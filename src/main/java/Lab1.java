@@ -52,7 +52,7 @@ public class Lab1 {
             System.exit(-1);
         }
         Job job = Job.getInstance();
-        job.setJarByClass(WordCountApp.class);
+        job.setJarByClass(Lab1.class);
         job.setJobName("Word count");
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
