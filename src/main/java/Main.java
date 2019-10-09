@@ -20,6 +20,12 @@ public class Main {
     public static class TextPair implements WritableComparable<TextPair> {
         Text first;
         Text second;
+
+        TextPair() {
+            this.first = new Text();
+            this.second = new Text();
+        }
+
         TextPair(String key1, String key2) {
             this.first = new Text(key1);
             this.second = new Text(key2);
