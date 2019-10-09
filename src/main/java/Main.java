@@ -1,8 +1,5 @@
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.WritableComparable;
+import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Partitioner;
@@ -65,7 +62,7 @@ public class Main {
             }
         }
 
-        public static class FirstComparator extends Compara
+        public static class FirstComparator extends RawComparator
     }
 
     public static class CallsJoinMapper extends Mapper<LongWritable, Text, TextPair, Text> {
