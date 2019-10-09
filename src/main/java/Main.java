@@ -129,7 +129,7 @@ public class Main {
                     delaysNum++;
                     allDelay += delay;
                 }
-                context.write(airportName, new Text("max = " + maxDelay + ", min = " + minDelay + ", averageDelay = " + allDelay / delaysNum));
+                context.write(new Text(airportName), new Text("max = " + maxDelay + ", min = " + minDelay + ", averageDelay = " + allDelay / delaysNum));
             }
         }
     }
