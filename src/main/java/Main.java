@@ -31,7 +31,7 @@ public class Main {
 
             String record = value.toString();
             String[] parts = record.split(",");
-
+            context.write(new TextPair(parts[14], "1"), new Text(parts[17]));
 
         }
     }
@@ -59,7 +59,7 @@ public class Main {
         MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, CallsJoinMapper.class);
         MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, SystemJoinMapper.class);
         FileOutputFormat.setOutputPath(job, new Path(args[2]));
-        job.setPartitionerClass(TextPair.FirstaPartitioner.class);
+        job.setPartitionerClass(TextPair.FirstPartitioner.class);
         job.setGroupingComparatorClass(TextPair.FirstComparator.class);
         job.setReducerClass(JoinReducer.class);
         job.setMapOutputKeyClass(TextPair.class);
