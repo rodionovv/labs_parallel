@@ -15,6 +15,13 @@ import java.io.IOException;
 
 public class Main {
 
+    private static class TextPair {
+        String pair;
+        TextPair(String key1, String key2) {
+            this.pair = String.
+        }
+    }
+
     public static class CallsJoinMapper extends Mapper<LongWritable, Text, TextPair, Text> {
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -32,7 +39,9 @@ public class Main {
                 return;
             }
 
-            
+            String record = value.toString();
+            String[] parts = record.split(",");
+            context.write(new TextPair(parts[0]), "0", new Text(parts[1]));
 
 
 //            SystemInfo system = new SystemInfo(value);
