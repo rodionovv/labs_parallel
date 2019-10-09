@@ -62,7 +62,7 @@ public class Main {
             }
         }
 
-        public static class FirstComparator extends RawComparator<TextPair>{
+        public static class FirstComparator implements RawComparator<TextPair>{
             @Override
             public int compare(byte[] b1, int s1, int l1, byte[] b2, int s2, int l2) {
                 return 0;
@@ -70,7 +70,7 @@ public class Main {
 
             @Override
             public int compare(TextPair o1, TextPair o2) {
-                return;
+                return o1.first.compareTo(o2.first);
             }
 
             @Override
@@ -117,6 +117,8 @@ public class Main {
             else return 1 % numPartitions;
         }
     }
+
+    public static class JoinReducer extends Reducer<TextPair, Text, >
 
     public static void main(String[] args) throws Exception{
         Job job = Job.getInstance();
