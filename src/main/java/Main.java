@@ -122,7 +122,12 @@ public class Main {
     public static class JoinReducer extends Reducer<TextPair, Text, Text, Text>{
         @Override
         protected void reduce(TextPair key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-            
+            Iterator<Text> iter = values.iterator();
+            Text airportName = new Text(iter.next());
+            while(iter.hasNext()) {
+                Text delay = iter.next();
+                
+            }
         }
     }
 
