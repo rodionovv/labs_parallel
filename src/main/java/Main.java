@@ -34,7 +34,7 @@ public class Main {
 
         @Override
         public int hashCode() {
-            return first.hashCode();
+            return Integer.parseInt(first.toString());
         }
 
         @Override
