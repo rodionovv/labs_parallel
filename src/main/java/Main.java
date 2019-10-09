@@ -109,7 +109,6 @@ public class Main {
             }
             String record = value.toString();
             String[] parts = record.split(",", 2);
-            System.out.println(parts[0]);
             context.write(new TextPair(parts[0].split("\"")[1], "0"), new Text(parts[1].split("\"")[1].split("\"")[0]));
         }
     }
@@ -122,6 +121,7 @@ public class Main {
             float maxDelay = 0, minDelay = Integer.MAX_VALUE, allDelay = 0, delaysNum = 0;
             while(iter.hasNext()) {
                 Text delayText = iter.next();
+                System.out.println(delayText.toString());
                 float delay = Float.parseFloat(delayText.toString());
                 if (delay != 0) {
                     if (delay > maxDelay) maxDelay = delay;
