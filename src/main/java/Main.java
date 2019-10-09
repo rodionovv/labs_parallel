@@ -53,9 +53,19 @@ public class Main {
         @Override
         public int compareTo(TextPair tp) {
             int f = Integer.parseInt(first.toString());
-            int s = Integer.parseInt(tp.first.toString())
-            return (f < s ? -1 : (f == s ? 0 : 1))
+            int s = Integer.parseInt(tp.first.toString());
+            return (f < s ? -1 : (f == s ? 0 : 1));
         }
+
+        public static class FirstPartitioner extends Partitioner<TextPair, Text>{
+            @Override
+            public int getPartition(TextPair textPair, Text text, int numPartitions) {
+                if (Integer.parseInt(textPair.first.toString()) < 13000) return 0;
+                else return 1 % numPartitions;
+            }
+        }
+
+        public static class FirstComparator extends Compara
     }
 
     public static class CallsJoinMapper extends Mapper<LongWritable, Text, TextPair, Text> {
@@ -88,7 +98,13 @@ public class Main {
         }
     }
 
-    public static class FirstPartitioner extends Partitioner<>
+    public static class FirstPartitioner extends Partitioner<TextPair, Text>{
+        @Override
+        public int getPartition(TextPair textPair, Text text, int numPartitions) {
+            if (Integer.parseInt(textPair.first.toString()) < 13000) return 0;
+            else return 1 % numPartitions;
+        }
+    }
 
     public static void main(String[] args) throws Exception{
         Job job = Job.getInstance();
