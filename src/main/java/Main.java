@@ -51,7 +51,9 @@ public class Main {
 
         @Override
         public int compareTo(TextPair tp) {
-            return first.compareTo(tp.first);
+            int f = Integer.parseInt(first.toString());
+            int s = Integer.parseInt(tp.first.toString())
+            return (f < s ? -1 : (f == s ? 0 : 1))
         }
     }
 
