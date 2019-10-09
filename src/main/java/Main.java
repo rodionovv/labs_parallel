@@ -93,8 +93,8 @@ public class Main {
             if (value.toString().startsWith("\"YEAR\",\"QUARTER\"")){
                 return;
             }
-
             String record = value.toString();
+            System.out.println(record);
             String[] parts = record.split(",");
             context.write(new TextPair(parts[14], "1"), new Text(parts[17]));
 
