@@ -62,7 +62,7 @@ public class Main {
             }
         }
 
-        public static class FirstComparator extends RawComparator<>
+        public static class FirstComparator extends RawComparator
     }
 
     public static class CallsJoinMapper extends Mapper<LongWritable, Text, TextPair, Text> {
