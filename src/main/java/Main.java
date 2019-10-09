@@ -18,7 +18,7 @@ public class Main {
     private static class TextPair {
         String pair;
         TextPair(String key1, String key2) {
-            this.pair = String.
+            this.pair = key1 + key2;
         }
     }
 
@@ -41,7 +41,7 @@ public class Main {
 
             String record = value.toString();
             String[] parts = record.split(",");
-            context.write(new TextPair(parts[0]), "0", new Text(parts[1]));
+            context.write(new TextPair(parts[0], "0"), new Text(parts[1]));
 
 
 //            SystemInfo system = new SystemInfo(value);
