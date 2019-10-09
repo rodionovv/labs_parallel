@@ -11,12 +11,14 @@ import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+import java.io.DataOutput;
+import java.io.DataInput;
 import java.io.IOException;
 
 
 public class Main {
 
-    private static class TextPair implements WritableComparable {
+    public static class TextPair implements WritableComparable<TextPair> {
         String first;
         String second;
         TextPair(String key1, String key2) {
@@ -26,7 +28,24 @@ public class Main {
 
         @Override
         public boolean equals(Object obj) {
-            return super.equals(obj);
+            TextPair tp = (TextPair) obj;
+            return first.equals(tp.first);
+        }
+
+        @Override
+        public int hashCode() {
+            return first.hashCode();
+        }
+
+        @Override
+        public void write(DataOutput out) throws IOException {
+            first.write(out);
+            second.write(out);
+        }
+
+        @Override
+        public int compareTo(TextPair tp) {
+            return first.compareTo(tp.first);
         }
     }
 
