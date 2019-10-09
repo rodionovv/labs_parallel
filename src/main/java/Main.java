@@ -102,12 +102,9 @@ public class Main {
             if (value.toString().startsWith("Code,Description")){
                 return;
             }
-
             String record = value.toString();
             String[] parts = record.split(",");
             context.write(new TextPair(parts[0], "0"), new Text(parts[1]));
-
-
         }
     }
 
@@ -124,9 +121,17 @@ public class Main {
         protected void reduce(TextPair key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             Iterator<Text> iter = values.iterator();
             Text airportName = new Text(iter.next());
+            float maxDelay = 0, minDelay = Integer.MAX_VALUE, allDelay = 0, delaysNum = 0;
             while(iter.hasNext()) {
-                Text delay = iter.next();
-                
+                Text delayText = iter.next();
+                float delay = Float.parseFloat(delayText.toString());
+                if (delay != 0) {
+                    if (delay > maxDelay) maxDelay = delay;
+                    if (delay < minDelay) minDelay = delay;
+                    delaysNum++;
+                    allDelay += delay;
+                }
+                context.write(airportName, new Text("max = " + maxDelay + ", min = " + minDelay + ", averageDelay = " + allDelay / delaysNum));
             }
         }
     }
