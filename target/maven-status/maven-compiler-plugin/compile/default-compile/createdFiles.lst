@@ -1,6 +1,5 @@
 Main$CallsJoinMapper.class
 Main.class
-Main$FirstPartitioner.class
 Main$SystemJoinMapper.class
 Main$TextPair$FirstPartitioner.class
 Main$JoinReducer.class
