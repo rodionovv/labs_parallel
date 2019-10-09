@@ -108,14 +108,6 @@ public class Main {
         }
     }
 
-    public static class FirstPartitioner extends Partitioner<TextPair, Text>{
-        @Override
-        public int getPartition(TextPair textPair, Text text, int numPartitions) {
-            if (Integer.parseInt(textPair.first.toString()) < 13000) return 0;
-            else return 1 % numPartitions;
-        }
-    }
-
     public static class JoinReducer extends Reducer<TextPair, Text, Text, Text>{
         @Override
         protected void reduce(TextPair key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
