@@ -28,7 +28,11 @@ public class Main {
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
-            if (value.toString().startsWith(""))
+            if (value.toString().startsWith("Code,Description")){
+                return;
+            }
+
+            
 
 
 //            SystemInfo system = new SystemInfo(value);
