@@ -19,17 +19,17 @@ import java.io.IOException;
 public class Main {
 
     public static class TextPair implements WritableComparable<TextPair> {
-        String first;
-        String second;
+        Text first;
+        Text second;
         TextPair(String key1, String key2) {
-            this.first = key1;
-            this.second = key2;
+            this.first = new Text(key1);
+            this.second = new Text(key2);
         }
 
         @Override
         public boolean equals(Object obj) {
             TextPair tp = (TextPair) obj;
-            return first.equals(tp.first);
+            return first == tp.first;
         }
 
         @Override
