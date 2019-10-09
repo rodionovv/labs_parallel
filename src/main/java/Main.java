@@ -2,6 +2,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -15,10 +16,17 @@ import java.io.IOException;
 
 public class Main {
 
-    private static class TextPair {
-        String pair;
+    private static class TextPair implements WritableComparable {
+        String first;
+        String second;
         TextPair(String key1, String key2) {
-            this.pair = key1 + key2;
+            this.first = key1;
+            this.second = key2;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return super.equals(obj);
         }
     }
 
