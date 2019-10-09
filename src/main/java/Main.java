@@ -44,6 +44,11 @@ public class Main {
         }
 
         @Override
+        public void readFields(DataInput in) throws IOException {
+            
+        }
+
+        @Override
         public int compareTo(TextPair tp) {
             return first.compareTo(tp.first);
         }
