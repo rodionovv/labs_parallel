@@ -108,7 +108,6 @@ public class Main {
                 return;
             }
             String record = value.toString();
-            System.out.println(record);
             String[] parts = record.split(",");
             context.write(new TextPair(parts[0], "0"), new Text(parts[1]));
         }
