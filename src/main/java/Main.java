@@ -45,7 +45,8 @@ public class Main {
 
         @Override
         public void readFields(DataInput in) throws IOException {
-            
+            first.readFields(in);
+            second.readFields(in);
         }
 
         @Override
