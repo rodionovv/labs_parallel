@@ -25,9 +25,13 @@ public class Main {
     public static class CallsJoinMapper extends Mapper<LongWritable, Text, TextPair, Text> {
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            ServiceCall call  = new ServiceCall(value);
-            context.write(new TextPair(call.getSystemA().toString(), "1"),
-                    new Text(call.toString()));
+            if (value.toString().startsWith("\"YEAR\",\"QUARTER\"")){
+                return;
+            }
+
+            String record = value.toString();
+            String[] parts = record.split(",");
+
         }
     }
 
@@ -44,8 +48,6 @@ public class Main {
             context.write(new TextPair(parts[0], "0"), new Text(parts[1]));
 
 
-//            SystemInfo system = new SystemInfo(value);
-//            context.write(new TextPair(system.getSystemCode().toString(), "0"), new Text(system.toString()));
         }
     }
 
