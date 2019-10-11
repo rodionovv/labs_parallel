@@ -95,8 +95,10 @@ public class Main {
         public static class FirstComparator implements WritableComparator{
 
             @Override
-            public int compare(TextPair o1, TextPair o2) {
-                return o1.first.compareTo(o2.first);
+            public int compare(WritableComparable o1, WritableComparable o2) {
+                TextPair tp1 = (TextPair) o1;
+                TextPair tp2 = (TextPair) o2;
+                return tp1.first.compareTo(tp2.first);
             }
 
             @Override
