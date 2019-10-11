@@ -66,7 +66,7 @@ public class Main {
         public int compareTo(TextPair tp) {
             int ff = Integer.parseInt(this.first.toString());
             int fs = Integer.parseInt(this.second.toString());
-            int sf = Integer.parseInt(tp.second.toString());
+            int sf = Integer.parseInt(tp.first.toString());
             int ss = Integer.parseInt(tp.second.toString());
             if (ff == sf){
                 if (fs == ss) return 0;
@@ -134,7 +134,7 @@ public class Main {
         @Override
         protected void reduce(TextPair key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             Iterator<Text> iter = values.iterator();
-            
+
             Text airportName = new Text(iter.next());
             float maxDelay = 0, minDelay = Integer.MAX_VALUE, allDelay = 0, delaysNum = 0;
             while(iter.hasNext()) {
