@@ -141,7 +141,11 @@ public class Main {
             while(iter.hasNext()) {
                 Text delayText = iter.next();
                 System.out.println(delayText.toString());
-                float delay = Float.parseFloat(delayText.toString());
+                if (delayText.toString().lengthO() > 0){
+                    float delay = Float.parseFloat(delayText.toString());
+                } else {
+                    continue;
+                }
                 if (delay != 0) {
                     if (delay > maxDelay) maxDelay = delay;
                     if (delay < minDelay) minDelay = delay;
