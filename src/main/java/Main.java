@@ -34,8 +34,8 @@ public class Main {
         @Override
         public boolean equals(Object obj) {
             TextPair tp = (TextPair) obj;
-            if (this.first.compareTo(tp.first)){
-                if (this.second.compareTo(tp.second)){
+            if (this.first.equals(tp.first)){
+                if (this.second.equals(tp.second)){
                     return true;
                 } else {
                     return false;
