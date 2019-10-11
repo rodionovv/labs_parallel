@@ -141,8 +141,9 @@ public class Main {
             while(iter.hasNext()) {
                 Text delayText = iter.next();
                 System.out.println(delayText.toString());
+                float delay;
                 if (delayText.toString().lengthO() > 0){
-                    float delay = Float.parseFloat(delayText.toString());
+                    delay = Float.parseFloat(delayText.toString());
                 } else {
                     continue;
                 }
