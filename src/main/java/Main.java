@@ -92,7 +92,7 @@ public class Main {
             }
         }
 
-        public static class FirstComparator implements WritableComparator{
+        public static class FirstComparator extends WritableComparator{
             public FirstComparator() {
                 super(TextPair.class, true);
             }
