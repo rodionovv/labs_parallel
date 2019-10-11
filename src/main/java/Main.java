@@ -64,8 +64,6 @@ public class Main {
 
         @Override
         public int compareTo(TextPair tp) {
-
-
             int ff = Integer.parseInt(this.first.toString());
             int fs = Integer.parseInt(this.second.toString());
             int sf = Integer.parseInt(tp.second.toString());
@@ -137,8 +135,6 @@ public class Main {
         protected void reduce(TextPair key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             Iterator<Text> iter = values.iterator();
             Text airportName = new Text(iter.next());
-            System.out.println(airportName);
-        
             float maxDelay = 0, minDelay = Integer.MAX_VALUE, allDelay = 0, delaysNum = 0;
             while(iter.hasNext()) {
                 Text delayText = iter.next();
@@ -155,6 +151,7 @@ public class Main {
                     allDelay += delay;
                 }
             }
+            System.out.println(allDelay / delaysNum);
             context.write(new Text(airportName), new Text("max = " + maxDelay + ", min = " + minDelay + ", averageDelay = " + allDelay / delaysNum));
         }
     }
