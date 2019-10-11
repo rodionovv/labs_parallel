@@ -146,7 +146,7 @@ public class Main {
                 } else {
                     continue;
                 }
-                if (delay != 0) {
+                if (delay > 0) {
                     if (delay > maxDelay) maxDelay = delay;
                     if (delay < minDelay) minDelay = delay;
                     delaysNum++;
