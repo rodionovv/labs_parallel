@@ -71,14 +71,14 @@ public class Main {
             if (ff == sf){
                 if (fs == ss) return 0;
                 else if (fs > ss) {
-                    return -1;
-                } else {
                     return 1;
+                } else {
+                    return -1;
                 }
             } else if ( ff > sf ) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             }
         }
 
@@ -134,7 +134,6 @@ public class Main {
         @Override
         protected void reduce(TextPair key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             Iterator<Text> iter = values.iterator();
-
             Text airportName = new Text(iter.next());
             float maxDelay = 0, minDelay = Integer.MAX_VALUE, allDelay = 0, delaysNum = 0;
             while(iter.hasNext()) {
