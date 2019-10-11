@@ -34,7 +34,15 @@ public class Main {
         @Override
         public boolean equals(Object obj) {
             TextPair tp = (TextPair) obj;
-            return first == tp.first;
+            if (this.first.compareTo(tp.first)){
+                if (this.second.compareTo(tp.second)){
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         }
 
         @Override
@@ -56,9 +64,24 @@ public class Main {
 
         @Override
         public int compareTo(TextPair tp) {
-            int f = Integer.parseInt(first.toString());
-            int s = Integer.parseInt(tp.first.toString());
-            return (f < s ? -1 : (f == s ? 0 : 1));
+
+
+            int ff = Integer.parseInt(this.first.toString());
+            int fs = Integer.parseInt(this.second.toString());
+            int sf = Integer.parseInt(tp.second.toString());
+            int ss = Integer.parseInt(tp.second.toString());
+            if (ff == sf){
+                if (fs == ss) return 0;
+                else if (fs > ss) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            } else if ( ff > sf ) {
+                return 1;
+            } else {
+                return -1;
+            }
         }
 
         public static class FirstPartitioner extends Partitioner<TextPair, Text>{
