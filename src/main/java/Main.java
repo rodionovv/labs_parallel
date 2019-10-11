@@ -93,6 +93,9 @@ public class Main {
         }
 
         public static class FirstComparator implements WritableComparator{
+            public FirstComparator() {
+                super(TextPair.class, true);
+            }
 
             @Override
             public int compare(WritableComparable o1, WritableComparable o2) {
