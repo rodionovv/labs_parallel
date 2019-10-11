@@ -73,14 +73,14 @@ public class Main {
             if (ff == sf){
                 if (fs == ss) return 0;
                 else if (fs > ss) {
-                    return 1;
-                } else {
                     return -1;
+                } else {
+                    return 1;
                 }
             } else if ( ff > sf ) {
-                return 1;
-            } else {
                 return -1;
+            } else {
+                return 1;
             }
         }
 
@@ -92,11 +92,7 @@ public class Main {
             }
         }
 
-        public static class FirstComparator implements RawComparator<TextPair>{
-            @Override
-            public int compare(byte[] b1, int s1, int l1, byte[] b2, int s2, int l2) {
-                return 0;
-            }
+        public static class FirstComparator implements WritableComparator{
 
             @Override
             public int compare(TextPair o1, TextPair o2) {
