@@ -100,11 +100,6 @@ public class Main {
                 TextPair tp2 = (TextPair) o2;
                 return tp1.first.compareTo(tp2.first);
             }
-
-            @Override
-            public boolean equals(Object obj) {
-                return false;
-            }
         }
     }
 
