@@ -140,7 +140,6 @@ public class Main {
             float maxDelay = 0, minDelay = Integer.MAX_VALUE, allDelay = 0, delaysNum = 0;
             while(iter.hasNext()) {
                 Text delayText = iter.next();
-                System.out.println(delayText.toString());
                 float delay;
                 if (delayText.toString().length() > 0){
                     delay = Float.parseFloat(delayText.toString());
@@ -153,8 +152,8 @@ public class Main {
                     delaysNum++;
                     allDelay += delay;
                 }
-                context.write(new Text(airportName), new Text("max = " + maxDelay + ", min = " + minDelay + ", averageDelay = " + allDelay / delaysNum));
             }
+            context.write(new Text(airportName), new Text("max = " + maxDelay + ", min = " + minDelay + ", averageDelay = " + allDelay / delaysNum));
         }
     }
 
