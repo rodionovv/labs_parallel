@@ -22,39 +22,14 @@ public class Main {
 
 
 
-    public static class JoinReducer extends Reducer<TextPair, Text, Text, Text>{
-        @Override
-        protected void reduce(TextPair key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-            Iterator<Text> iter = values.iterator();
-            Text airportName = new Text(iter.next());
-            float maxDelay = 0, minDelay = Integer.MAX_VALUE, allDelay = 0, delaysNum = 0;
-            while(iter.hasNext()) {
-                Text delayText = iter.next();
-                float delay;
-                if (delayText.toString().length() > 0){
-                    delay = Float.parseFloat(delayText.toString());
-                } else {
-                    continue;
-                }
-                if (delay > 0) {
-                    if (delay > maxDelay) maxDelay = delay;
-                    if (delay < minDelay) minDelay = delay;
-                    delaysNum++;
-                    allDelay += delay;
-                }
-            }
-            if (delaysNum != 0) {
-                context.write(new Text(airportName), new Text("max = " + maxDelay + ", min = " + minDelay + ", averageDelay = " + allDelay / delaysNum));
-            }
-        }
-    }
+
 
     public static void main(String[] args) throws Exception{
         Job job = Job.getInstance();
         job.setJarByClass(Main.class);
         job.setJobName("Reduce side join");
         MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, DelayJoinMapper.class);
-        MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, AirportJoinClass.class);
+        MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, AirportJoinMapper.class);
         FileOutputFormat.setOutputPath(job, new Path(args[2]));
         job.setPartitionerClass(FirstPartitioner.class);
         job.setGroupingComparatorClass(FirstComparator.class);
