@@ -53,8 +53,8 @@ public class Main {
         Job job = Job.getInstance();
         job.setJarByClass(Main.class);
         job.setJobName("Reduce side join");
-        MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, CallsJoinMapper.class);
-        MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, SystemJoinMapper.class);
+        MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, DelayJoinMapper.class);
+        MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, AirportJoinClass.class);
         FileOutputFormat.setOutputPath(job, new Path(args[2]));
         job.setPartitionerClass(FirstPartitioner.class);
         job.setGroupingComparatorClass(FirstComparator.class);
