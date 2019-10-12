@@ -153,7 +153,9 @@ public class Main {
                     allDelay += delay;
                 }
             }
-            if (delaysNum != 0) context.write(new Text(airportName), new Text("max = " + maxDelay + ", min = " + minDelay + ", averageDelay = " + allDelay / delaysNum));
+            if (delaysNum != 0) {
+                context.write(new Text(airportName), new Text("max = " + maxDelay + ", min = " + minDelay + ", averageDelay = " + allDelay / delaysNum));
+            }
         }
     }
 
