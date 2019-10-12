@@ -17,14 +17,14 @@ public class WordCountApp {
     public static class WordMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
         private final static IntWritable one = new IntWritable(1);
-        private Text word = new Text();
 
         @Override
         protected void map(LongWritable key, Text value, Context context
         ) throws IOException, InterruptedException {
-            StringTokenizer itr = new StringTokenizer(value.toString().replaceAll("[^a-zA-Z0-9\\s+]", "").toLowerCase());
+            StringTokenizer itr = new StringTokenizer(value.toString().replaceAll("[^a-zA-Z0-9а-яА-Я\\s+]", "").toLowerCase());
 
             while(itr.hasMoreTokens()){
+                Text word = new Text();
                 word.set(itr.nextToken());
                 context.write(word, one);
             }
