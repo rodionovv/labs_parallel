@@ -19,18 +19,6 @@ import java.util.Iterator;
 
 public class Main {
 
-    static String getLine(Text value, int i){
-        String record = value.toString();
-        if (i == 0) {
-            return record.split(",", 2)[i].split("\"")[1];
-        } else {
-            return record.split(",", 2)[i].split("\"")[1].split("\"")[0];
-        }
-    }
-
-    static String[] getLine(Text value) {
-        return value.toString().split(",");
-    }
 
     public static void main(String[] args) throws Exception{
         Job job = Job.getInstance();

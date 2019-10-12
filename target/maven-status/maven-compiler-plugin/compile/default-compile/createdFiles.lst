@@ -1,7 +1,7 @@
-Main$CallsJoinMapper.class
-Main.class
-Main$SystemJoinMapper.class
-Main$TextPair$FirstPartitioner.class
-Main$JoinReducer.class
-Main$TextPair.class
-Main$TextPair$FirstComparator.class
+org/rodionov/FirstPartitioner.class
+org/rodionov/DelayJoinMapper.class
+org/rodionov/FirstComparator.class
+org/rodionov/TextPair.class
+org/rodionov/AirportJoinMapper.class
+org/rodionov/JoinReducer.class
+org/rodionov/Main.class

@@ -1,1 +1,7 @@
-/home/vasya/IdeaProjects/lab_parallel/src/main/java/Main.java
+/home/vasya/IdeaProjects/lab_parallel/src/main/java/org/rodionov/TextPair.java
+/home/vasya/IdeaProjects/lab_parallel/src/main/java/org/rodionov/JoinReducer.java
+/home/vasya/IdeaProjects/lab_parallel/src/main/java/org/rodionov/DelayJoinMapper.java
+/home/vasya/IdeaProjects/lab_parallel/src/main/java/org/rodionov/FirstPartitioner.java
+/home/vasya/IdeaProjects/lab_parallel/src/main/java/org/rodionov/AirportJoinMapper.java
+/home/vasya/IdeaProjects/lab_parallel/src/main/java/org/rodionov/FirstComparator.java
+/home/vasya/IdeaProjects/lab_parallel/src/main/java/org/rodionov/Main.java

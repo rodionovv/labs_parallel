@@ -14,6 +14,9 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, TextPair, Text
         if (value.toString().startsWith("Code,Description")){
             return;
         }
-        context.write(new TextPair(Main.getLine(value, 0), "0"), new Text(Main.getLine(value, 1)));
+        String[] parts = ParseCSV.splitComma(value, 2);
+        String airportID = ParseCSV.getKey(parts);
+        String airportName = ParseCSV.getValue(parts);
+        context.write(new TextPair(airportID, "0"), new Text(airportName));
     }
 }
