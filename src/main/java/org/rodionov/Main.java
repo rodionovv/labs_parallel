@@ -19,75 +19,6 @@ import java.util.Iterator;
 
 public class Main {
 
-    public static class TextPair implements WritableComparable<TextPair> {
-        Text first;
-        Text second;
-
-        TextPair() {
-            this.first = new Text();
-            this.second = new Text();
-        }
-
-        TextPair(String key1, String key2) {
-            this.first = new Text(key1);
-            this.second = new Text(key2);
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            TextPair tp = (TextPair) obj;
-            if (this.first.equals(tp.first)){
-                if (this.second.equals(tp.second)){
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public int hashCode() {
-            return Integer.parseInt(first.toString());
-        }
-
-        @Override
-        public void write(DataOutput out) throws IOException {
-            first.write(out);
-            second.write(out);
-        }
-
-        @Override
-        public void readFields(DataInput in) throws IOException {
-            first.readFields(in);
-            second.readFields(in);
-        }
-
-        @Override
-        public int compareTo(TextPair tp) {
-            int ff = Integer.parseInt(this.first.toString());
-            int fs = Integer.parseInt(this.second.toString());
-            int sf = Integer.parseInt(tp.first.toString());
-            int ss = Integer.parseInt(tp.second.toString());
-            if (ff == sf){
-                if (fs == ss) return 0;
-                else if (fs > ss) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            } else if ( ff > sf ) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
-
-
-
-    }
-
     public static class CallsJoinMapper extends Mapper<LongWritable, Text, TextPair, Text> {
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -148,8 +79,8 @@ public class Main {
         MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, CallsJoinMapper.class);
         MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, SystemJoinMapper.class);
         FileOutputFormat.setOutputPath(job, new Path(args[2]));
-        job.setPartitionerClass(TextPair.FirstPartitioner.class);
-        job.setGroupingComparatorClass(TextPair.FirstComparator.class);
+        job.setPartitionerClass(FirstPartitioner.class);
+        job.setGroupingComparatorClass(FirstComparator.class);
         job.setReducerClass(JoinReducer.class);
         job.setMapOutputKeyClass(TextPair.class);
         job.setOutputKeyClass(Text.class);
