@@ -24,11 +24,25 @@ public class TextPair implements WritableComparable<TextPair> {
         this.second = new Text(key2);
     }
 
-    //    @Override
-//    public int hashCode() {
-//        return Objects.hash(first, second);
-//    }
-//
+    @Override
+    public boolean equals(Object obj) {
+        TextPair tp = (TextPair) obj;
+        if (this.first.equals(tp.first)){
+            if (this.second.equals(tp.second)){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(first, second);
+    }
+
 
     @Override
     public void write(DataOutput out) throws IOException {
