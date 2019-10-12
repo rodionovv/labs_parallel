@@ -9,7 +9,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public static class TextPair implements WritableComparable<Main.TextPair> {
+public class TextPair implements WritableComparable<Main.TextPair> {
     Text first;
     Text second;
 
