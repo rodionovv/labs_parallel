@@ -84,26 +84,8 @@ public class Main {
             }
         }
 
-        public static class FirstPartitioner extends Partitioner<TextPair, Text>{
-            @Override
-            public int getPartition(TextPair textPair, Text text, int numPartitions) {
-                if (Integer.parseInt(textPair.first.toString()) < 13000) return 0;
-                else return 1 % numPartitions;
-            }
-        }
 
-        public static class FirstComparator extends WritableComparator{
-            public FirstComparator() {
-                super(TextPair.class, true);
-            }
 
-            @Override
-            public int compare(WritableComparable o1, WritableComparable o2) {
-                TextPair tp1 = (TextPair) o1;
-                TextPair tp2 = (TextPair) o2;
-                return tp1.first.compareTo(tp2.first);
-            }
-        }
     }
 
     public static class CallsJoinMapper extends Mapper<LongWritable, Text, TextPair, Text> {

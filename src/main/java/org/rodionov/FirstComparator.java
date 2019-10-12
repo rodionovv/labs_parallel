@@ -3,7 +3,7 @@ package org.rodionov;
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;
 
-public static class FirstComparator extends WritableComparator {
+public class FirstComparator extends WritableComparator {
     public FirstComparator() {
         super(Main.TextPair.class, true);
     }
