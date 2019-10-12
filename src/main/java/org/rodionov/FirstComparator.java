@@ -5,13 +5,13 @@ import org.apache.hadoop.io.WritableComparator;
 
 public class FirstComparator extends WritableComparator {
     public FirstComparator() {
-        super(Main.TextPair.class, true);
+        super(TextPair.class, true);
     }
 
     @Override
     public int compare(WritableComparable o1, WritableComparable o2) {
-        Main.TextPair tp1 = (Main.TextPair) o1;
-        Main.TextPair tp2 = (Main.TextPair) o2;
+        TextPair tp1 = (TextPair) o1;
+        TextPair tp2 = (TextPair) o2;
         return tp1.first.compareTo(tp2.first);
     }
 }

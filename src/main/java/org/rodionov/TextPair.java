@@ -8,8 +8,9 @@ import org.apache.hadoop.mapreduce.Partitioner;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Objects;
 
-public class TextPair implements WritableComparable<Main.TextPair> {
+public class TextPair implements WritableComparable<TextPair> {
     Text first;
     Text second;
 
@@ -23,24 +24,11 @@ public class TextPair implements WritableComparable<Main.TextPair> {
         this.second = new Text(key2);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        Main.TextPair tp = (Main.TextPair) obj;
-        if (this.first.equals(tp.first)){
-            if (this.second.equals(tp.second)){
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return Integer.parseInt(first.toString());
-    }
+    //    @Override
+//    public int hashCode() {
+//        return Objects.hash(first, second);
+//    }
+//
 
     @Override
     public void write(DataOutput out) throws IOException {
@@ -55,7 +43,7 @@ public class TextPair implements WritableComparable<Main.TextPair> {
     }
 
     @Override
-    public int compareTo(Main.TextPair tp) {
+    public int compareTo(TextPair tp) {
         int ff = Integer.parseInt(this.first.toString());
         int fs = Integer.parseInt(this.second.toString());
         int sf = Integer.parseInt(tp.first.toString());
@@ -71,27 +59,6 @@ public class TextPair implements WritableComparable<Main.TextPair> {
             return 1;
         } else {
             return -1;
-        }
-    }
-
-    public static class FirstPartitioner extends Partitioner<Main.TextPair, Text> {
-        @Override
-        public int getPartition(Main.TextPair textPair, Text text, int numPartitions) {
-            if (Integer.parseInt(textPair.first.toString()) < 13000) return 0;
-            else return 1 % numPartitions;
-        }
-    }
-
-    public static class FirstComparator extends WritableComparator {
-        public FirstComparator() {
-            super(Main.TextPair.class, true);
-        }
-
-        @Override
-        public int compare(WritableComparable o1, WritableComparable o2) {
-            Main.TextPair tp1 = (Main.TextPair) o1;
-            Main.TextPair tp2 = (Main.TextPair) o2;
-            return tp1.first.compareTo(tp2.first);
         }
     }
 }

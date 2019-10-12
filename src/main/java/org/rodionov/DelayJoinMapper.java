@@ -12,8 +12,7 @@ public class DelayJoinMapper extends Mapper<LongWritable, Text, TextPair, Text> 
         if (value.toString().startsWith("\"YEAR\",\"QUARTER\"")){
             return;
         }
-        String record = value.toString();
-        String[] parts = record.split(",");
+        String[] parts = Main.getLine(value);
         context.write(new TextPair(parts[14], "1"), new Text(parts[17]));
 
     }
