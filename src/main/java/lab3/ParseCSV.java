@@ -1,6 +1,8 @@
 package lab3;
 
 import org.apache.hadoop.io.Text;
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
 
 public class ParseCSV {
 
@@ -26,6 +28,10 @@ public class ParseCSV {
 
     static String getValue(String[] parts, int i) {
         return parts[i];
+    }
+
+    static JavaRDD<String> readCSV(SparkConf sc, ) {
+
     }
 
 }
