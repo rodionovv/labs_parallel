@@ -83,10 +83,12 @@ public class Main {
                                                     return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
                                             );
-        data.groupByKey().mapValues(
+        JavaPairRDD<Tuple2<String, String>, Values> reducedData = data.groupByKey().mapValues(
                 s -> {
+                    float maxDelay = 0;
+                    int cancelCount = 0, delayCount;
                     for (Values val : s) {
-                        
+                        if ()
                     }
                 }
         );
