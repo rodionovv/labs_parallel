@@ -1,4 +1,4 @@
-//package org.rodionov;
+package lab3;
 
 import org.apache.hadoop.io.Text;
 
