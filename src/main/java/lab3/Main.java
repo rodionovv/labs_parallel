@@ -35,9 +35,16 @@ public class Main {
     public static class Values implements Serializable{
         private String delay;
         private String cancelled;
+        private float maxDelay;
+        private float percents;
         Values(String delay, String cancelled) {
             this.delay = delay;
             this.cancelled = cancelled;
+        }
+
+        Values(float maxDelay, float percents) {
+            this.maxDelay = maxDelay;
+            this.percents = percents;
         }
 
         public String getDelay() {
@@ -48,8 +55,6 @@ public class Main {
         public String getCancelled() {
             return this.cancelled;
         }
-
-        @
     }
 
 
@@ -84,24 +89,26 @@ public class Main {
                                                 }
                                             );
         JavaPairRDD<Tuple2<String, String>, Values> reducedData = data.groupByKey().mapValues(
-                s -> {
-                    float maxDelay = 0;
-                    int cancelCount = 0, delayCount = 0, countf;
-                    for (Values val : s) {
-                        if (val.getCancelled() == "1.00") {
-                            cancelCount++;
-                            continue;
-                        } else {
-                            float delay = Float.parseFloat(val.getDelay());
-                            if (delay > 0) {
-                                delayCount++;
-                                if (delay > maxDelay) maxDelay = delay;
-                            }
-
-
-                    }
-                }
-        );
+                                                s -> {
+                                                    float maxDelay = 0;
+                                                    int countCancelled = 0, countDelay = 0, countFlights = 0;
+                                                    for (Values val : s) {
+                                                        countFlights++;
+                                                        if (val.getCancelled() == "1.00") {
+                                                            countCancelled++;
+                                                            continue;
+                                                        } else {
+                                                            float delay = Float.parseFloat(val.getDelay());
+                                                            if (delay > 0) {
+                                                                countDelay++;
+                                                                if (delay > maxDelay) maxDelay = delay;
+                                                            }
+                                                        }
+                                                    }
+                                                    float percents = (countCancelled + countDelay) * 100 / countFlights;
+                                                    return new Values(maxDelay, percents);
+                                                }
+                                        );
 
     }
 
