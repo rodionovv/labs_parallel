@@ -126,12 +126,11 @@ public class Main {
                                                     return new Tuple2<>(new AirportPair(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
                                             );
-        data.reduceByKey(
+        JavaPairRDD<AirportPair, Values> output = data.reduceByKey(
                 (f, s) -> {
                     f.addFlights(s.getCountFlights());
-                    if (s.getCancelled() == "1.00") {
+                    if (s.getCancelled().equals("1.00")) {
                         f.addCanceled(s.getCountCanceled());
-                        return f;
                     } else {
                         float delay = Float.parseFloat(s.getDelay());
                         if (delay > 0) {
@@ -143,7 +142,7 @@ public class Main {
                 }
         );
 //        data.groupByKey();
-        data.saveAsTextFile(args[2]);
+        output.saveAsTextFile(args[2]);
 ////                .mapValues(
 //                        s -> {
 //                            float maxDelay = 0;
