@@ -20,7 +20,7 @@ public class Main {
         @Override
         public boolean equals(Object obj) {
             AirportPair p = (AirportPair) obj;
-            return this.pair._1 == p.pair._1 && this.pair._2 == p.pair._2;
+            return this.pair._1.equals(p.pair._1) && this.pair._2.equals(p.pair._2);
         }
     }
 
@@ -132,23 +132,23 @@ public class Main {
                                                     return new Tuple2<>(new AirportPair(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
                                             );
-        JavaPairRDD<AirportPair, Values> output = data.reduceByKey(
-                (f, s) -> {
-                    f.addFlights(s.getCountFlights());
-                    if (s.getCancelled().equals("1.00")) {
-                        f.addCanceled(s.getCountCanceled());
-                    } else {
-                        float delay = Float.parseFloat(s.getDelay());
-                        if (delay > 0) {
-                            f.addDelayed(s.getCountDelay());
-                            if (delay > f.getMaxDelay()) f.setMaxDelay(delay);
-                        }
-                    }
-                    return f;
-                }
-        );
-//        data.groupByKey();
-        output.saveAsTextFile(args[2]);
+//        JavaPairRDD<AirportPair, Values> output = data.reduceByKey(
+//                (f, s) -> {
+//                    f.addFlights(s.getCountFlights());
+//                    if (s.getCancelled().equals("1.00")) {
+//                        f.addCanceled(s.getCountCanceled());
+//                    } else {
+//                        float delay = Float.parseFloat(s.getDelay());
+//                        if (delay > 0) {
+//                            f.addDelayed(s.getCountDelay());
+//                            if (delay > f.getMaxDelay()) f.setMaxDelay(delay);
+//                        }
+//                    }
+//                    return f;
+//                }
+//        );
+        data.groupByKey();
+        data.saveAsTextFile(args[2]);
 ////                .mapValues(
 //                        s -> {
 //                            float maxDelay = 0;
