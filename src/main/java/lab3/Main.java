@@ -67,9 +67,12 @@ public class Main {
 
         @Override
         public String toString() {
-            float percentsDelay = this.countDelay * 100 / countFlights;
-            float percentsCancelled = this.countCanceled * 100 / countFlights;
-            return "Max Delay = " + this.maxDelay + ", Delay Percentage = " + percentsDelay + "%, Canceled Percentage = " + percentsCancelled + "%";
+            if (this.countFlights != 0) {
+                float percentsDelay = this.countDelay * 100 / this.countFlights;
+                float percentsCancelled = this.countCanceled * 100 / this.countFlights;
+                return "Max Delay = " + this.maxDelay + ", Delay Percentage = " + percentsDelay + "%, Canceled Percentage = " + percentsCancelled + "%";
+            }
+            return "";
         }
 
         public void setMaxDelay(float newMax) {
