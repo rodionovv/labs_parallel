@@ -80,10 +80,16 @@ public class Main {
                                                     String destAirport = ParseCSV.getKey(parts, 14);
                                                     String delay = ParseCSV.getValue(parts, 17);
                                                     String cancelled = ParseCSV.getValue(parts, 19);
-                                                    return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled);
+                                                    return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
-                                            ).;
-        JavaPairRDD<Tuple2<String, String>, Values> groupedData = data.groupByKey();
+                                            );
+        data.groupByKey().mapValues(
+                s -> {
+                    for (Values val : s) {
+                        
+                    }
+                }
+        );
 
     }
 
