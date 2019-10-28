@@ -30,7 +30,7 @@ public class Main {
 
     }
 
-    public static class Values implements Serializable. Iterable{
+    public static class Values implements Serializable. Iterable<Values>{
         private String delay;
         private String cancelled;
         Values(String delay, String cancelled) {
