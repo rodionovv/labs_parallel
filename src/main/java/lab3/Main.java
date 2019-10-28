@@ -91,7 +91,9 @@ public class Main {
                         if (val.getCancelled() == "1.00") {
                             cancelCount++;
                             continue;
-                        } else if ()
+                        } else if (val.getDelay().p > 0) {
+
+                        }
                     }
                 }
         );
