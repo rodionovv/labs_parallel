@@ -80,11 +80,7 @@ public class Main {
                                                 }
                                             );
         data.groupByKey();
-        data.flatMapValues(
-                values -> {
-                    
-                }
-        );
+        
     }
 
 }
