@@ -16,6 +16,12 @@ public class Main {
         AirportPair(String originAirport, String destAirport) {
             this.pair = new Tuple2<>(originAirport, destAirport);
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            AirportPair p = (AirportPair) obj;
+            return this.pair._1 == p.pair._1 && this.pair._2 == p.pair._2;
+        }
     }
 
 
