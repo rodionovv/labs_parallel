@@ -50,7 +50,12 @@ public class Main {
                                                     );
         JavaPairRDD<AirportPair, String> data = flights.mapToPair(
                                                 s -> {
-                                                    if ()
+                                                    if (s.startsWith("\"YEAR\",\"QUARTER\"")){
+                                                        return;
+                                                    }
+                                                    String[] parts = ParseCSV.splitComma(s);
+                                                    String originAirport = ParseCSV.getKey(parts, 14);
+                                                    String destAirport = ParseCSV.getKey(parts, 14);
                                                 }
                                             );
     }
