@@ -11,11 +11,9 @@ public class Main {
 
     public static class AirportPair implements Serializable {
         private Tuple2<String, String> key;
-        private String delay;
 
-        AirportPair(String originAirport, String destAirport,String delay){
+        AirportPair(String originAirport, String destAirport){
             this.key = new Tuple2<>(originAirport, destAirport);
-            this.delay = delay;
         }
 
         public Tuple2 getPair(){
@@ -28,10 +26,6 @@ public class Main {
 
         public String getDesAirport(){
             return this.key._2;
-        }
-
-        public String getDelay(){
-            return this.delay;
         }
 
     }
@@ -54,20 +48,24 @@ public class Main {
                                                             return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
-        JavaRDD<AirportPair> data = flights.map(
+        JavaPairRDD<AirportPair,String> data = flights.mapToPair(
                                                 s -> {
                                                     if (s.startsWith("\"YEAR\",\"QUARTER\"")){
-                                                        return new AirportPair("", "", "");
+                                                        return new Tuple2<>(new AirportPair("", ""), "");
                                                     }
                                                     String[] parts = ParseCSV.splitComma(s);
                                                     String originAirport = ParseCSV.getKey(parts, 11);
                                                     String destAirport = ParseCSV.getKey(parts, 14);
                                                     String delay = ParseCSV.getValue(parts, 17);
-                                                    return new AirportPair(originAirport, destAirport, delay);
+                                                    return new Tuple2<>(new AirportPair(originAirport, destAirport), delay);
                                                 }
                                             );
         
+        data.reduceByKey(
+                (f, s) -> {
 
+                }
+             );
     }
 
 }
