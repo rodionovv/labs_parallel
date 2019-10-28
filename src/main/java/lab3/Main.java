@@ -32,6 +32,20 @@ public class Main {
 
     public static class Values implements Serializable{
         private String delay;
+        private String cancelled;
+        Values(String delay, String cancelled) {
+            this.delay = delay;
+            this.cancelled = cancelled;
+        }
+
+        public String getDelay() {
+            return this.delay;
+        }
+
+
+        public String getCancelled() {
+            return this.cancelled;
+        }
     }
 
 
@@ -52,20 +66,20 @@ public class Main {
                                                             return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
-        JavaPairRDD<AirportPair,String[]> data = flights.mapToPair(
+        JavaPairRDD<Tuple2<String, String>,Values> data = flights.mapToPair(
                                                 s -> {
                                                     if (s.startsWith("\"YEAR\",\"QUARTER\"")){
-                                                        return new Tuple2<>(new AirportPair("", ""), "");
+                                                        return new Tuple2<>(new Tuple2<>("", ""), new Values("", ""));
                                                     }
                                                     String[] parts = ParseCSV.splitComma(s);
                                                     String originAirport = ParseCSV.getKey(parts, 11);
                                                     String destAirport = ParseCSV.getKey(parts, 14);
                                                     String delay = ParseCSV.getValue(parts, 17);
                                                     String cancelled = ParseCSV.getValue(parts, 19);
-                                                    return new Tuple2<>(new AirportPair(originAirport, destAirport), delay);
+                                                    return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled);
                                                 }
                                             );
-        JavaPairRDD<AirportPair, Values> reducedData = data.reduceByKey()
+        JavaPairRDD<Tuple2<String, String>, Values> reducedData = data.reduceByKey()
     }
 
 }
