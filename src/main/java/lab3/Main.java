@@ -39,6 +39,8 @@ public class Main {
         public int hashCode() {
             return Objects.hash(originAirport, destAirport);
         }
+
+
     }
 
 
@@ -90,7 +92,7 @@ public class Main {
                 float percentsCancelled = this.countCanceled * 100 / this.countFlights;
                 return "Max Delay = " + this.maxDelay + ", Delay Percentage = " + percentsDelay + "%, Canceled Percentage = " + percentsCancelled + "%";
             }
-            return "delaty = " + this.delay + ", cancelled = " + this.cancelled;
+            return "delay = " + this.delay + ", cancelled = " + this.cancelled;
         }
 
         public void setMaxDelay(float newMax) {
