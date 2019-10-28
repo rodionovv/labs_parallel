@@ -60,7 +60,7 @@ public class Main {
                                                     return new Tuple2<>(new AirportPair(originAirport, destAirport), delay);
                                                 }
                                             );
-        System.out.println(data);
+        
     }
 
 }
