@@ -4,9 +4,20 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import scala.Serializable;
 import scala.Tuple2;
 
 public class Main {
+
+
+
+    public static class AirportPair implements Serializable{
+        private Tuple2<String, String> pair;
+        AirportPair(String originAirpirt, String destAirport) {
+            this.pair = new Tuple2<>(originAirpirt, destAirport);
+        }
+    }
+
 
     public static class Values{
         private String delay;
@@ -71,14 +82,14 @@ public class Main {
                                                             return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
-        JavaPairRDD<Tuple2<String, String>,Values> data = flights.mapToPair(
+        JavaPairRDD<AirportPair,Values> data = flights.mapToPair(
                                                 s -> {
                                                         String[] parts = ParseCSV.splitComma(s);
                                                     String originAirport = ParseCSV.getKey(parts, 11);
                                                     String destAirport = ParseCSV.getKey(parts, 14);
                                                     String delay = ParseCSV.getValue(parts, 17);
                                                     String cancelled = ParseCSV.getValue(parts, 19);
-                                                    return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled));
+                                                    return new Tuple2<>(new AirportPair(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
                                             );
         data.groupByKey();
