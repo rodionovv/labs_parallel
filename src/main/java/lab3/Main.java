@@ -30,6 +30,10 @@ public class Main {
 
     }
 
+    public static class Values implements Serializable{
+        private String delay;
+    }
+
 
     public static void main(String args[]){
 
@@ -60,7 +64,7 @@ public class Main {
                                                     return new Tuple2<>(new AirportPair(originAirport, destAirport), delay);
                                                 }
                                             );
-        JavaPairRDD<AirportPair, String[]> reducedData = data.reduceByKey()
+        JavaPairRDD<AirportPair, Values> reducedData = data.reduceByKey()
     }
 
 }
