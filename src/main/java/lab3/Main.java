@@ -6,11 +6,14 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 public class Main {
 
 
 
-    public static class AirportPair {
+    public static class AirportPair implements Serializable {
         private String originAirport;
         private String destAirport;
         AirportPair(String originAirport, String destAirport) {
@@ -30,6 +33,11 @@ public class Main {
             } else {
                 return false;
             }
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(originAirport, destAirport);
         }
     }
 
