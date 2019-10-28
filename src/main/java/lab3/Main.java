@@ -181,7 +181,7 @@ public class Main {
                 }
         );
 
-        JavaRDD<>output.map((s) -> {
+        JavaRDD<String> output = reducedData.map((s) -> {
                     String originAirportID = s._1.getOriginAirport();
                     String destAirportID = s._1.getDestAirport();
                     String originAirportName = broadcastAirports.getValue().get(originAirportID);
