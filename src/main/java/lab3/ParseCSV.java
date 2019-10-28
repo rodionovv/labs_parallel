@@ -30,8 +30,8 @@ public class ParseCSV {
         return parts[i];
     }
 
-    static JavaRDD<String> readCSV(SparkConf sc, ) {
-
+    static JavaRDD<String> readCSV(SparkConf sc, String path, String header) {
+        
     }
 
 }
