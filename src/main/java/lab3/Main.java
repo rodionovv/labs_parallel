@@ -57,6 +57,7 @@ public class Main {
         airports.filter(
                 s -> !s.startsWith("Code,Description")
         );
+        System.out.println(airports);
         JavaRDD<String> flights = sc.textFile(args[1]);
         flights.filter(
                 s -> !s.startsWith("\"YEAR\",\"QUARTER\"")
