@@ -7,8 +7,6 @@ import org.apache.spark.api.java.JavaSparkContext;
 import scala.Serializable;
 import scala.Tuple2;
 
-import java.util.Iterator;
-
 public class Main {
 
     public static class Values implements Serializable{
@@ -103,7 +101,7 @@ public class Main {
                                                     return new Values(maxDelay, percentsDelay, percentsCancelled);
                                                 }
                                         );
-        
+
     }
 
 }
