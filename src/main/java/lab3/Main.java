@@ -8,8 +8,11 @@ import scala.Tuple2;
 
 public class Main {
 
+    
+
 
     public static void main(String args[]){
+
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> airports = sc.textFile(args[0]);
@@ -25,7 +28,7 @@ public class Main {
                                                             return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
-        
+
     }
 
 }
