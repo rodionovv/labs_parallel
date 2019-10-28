@@ -7,6 +7,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.Objects;
 
 public class Main {
@@ -141,6 +142,10 @@ public class Main {
                                                             return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
+
+        Map<String, String> airportsMap = splitterAirports.collectAsMap();
+        sc.broadcast(airportsMap);
+
         JavaPairRDD<AirportPair,Values> data = flights.mapToPair(
                                                 s -> {
                                                         String[] parts = ParseCSV.splitComma(s);
