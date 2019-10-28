@@ -157,7 +157,7 @@ public class Main {
                     f.addFlights(s.getCountFlights());
                     if (s.getCancelled().equals("1.00")) {
                         f.addCanceled(s.getCountCanceled());
-                    } else {
+                    } else if (!s.getDelay().equals("")) {
                         float delay = Float.parseFloat(s.getDelay());
                         if (delay > 0) {
                             f.addDelayed(s.getCountDelay());
