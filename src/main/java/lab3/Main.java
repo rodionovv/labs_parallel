@@ -30,7 +30,7 @@ public class Main {
 
     }
 
-    public static class Values implements Serializable{
+    public static class Values implements Serializable. Iterable{
         private String delay;
         private String cancelled;
         Values(String delay, String cancelled) {
@@ -82,7 +82,7 @@ public class Main {
         JavaPairRDD<Tuple2<String, String>,Values> groupedData = data.groupByKey();
         groupedData.mapValues(
                 s -> {
-                    
+
                 }
         );
     }
