@@ -9,20 +9,15 @@ import scala.Tuple2;
 
 public class Main {
 
-    public class DataStorage implements Serializable {
+    public class AirportPair implements Serializable {
         private Tuple2<String, String> key;
-        private String delay;
-        DataStorage(String originAirport, String destAirport, String delay){
+
+        AirportPair(String originAirport, String destAirport, String delay){
             this.key = new Tuple2<>(originAirport, destAirport);
-            this.delay = delay;
         }
 
-        public Tuple2 getKey(){
+        public Tuple2 getPair(){
             return this.key;
-        }
-
-        public String getDelay(){
-            return this.delay;
         }
 
         public String getOriginAirport(){
@@ -53,7 +48,11 @@ public class Main {
                                                             return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
-        JavaRDD<DataStorage> data = flights.map()
+        JavaPairRDD<AirportPair, String> data = flights.mapToPair(
+                                                s -> {
+                                                    if ()
+                                                }
+                                            );
     }
 
 }
