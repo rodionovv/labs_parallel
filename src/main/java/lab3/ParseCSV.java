@@ -32,8 +32,8 @@ public class ParseCSV {
     }
 
     static JavaRDD<String> readCSV(JavaSparkContext sc, String path, String header) {
-        JavaRDD<String> data = sc.textFile(path);
-        
+        JavaRDD<String> data = sc.textFile(path).flatMap(s -> s.split("\n").ite);
+
     }
 
 }
