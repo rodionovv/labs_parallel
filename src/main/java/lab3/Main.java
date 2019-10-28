@@ -7,6 +7,8 @@ import org.apache.spark.api.java.JavaSparkContext;
 import scala.Serializable;
 import scala.Tuple2;
 
+import java.util.Iterator;
+
 public class Main {
 
     public static class AirportPair implements Serializable {
@@ -30,7 +32,7 @@ public class Main {
 
     }
 
-    public static class Values implements Serializable. Iterable<Values>{
+    public static class Values implements Serializable, Iterable<Values>{
         private String delay;
         private String cancelled;
         Values(String delay, String cancelled) {
@@ -45,6 +47,11 @@ public class Main {
 
         public String getCancelled() {
             return this.cancelled;
+        }
+
+        @Override
+        public Iterator<Values> iterator() {
+            return 
         }
     }
 
