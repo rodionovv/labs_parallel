@@ -7,7 +7,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 
 public class Main {
-    
+
 
     public static void main(String args[]){
         SparkConf conf = new SparkConf().setAppName("lab3");
@@ -20,11 +20,12 @@ public class Main {
                                                                 return new Tuple2<>("", "");
                                                             }
                                                             String[] parts = ParseCSV.splitComma(s, 2);
-                                                            String airprotID = ParseCSV.getKey(parts);
+                                                            String airportID = ParseCSV.getKey(parts);
                                                             String airportName = ParseCSV.getValue(parts);
-                                                            return new Tuple2<>(airprotID, airportName);
+                                                            return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
+        
     }
 
 }
