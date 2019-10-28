@@ -103,7 +103,7 @@ public class Main {
                                                     return new Values(maxDelay, percentsDelay, percentsCancelled);
                                                 }
                                         );
-
+        
     }
 
 }
