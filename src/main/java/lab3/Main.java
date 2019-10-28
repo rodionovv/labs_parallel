@@ -25,9 +25,13 @@ public class Main {
         private float maxDelay;
         private float percentsCancelled;
         private float percentsDelay;
+        private int countCanceled;
+        private int countDelay;
         Values(String delay, String cancelled) {
             this.delay = delay;
             this.cancelled = cancelled;
+            this.countCanceled = 0;
+            this.countDelay = 0;
         }
 
 
@@ -42,6 +46,14 @@ public class Main {
             return this.delay;
         }
 
+        public int getCountCanceled() {
+            return this.countCanceled;
+        }
+
+        public int getCountDelay() {
+            return this.countDelay;
+        }
+
         @Override
         public String toString() {
             if (this.delay != null) {
@@ -49,6 +61,8 @@ public class Main {
             }
             return "Max Delay = " + this.maxDelay + ", Delay Percentage = " + this.percentsDelay + "%, Canceled Percentage = " + this.percentsCancelled + "%";
         }
+
+        operator
 
         public String getCancelled() {
             return this.cancelled;
@@ -92,9 +106,16 @@ public class Main {
                                                     return new Tuple2<>(new AirportPair(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
                                             );
-        data.groupByKey();
-        data.saveAsTextFile(args[2]);
-//                .mapValues(
+        data.reduceByKey(
+                (f, s) -> {
+                    if (s.getCancelled() == "1.00") {
+                        f.getCancelled(
+                    }
+                }
+        )
+//        data.groupByKey();
+//        data.saveAsTextFile(args[2]);
+////                .mapValues(
 //                        s -> {
 //                            float maxDelay = 0;
 //                            int countCancelled = 0, countDelay = 0, countFlights = 0;
