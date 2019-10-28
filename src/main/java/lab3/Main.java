@@ -11,40 +11,21 @@ import java.util.Iterator;
 
 public class Main {
 
-//    public static class AirportPair implements Serializable {
-//        private Tuple2<String, String> key;
-//
-//        AirportPair(String originAirport, String destAirport){
-//            this.key = new Tuple2<>(originAirport, destAirport);
-//        }
-//
-//        public Tuple2 getPair(){
-//            return this.key;
-//        }
-//
-//        public String getOriginAirport(){
-//            return this.key._1;
-//        }
-//
-//        public String getDesAirport(){
-//            return this.key._2;
-//        }
-//
-//    }
-
     public static class Values implements Serializable{
         private String delay;
         private String cancelled;
         private float maxDelay;
-        private float percents;
+        private float percentsCancelled;
+        private float percentsDelay;
         Values(String delay, String cancelled) {
             this.delay = delay;
             this.cancelled = cancelled;
         }
 
-        Values(float maxDelay, float percents) {
+        Values(float maxDelay, float percentsDelay, float percentsCancelled) {
             this.maxDelay = maxDelay;
-            this.percents = percents;
+            this.percentsDelay = percentsDelay;
+            this.percentsCancelled = percentsCancelled;
         }
 
         public String getDelay() {
@@ -54,6 +35,18 @@ public class Main {
 
         public String getCancelled() {
             return this.cancelled;
+        }
+
+        public float getMaxDelay() {
+            return this.maxDelay;
+        }
+
+        public float getPercentsCancelled() {
+            return this.percentsCancelled;
+        }
+
+        public float getPercentsDelay() {
+            return this.percentsDelay;
         }
     }
 
@@ -106,8 +99,8 @@ public class Main {
                                                         }
                                                     }
                                                     float percentsDelay = countDelay * 100 / countFlights;
-                                                    float percentsCancelled = (countCancelled * 100 / countFlights;
-                                                    return new Values(maxDelay, percents);
+                                                    float percentsCancelled = countCancelled * 100 / countFlights;
+                                                    return new Values(maxDelay, percentsDelay, percentsCancelled);
                                                 }
                                         );
 
