@@ -20,7 +20,7 @@ public class Main {
             this.cancelled = cancelled;
         }
 
-        
+
 
         Values(float maxDelay, float percentsDelay, float percentsCancelled) {
             this.maxDelay = maxDelay;
