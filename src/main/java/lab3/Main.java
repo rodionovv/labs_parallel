@@ -9,10 +9,10 @@ import scala.Tuple2;
 
 public class Main {
 
-    public class AirportPair implements Serializable {
+    public static class AirportPair implements Serializable {
         private Tuple2<String, String> key;
 
-        AirportPair(String originAirport, String destAirport, String delay){
+        AirportPair(String originAirport, String destAirport){
             this.key = new Tuple2<>(originAirport, destAirport);
         }
 
@@ -51,12 +51,13 @@ public class Main {
         JavaPairRDD<AirportPair, String> data = flights.mapToPair(
                                                 s -> {
                                                     if (s.startsWith("\"YEAR\",\"QUARTER\"")){
-                                                        return;
+                                                        return new Tuple2<>(new AirportPair("", ""), "");
                                                     }
                                                     String[] parts = ParseCSV.splitComma(s);
                                                     String originAirport = ParseCSV.getKey(parts, 11);
                                                     String destAirport = ParseCSV.getKey(parts, 14);
-                                                    String delay = 
+                                                    String delay = ParseCSV.getValue(parts, 17);
+                                                    return new Tuple2<>(new AirportPair(originAirport, destAirport), delay);
                                                 }
                                             );
     }
