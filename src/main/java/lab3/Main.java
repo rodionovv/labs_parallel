@@ -14,9 +14,9 @@ public class Main {
         JavaRDD<String> airports = sc.textFile(args[0]);
         JavaRDD<String> delay = sc.textFile(args[1]);
         JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
-                                                        s -> {
-                                                            if (s.startsWith("Code,Description")){
-                                                                return;
+                                                        (s) -> {
+                                                            if (s.startsWith("Code,Description")) {
+                                                                return new Tuple2<>("", "");
                                                             }
                                                             String[] parts = ParseCSV.splitComma(s, 2);
                                                             String airprotID = ParseCSV.getKey(parts);
