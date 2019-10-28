@@ -8,7 +8,7 @@ public class Main {
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> airports = sc.textFile(args[0]);
-        JavaRDD<String> data = sc.textFile(args[1]);
+        JavaRDD<String> delay = sc.textFile(args[1]);
     }
 
 }
