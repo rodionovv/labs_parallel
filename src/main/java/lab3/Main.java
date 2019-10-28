@@ -11,10 +11,28 @@ public class Main {
 
     public class DataStorage implements Serializable {
         private Tuple2<String, String> key;
-        private String 
-        DataStorage(){
-
+        private String delay;
+        DataStorage(String originAirport, String destAirport, String delay){
+            this.key = new Tuple2<>(originAirport, destAirport);
+            this.delay = delay;
         }
+
+        public Tuple2 getKey(){
+            return this.key;
+        }
+
+        public String getDelay(){
+            return this.delay;
+        }
+
+        public String getOriginAirport(){
+            return this.key._1;
+        }
+
+        public String getDesAirport(){
+            return this.key._2;
+        }
+
     }
 
 
@@ -23,7 +41,7 @@ public class Main {
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> airports = sc.textFile(args[0]);
-        JavaRDD<String> delay = sc.textFile(args[1]);
+        JavaRDD<String> fligts = sc.textFile(args[1]);
         JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
                                                         (s) -> {
                                                             if (s.startsWith("Code,Description")) {
@@ -35,7 +53,7 @@ public class Main {
                                                             return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
-
+        JavaRDD<DataStorage> data = dela
     }
 
 }
