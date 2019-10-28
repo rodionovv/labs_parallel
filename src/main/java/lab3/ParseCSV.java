@@ -3,6 +3,7 @@ package lab3;
 import org.apache.hadoop.io.Text;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
 
 public class ParseCSV {
 
@@ -30,8 +31,8 @@ public class ParseCSV {
         return parts[i];
     }
 
-    static JavaRDD<String> readCSV(SparkConf sc, String path, String header) {
-        
+    static JavaRDD<String> readCSV(JavaSparkContext sc, String path, String header) {
+        JavaRDD<String> data = sc.textFile(path)
     }
 
 }
