@@ -11,7 +11,7 @@ public class Main {
 
 
 
-    public static class AirportPair implements Serializable{
+    public static class AirportPair {
         private Tuple2<String, String> pair;
         AirportPair(String originAirport, String destAirport) {
             this.pair = new Tuple2<>(originAirport, destAirport);
