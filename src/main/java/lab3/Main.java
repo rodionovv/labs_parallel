@@ -79,11 +79,8 @@ public class Main {
                                                     return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled);
                                                 }
                                             );
-        JavaPairRDD<Tuple2<String, String>, Values> reducedData = data.reduceByKey(
-                (f, s) -> {
-
-                }
-        );
+        data.groupByKey();
+        
     }
 
 }
