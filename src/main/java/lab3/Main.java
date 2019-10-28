@@ -32,7 +32,7 @@ public class Main {
 
     }
 
-    public static class Values implements Serializable, Iterable<Values>{
+    public static class Values implements Serializable{
         private String delay;
         private String cancelled;
         Values(String delay, String cancelled) {
@@ -49,10 +49,7 @@ public class Main {
             return this.cancelled;
         }
 
-        @Override
-        public Iterator<Values> iterator() {
-            return
-        }
+        @
     }
 
 
