@@ -58,7 +58,7 @@ public class Main {
             this.cancelled = cancelled;
             this.countCanceled = 0;
             this.countDelay = 0;
-            this.countFlights = 0;
+            this.countFlights = 1;
         }
 
 
