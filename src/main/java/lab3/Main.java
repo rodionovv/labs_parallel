@@ -79,8 +79,8 @@ public class Main {
                                                     return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled);
                                                 }
                                             );
-        data.groupByKey();
-        data.mapValues(
+        JavaPairRDD<Tuple2<String, String>,Values> groupedData = data.groupByKey();
+        groupedData.mapValues(
                 s -> {
                     
                 }
