@@ -52,7 +52,7 @@ public class Main {
                                                             return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
-        JavaPairRDD<AirportPair,String> data = flights.mapToPair(
+        JavaPairRDD<AirportPair,String[]> data = flights.mapToPair(
                                                 s -> {
                                                     if (s.startsWith("\"YEAR\",\"QUARTER\"")){
                                                         return new Tuple2<>(new AirportPair("", ""), "");
@@ -61,6 +61,7 @@ public class Main {
                                                     String originAirport = ParseCSV.getKey(parts, 11);
                                                     String destAirport = ParseCSV.getKey(parts, 14);
                                                     String delay = ParseCSV.getValue(parts, 17);
+                                                    String cancelled = ParseCSV.getValue(parts, 19);
                                                     return new Tuple2<>(new AirportPair(originAirport, destAirport), delay);
                                                 }
                                             );
