@@ -60,12 +60,7 @@ public class Main {
                                                     return new Tuple2<>(new AirportPair(originAirport, destAirport), delay);
                                                 }
                                             );
-        
-        data.reduceByKey(
-                (f, s) -> {
-
-                }
-             );
+        JavaPairRDD<AirportPair, String[]> reducedData = data.reduceByKey()
     }
 
 }
