@@ -54,8 +54,9 @@ public class Main {
                                                         return;
                                                     }
                                                     String[] parts = ParseCSV.splitComma(s);
-                                                    String originAirport = ParseCSV.getKey(parts, 14);
+                                                    String originAirport = ParseCSV.getKey(parts, 11);
                                                     String destAirport = ParseCSV.getKey(parts, 14);
+                                                    String delay = 
                                                 }
                                             );
     }
