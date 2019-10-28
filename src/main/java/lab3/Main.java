@@ -62,7 +62,14 @@ public class Main {
             return "Max Delay = " + this.maxDelay + ", Delay Percentage = " + this.percentsDelay + "%, Canceled Percentage = " + this.percentsCancelled + "%";
         }
 
-        operator
+        public void addCanceled() {
+            this.countCanceled++;
+        }
+
+
+        public void addDelayed() {
+            this.countDelay++;
+        }
 
         public String getCancelled() {
             return this.cancelled;
@@ -109,10 +116,11 @@ public class Main {
         data.reduceByKey(
                 (f, s) -> {
                     if (s.getCancelled() == "1.00") {
-                        f.getCancelled(
+                        f.addDelayed();
+                        return
                     }
                 }
-        )
+        );
 //        data.groupByKey();
 //        data.saveAsTextFile(args[2]);
 ////                .mapValues(
