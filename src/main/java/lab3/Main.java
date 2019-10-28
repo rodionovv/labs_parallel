@@ -11,15 +11,25 @@ public class Main {
 
 
     public static class AirportPair {
-        private Tuple2<String, String> pair;
+        private String originAirport;
+        private String destAirport;
         AirportPair(String originAirport, String destAirport) {
-            this.pair = new Tuple2<>(originAirport, destAirport);
+            this.originAirport = originAirport;
+            this.destAirport = destAirport;
         }
 
         @Override
         public boolean equals(Object obj) {
             AirportPair p = (AirportPair) obj;
-            return this.pair._1.equals(p.pair._1) && this.pair._2.equals(p.pair._2);
+            if (this.originAirport.equals(p.originAirport)){
+                if (this.destAirport.equals(p.destAirport)){
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         }
     }
 
