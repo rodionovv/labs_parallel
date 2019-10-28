@@ -88,7 +88,10 @@ public class Main {
                     float maxDelay = 0;
                     int cancelCount = 0, delayCount;
                     for (Values val : s) {
-                        if ()
+                        if (val.getCancelled() == "1.00") {
+                            cancelCount++;
+                            continue;
+                        } else if ()
                     }
                 }
         );
