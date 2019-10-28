@@ -143,7 +143,7 @@ public class Main {
                 }
         );
 //        data.groupByKey();
-//        data.saveAsTextFile(args[2]);
+        data.saveAsTextFile(args[2]);
 ////                .mapValues(
 //                        s -> {
 //                            float maxDelay = 0;
