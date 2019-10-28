@@ -9,7 +9,7 @@ import scala.Tuple2;
 
 public class Main {
 
-    public static class Values implements Serializable{
+    public static class Values{
         private String delay;
         private String cancelled;
         private float maxDelay;
