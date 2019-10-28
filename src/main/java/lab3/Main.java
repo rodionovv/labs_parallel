@@ -82,6 +82,7 @@ public class Main {
                                                     return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
                                             );
+        data.saveAsTextFile(args[2]);
         data.groupByKey()
                 .mapValues(
                         s -> {
