@@ -105,7 +105,8 @@ public class Main {
                                                             }
                                                         }
                                                     }
-                                                    float percents = (countCancelled + countDelay) * 100 / countFlights;
+                                                    float percentsDelay = countDelay * 100 / countFlights;
+                                                    float percentsCancelled = (countCancelled * 100 / countFlights;
                                                     return new Values(maxDelay, percents);
                                                 }
                                         );
