@@ -54,7 +54,13 @@ public class Main {
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> airports = sc.textFile(args[0]);
+        airports.filter(
+                s -> !s.startsWith("Code,Description")
+        );
         JavaRDD<String> flights = sc.textFile(args[1]);
+        flights.filter(
+                s -> !s.startsWith("Code,Description")
+        );
         JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
                                                         (s) -> {
                                                             if (s.startsWith("Code,Description")) {
