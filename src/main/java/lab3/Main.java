@@ -86,14 +86,19 @@ public class Main {
         JavaPairRDD<Tuple2<String, String>, Values> reducedData = data.groupByKey().mapValues(
                 s -> {
                     float maxDelay = 0;
-                    int cancelCount = 0, delayCount;
+                    int cancelCount = 0, delayCount = 0, countf;
                     for (Values val : s) {
                         if (val.getCancelled() == "1.00") {
                             cancelCount++;
                             continue;
-                        } else if (val.getDelay().p > 0) {
-
+                        } else {
+                            float delay = Float.parseFloat(val.getDelay());
+                            if (delay > 0) {
+                                delayCount++;
+                                if (delay > maxDelay) maxDelay = delay;
+                            }
                         }
+
                     }
                 }
         );
