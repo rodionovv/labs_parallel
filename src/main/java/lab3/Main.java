@@ -81,7 +81,7 @@ public class Main {
                                             );
         JavaPairRDD<Tuple2<String, String>, Values> reducedData = data.reduceByKey(
                 (f, s) -> {
-                              
+
                 }
         );
     }
