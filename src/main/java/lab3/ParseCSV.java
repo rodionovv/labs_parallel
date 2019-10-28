@@ -34,8 +34,8 @@ public class ParseCSV {
     }
 
     static JavaRDD<String> readCSV(JavaSparkContext sc, String path, String header) {
-        JavaRDD<String> data = sc.textFile(path).flatMap(s -> Arrays.stream(s.split("\n")).iterator();
-        return data.filter(line -> !line.equals(header));
+        JavaRDD<String> data = sc.textFile(path).flatMap(s -> Arrays.stream(s.split("\n")).iterator());
+        return data.filter(line -> !line.startsWith(header));
     }
 
 }

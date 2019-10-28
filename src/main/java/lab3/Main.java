@@ -53,15 +53,9 @@ public class Main {
 
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
-        JavaRDD<String> airports = sc.textFile(args[0]);
-        airports.filter(
-                s -> !s.startsWith("Code,Description")
-        );
+        JavaRDD<String> airports = ParseCSV.readCSV(sc, args[0], "Code,Description");
         airports.saveAsTextFile(args[2]);
-        JavaRDD<String> flights = sc.textFile(args[1]);
-        flights.filter(
-                s -> !s.startsWith("\"YEAR\",\"QUARTER\"")
-        );
+        JavaRDD<String> flights = ParseCSV.readCSV(sc, args[1], "\"YEAR\",\"QUARTER\"");
         JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
                                                         (s) -> {
                                                             String[] parts = ParseCSV.splitComma(s, 2);
