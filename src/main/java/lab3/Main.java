@@ -54,11 +54,10 @@ public class Main {
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> airports = sc.textFile(args[0]);
-        airports.saveAsTextFile(args[2]);
         airports.filter(
                 s -> !s.startsWith("Code,Description")
         );
-        System.out.println(airports);
+        airports.saveAsTextFile(args[2]);
         JavaRDD<String> flights = sc.textFile(args[1]);
         flights.filter(
                 s -> !s.startsWith("\"YEAR\",\"QUARTER\"")
