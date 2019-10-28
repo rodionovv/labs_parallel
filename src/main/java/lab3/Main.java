@@ -96,7 +96,6 @@ public class Main {
                                                 }
                                         );
         reducedData.saveAsTextFile(args[2]);
-
     }
 
 }
