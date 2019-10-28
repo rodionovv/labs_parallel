@@ -59,13 +59,10 @@ public class Main {
         );
         JavaRDD<String> flights = sc.textFile(args[1]);
         flights.filter(
-                s -> !s.startsWith("Code,Description")
+                s -> !s.startsWith("\"YEAR\",\"QUARTER\"")
         );
         JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
                                                         (s) -> {
-                                                            if (s.startsWith("Code,Description")) {
-                                                                return new Tuple2<>("", "");
-                                                            }
                                                             String[] parts = ParseCSV.splitComma(s, 2);
                                                             String airportID = ParseCSV.getKey(parts);
                                                             String airportName = ParseCSV.getValue(parts);
@@ -74,9 +71,6 @@ public class Main {
                                                     );
         JavaPairRDD<Tuple2<String, String>,Values> data = flights.mapToPair(
                                                 s -> {
-                                                    if (s.startsWith("\"YEAR\",\"QUARTER\"")){
-                                                        return new Tuple2<>(new Tuple2<>("", ""), new Values("", ""));
-                                                    }
                                                     String[] parts = ParseCSV.splitComma(s);
                                                     String originAirport = ParseCSV.getKey(parts, 11);
                                                     String destAirport = ParseCSV.getKey(parts, 14);
@@ -85,7 +79,11 @@ public class Main {
                                                     return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled);
                                                 }
                                             );
-        JavaPairRDD<Tuple2<String, String>, Values> reducedData = data.reduceByKey()
+        JavaPairRDD<Tuple2<String, String>, Values> reducedData = data.reduceByKey(
+                (f, s) -> {
+                              
+                }
+        );
     }
 
 }
