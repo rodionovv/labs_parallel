@@ -153,7 +153,7 @@ public class Main {
                                                     );
 
         Map<String, String> airportsMap = splitterAirports.collectAsMap();
-        final Broadcast<Map<String, String>> broadcaastAirports = sc.broadcast(airportsMap);
+        final Broadcast<Map<String, String>> broadcastAirports = sc.broadcast(airportsMap);
 
         JavaPairRDD<AirportPair,Values> data = flights.mapToPair(
                                                 s -> {
@@ -165,7 +165,7 @@ public class Main {
                                                     return new Tuple2<>(new AirportPair(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
                                             );
-        JavaPairRDD<AirportPair, Values> output = data.reduceByKey(
+        JavaPairRDD<AirportPair, Values> reducedData = data.reduceByKey(
                 (f, s) -> {
                     f.addFlights(s.getCountFlights());
                     if (s.getCancelled().equals("1.00")) {
@@ -181,11 +181,11 @@ public class Main {
                 }
         );
 
-        output.map((s) -> {
+        JavaRDD<>output.map((s) -> {
                     String originAirportID = s._1.getOriginAirport();
                     String destAirportID = s._1.getDestAirport();
-                    String originAirportName = broadcaastAirports.getValue().get(originAirportID);
-                    String destAirportName = broadcaastAirports.getValue().get(destAirportID);
+                    String originAirportName = broadcastAirports.getValue().get(originAirportID);
+                    String destAirportName = broadcastAirports.getValue().get(destAirportID);
                     AirportPair pair = new AirportPair(originAirportName, destAirportName);
                     Values info = s._2;
                     return pair.toString() + info.toString();
