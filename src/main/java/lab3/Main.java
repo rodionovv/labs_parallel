@@ -75,7 +75,6 @@ public class Main {
                                                     return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
                                             );
-        data.saveAsTextFile(args[2]);
         JavaPairRDD<Tuple2<String, String>, Values> reducedData = data.groupByKey().mapValues(
                                                 s -> {
                                                     float maxDelay = 0;
@@ -98,6 +97,7 @@ public class Main {
                                                     return new Values(maxDelay, percentsDelay, percentsCancelled);
                                                 }
                                         );
+        reducedData.saveAsTextFile(args[2]);
 
     }
 
