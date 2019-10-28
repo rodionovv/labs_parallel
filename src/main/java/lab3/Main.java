@@ -74,7 +74,7 @@ public class Main {
                                                     );
         JavaPairRDD<Tuple2<String, String>,Values> data = flights.mapToPair(
                                                 s -> {
-                                                    String[] parts = ParseCSV.splitComma(s);
+                                                        String[] parts = ParseCSV.splitComma(s);
                                                     String originAirport = ParseCSV.getKey(parts, 11);
                                                     String destAirport = ParseCSV.getKey(parts, 14);
                                                     String delay = ParseCSV.getValue(parts, 17);
