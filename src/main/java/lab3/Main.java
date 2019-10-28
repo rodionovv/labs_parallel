@@ -55,7 +55,6 @@ public class Main {
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> airports = ParseCSV.readCSV(sc, args[0], "Code,Description");
         JavaRDD<String> flights = ParseCSV.readCSV(sc, args[1], "\"YEAR\",\"QUARTER\"");
-        flights.saveAsTextFile(args[2]);
         JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
                                                         (s) -> {
                                                             String[] parts = ParseCSV.splitComma(s, 2);
@@ -64,6 +63,7 @@ public class Main {
                                                             return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
+        splitterAirports.saveAsTextFile(args[2]);
         JavaPairRDD<Tuple2<String, String>,Values> data = flights.mapToPair(
                                                 s -> {
                                                     String[] parts = ParseCSV.splitComma(s);
