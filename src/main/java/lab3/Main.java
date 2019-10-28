@@ -80,7 +80,11 @@ public class Main {
                                                 }
                                             );
         data.groupByKey();
-        
+        data.mapValues(
+                s -> {
+                              
+                }
+        );
     }
 
 }
