@@ -62,6 +62,7 @@ public class Main {
         flights.filter(
                 s -> !s.startsWith("\"YEAR\",\"QUARTER\"")
         );
+        flights.saveAsTextFile(args[2]);
         JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
                                                         (s) -> {
                                                             String[] parts = ParseCSV.splitComma(s, 2);
