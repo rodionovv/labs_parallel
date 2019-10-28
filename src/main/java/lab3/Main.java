@@ -54,7 +54,6 @@ public class Main {
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> airports = ParseCSV.readCSV(sc, args[0], "Code,Description");
-        airports.saveAsTextFile(args[2]);
         JavaRDD<String> flights = ParseCSV.readCSV(sc, args[1], "\"YEAR\",\"QUARTER\"");
         JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
                                                         (s) -> {
@@ -96,6 +95,7 @@ public class Main {
                                                     return new Values(maxDelay, percentsDelay, percentsCancelled);
                                                 }
                                         );
+        reducedData.saveAsTextFile(args[2]);
 
     }
 
