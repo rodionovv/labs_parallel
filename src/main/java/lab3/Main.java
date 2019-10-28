@@ -13,8 +13,8 @@ public class Main {
 
     public static class AirportPair implements Serializable{
         private Tuple2<String, String> pair;
-        AirportPair(String originAirpirt, String destAirport) {
-            this.pair = new Tuple2<>(originAirpirt, destAirport);
+        AirportPair(String originAirport, String destAirport) {
+            this.pair = new Tuple2<>(originAirport, destAirport);
         }
     }
 
