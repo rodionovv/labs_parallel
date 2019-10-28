@@ -4,12 +4,12 @@ import org.apache.hadoop.io.Text;
 
 public class ParseCSV {
 
-    static String[] splitComma(Text value) {
-        return value.toString().split(",");
+    static String[] splitComma(String value) {
+        return value.split(",");
     }
 
-    static String[] splitComma(Text value, int limit) {
-        return value.toString().split(",", limit);
+    static String[] splitComma(String value, int limit) {
+        return value.split(",", limit);
     }
 
     static String getKey(String[] parts){

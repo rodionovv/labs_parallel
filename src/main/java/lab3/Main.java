@@ -13,8 +13,16 @@ public class Main {
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> airports = sc.textFile(args[0]);
         JavaRDD<String> delay = sc.textFile(args[1]);
-        JavaPairRDD<Long, String> splitterAirports = airports.mapToPair(
-                                                        s -> new Tuple2<>(, )
+        JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
+                                                        s -> {
+                                                            if (s.startsWith("Code,Description")){
+                                                                return;
+                                                            }
+                                                            String[] parts = ParseCSV.splitComma(s, 2);
+                                                            String airprotID = ParseCSV.getKey(parts);
+                                                            String airportName = ParseCSV.getValue(parts);
+                                                            return new Tuple2<>(airprotID, airportName);
+                                                        }
                                                     );
     }
 
