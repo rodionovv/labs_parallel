@@ -11,26 +11,26 @@ import java.util.Iterator;
 
 public class Main {
 
-    public static class AirportPair implements Serializable {
-        private Tuple2<String, String> key;
-
-        AirportPair(String originAirport, String destAirport){
-            this.key = new Tuple2<>(originAirport, destAirport);
-        }
-
-        public Tuple2 getPair(){
-            return this.key;
-        }
-
-        public String getOriginAirport(){
-            return this.key._1;
-        }
-
-        public String getDesAirport(){
-            return this.key._2;
-        }
-
-    }
+//    public static class AirportPair implements Serializable {
+//        private Tuple2<String, String> key;
+//
+//        AirportPair(String originAirport, String destAirport){
+//            this.key = new Tuple2<>(originAirport, destAirport);
+//        }
+//
+//        public Tuple2 getPair(){
+//            return this.key;
+//        }
+//
+//        public String getOriginAirport(){
+//            return this.key._1;
+//        }
+//
+//        public String getDesAirport(){
+//            return this.key._2;
+//        }
+//
+//    }
 
     public static class Values implements Serializable{
         private String delay;
@@ -82,13 +82,9 @@ public class Main {
                                                     String cancelled = ParseCSV.getValue(parts, 19);
                                                     return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled);
                                                 }
-                                            );
-        JavaPairRDD<Tuple2<String, String>,Values> groupedData = data.groupByKey();
-        groupedData.mapValues(
-                s -> {
+                                            ).;
+        JavaPairRDD<Tuple2<String, String>, Values> groupedData = data.groupByKey();
 
-                }
-        );
     }
 
 }
