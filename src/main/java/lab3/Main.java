@@ -34,6 +34,9 @@ public class Main {
 
         @Override
         public String toString() {
+            if (this.delay != null) {
+                return "delay = " + this.delay + " canceled = " + this.cancelled;
+            }
             return "Max Delay = " + this.maxDelay + ", Delay Percentage = " + this.percentsDelay + "%, Canceled Percentage = " + this.percentsCancelled + "%";
         }
 
