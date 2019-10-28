@@ -63,7 +63,6 @@ public class Main {
                                                             return new Tuple2<>(airportID, airportName);
                                                         }
                                                     );
-        splitterAirports.saveAsTextFile(args[2]);
         JavaPairRDD<Tuple2<String, String>,Values> data = flights.mapToPair(
                                                 s -> {
                                                     String[] parts = ParseCSV.splitComma(s);
@@ -74,6 +73,7 @@ public class Main {
                                                     return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
                                             );
+        data.saveAsTextFile(args[2]);
         JavaPairRDD<Tuple2<String, String>, Values> reducedData = data.groupByKey().mapValues(
                                                 s -> {
                                                     float maxDelay = 0;
