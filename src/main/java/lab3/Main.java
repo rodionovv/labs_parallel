@@ -4,6 +4,8 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.broadcast.Broadcast;
+import org.glassfish.jersey.server.Broadcaster;
 import scala.Tuple2;
 
 import java.io.Serializable;
@@ -20,6 +22,14 @@ public class Main {
         AirportPair(String originAirport, String destAirport) {
             this.originAirport = originAirport;
             this.destAirport = destAirport;
+        }
+
+        public String getDestAirport() {
+            return this.destAirport;
+        }
+
+        public String getOriginAirport() {
+            return this.originAirport;
         }
 
         @Override
@@ -144,7 +154,7 @@ public class Main {
                                                     );
 
         Map<String, String> airportsMap = splitterAirports.collectAsMap();
-        sc.broadcast(airportsMap);
+        final Broadcast<Map<String, String>> broadcaastAirports = sc.broadcast(airportsMap);
 
         JavaPairRDD<AirportPair,Values> data = flights.mapToPair(
                                                 s -> {
@@ -171,6 +181,18 @@ public class Main {
                     return f;
                 }
         );
+
+        output.map((s) -> {
+                    String originAirportID = s._1.getOriginAirport();
+                    String destAirportID = s._1.getDestAirport();
+                    String originAirportName = broadcaastAirports.getValue().get(originAirportID);
+                    String destAirportName = broadcaastAirports.getValue().get(destAirportID);
+                    AirportPair pair = new AirportPair(originAirportName, destAirportName);
+                    Values info = s._2;
+                    return pair.toString() + info.toString();
+                }
+        );
+
         output.saveAsTextFile(args[2]);
 
     }
