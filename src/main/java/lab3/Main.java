@@ -82,31 +82,29 @@ public class Main {
                                                     return new Tuple2<>(new Tuple2<>(originAirport, destAirport), new Values(delay, cancelled));
                                                 }
                                             );
-        data.groupByKey();
-        data.saveAsTextFile(args[2]);
-
-//                .mapValues(
-//                                                s -> {
-//                                                    float maxDelay = 0;
-//                                                    int countCancelled = 0, countDelay = 0, countFlights = 0;
-//                                                    for (Values val : s) {
-//                                                        countFlights++;
-//                                                        if (val.getCancelled() == "1.00") {
-//                                                            countCancelled++;
-//                                                            continue;
-//                                                        } else {
-//                                                            float delay = Float.parseFloat(val.getDelay());
-//                                                            if (delay > 0) {
-//                                                                countDelay++;
-//                                                                if (delay > maxDelay) maxDelay = delay;
-//                                                            }
-//                                                        }
-//                                                    }
-//                                                    float percentsDelay = countDelay * 100 / countFlights;
-//                                                    float percentsCancelled = countCancelled * 100 / countFlights;
-//                                                    return new Values(maxDelay, percentsDelay, percentsCancelled);
-//                                                }
-//                                        );
+        data.groupByKey()
+                .mapValues(
+                        s -> {
+                            float maxDelay = 0;
+                            int countCancelled = 0, countDelay = 0, countFlights = 0;
+                            for (Values val : s) {
+                                countFlights++;
+                                if (val.getCancelled() == "1.00") {
+                                    countCancelled++;
+                                    continue;
+                                } else {
+                                    float delay = Float.parseFloat(val.getDelay());
+                                    if (delay > 0) {
+                                        countDelay++;
+                                        if (delay > maxDelay) maxDelay = delay;
+                                    }
+                                }
+                            }
+                            float percentsDelay = countDelay * 100 / countFlights;
+                            float percentsCancelled = countCancelled * 100 / countFlights;
+                            return new Values(maxDelay, percentsDelay, percentsCancelled);
+                        }
+                );
 
     }
 
