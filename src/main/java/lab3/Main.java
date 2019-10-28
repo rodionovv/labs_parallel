@@ -40,7 +40,10 @@ public class Main {
             return Objects.hash(originAirport, destAirport);
         }
 
-
+        @Override
+        public String toString() {
+            return "Flight from " + originAirport + " to " + destAirport;
+        }
     }
 
 
@@ -48,11 +51,11 @@ public class Main {
         private String delay;
         private String cancelled;
         private float maxDelay;
-//        private float percentsCancelled;
-//        private float percentsDelay;
         private int countCanceled;
         private int countDelay;
         private int countFlights;
+
+
         Values(String delay, String cancelled) {
             this.delay = delay;
             this.cancelled = cancelled;
@@ -60,14 +63,6 @@ public class Main {
             this.countDelay = 0;
             this.countFlights = 1;
         }
-
-
-
-//        Values(float maxDelay, float percentsDelay, float percentsCancelled) {
-//            this.maxDelay = maxDelay;
-//            this.percentsDelay = percentsDelay;
-//            this.percentsCancelled = percentsCancelled;
-//        }
 
         public int getCountFlights() {
             return this.countFlights;
@@ -85,22 +80,17 @@ public class Main {
             return this.countDelay;
         }
 
-        @Override
-        public String toString() {
-            if (this.countFlights != 0) {
-                float percentsDelay = this.countDelay * 100 / this.countFlights;
-                float percentsCancelled = this.countCanceled * 100 / this.countFlights;
-                return "Max Delay = " + this.maxDelay + ", Delay Percentage = " + percentsDelay + "%, Canceled Percentage = " + percentsCancelled + "%";
-            }
-            return "delay = " + this.delay + ", cancelled = " + this.cancelled;
-        }
 
         public void setMaxDelay(float newMax) {
             this.maxDelay = newMax;
         }
 
         public void addCanceled(int val) {
-            this.countCanceled += val;
+            if (val == 0) {
+                this.countCanceled++;
+            } else {
+                this.countCanceled += val;
+            }
         }
 
         public void addFlights(int val) {
@@ -109,7 +99,11 @@ public class Main {
 
 
         public void addDelayed(int val) {
-            this.countDelay += val;
+            if (val == 0) {
+                this.countDelay++;
+            } else {
+                this.countDelay += val;
+            }
         }
 
         public String getCancelled() {
@@ -120,13 +114,16 @@ public class Main {
             return this.maxDelay;
         }
 
-//        public float getPercentsCancelled() {
-//            return this.percentsCancelled;
-//        }
-//
-//        public float getPercentsDelay() {
-//            return this.percentsDelay;
-//        }
+        @Override
+        public String toString() {
+            if (this.countFlights != 0) {
+                float percentsDelay = this.countDelay * 100 / this.countFlights;
+                float percentsCancelled = this.countCanceled * 100 / this.countFlights;
+                return "Max Delay = " + this.maxDelay + ", Delay Percentage = " + percentsDelay + "%, Canceled Percentage = " + percentsCancelled + "%";
+            }
+            return "delay = " + this.delay + ", cancelled = " + this.cancelled;
+        }
+
     }
 
 
@@ -169,30 +166,7 @@ public class Main {
                     return f;
                 }
         );
-//        data.groupByKey();
         output.saveAsTextFile(args[2]);
-////                .mapValues(
-//                        s -> {
-//                            float maxDelay = 0;
-//                            int countCancelled = 0, countDelay = 0, countFlights = 0;
-//                            for (Values val : s) {
-//                                countFlights++;
-//                                if (val.getCancelled() == "1.00") {
-//                                    countCancelled++;
-//                                    continue;
-//                                } else {
-//                                    float delay = Float.parseFloat(val.getDelay());
-//                                    if (delay > 0) {
-//                                        countDelay++;
-//                                        if (delay > maxDelay) maxDelay = delay;
-//                                    }
-//                                }
-//                            }
-//                            float percentsDelay = countDelay * 100 / countFlights;
-//                            float percentsCancelled = countCancelled * 100 / countFlights;
-//                            return new Values(maxDelay, percentsDelay, percentsCancelled);
-//                        }
-//                );
 
     }
 
