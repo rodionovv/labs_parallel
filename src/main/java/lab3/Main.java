@@ -71,17 +71,17 @@ public class Main {
             this.maxDelay = newMax;
         }
 
-        public void addCanceled() {
-            this.countCanceled++;
+        public void addCanceled(int val) {
+            this.countCanceled += val;
         }
 
-        public void addFlights() {
-            this.countFlights++;
+        public void addFlights(int val) {
+            this.countFlights += val;
         }
 
 
-        public void addDelayed() {
-            this.countDelay++;
+        public void addDelayed(int val) {
+            this.countDelay += val;
         }
 
         public String getCancelled() {
@@ -128,14 +128,14 @@ public class Main {
                                             );
         data.reduceByKey(
                 (f, s) -> {
-                    f.addFlights();
+                    f.addFlights(s.getCountFlights());
                     if (s.getCancelled() == "1.00") {
-                        f.addCanceled();
+                        f.addCanceled(s.getCountCanceled());
                         return f;
                     } else {
                         float delay = Float.parseFloat(s.getDelay());
                         if (delay > 0) {
-                            f.addDelayed();
+                            f.addDelayed(s.getCountDelay());
                             if (delay > f.getMaxDelay()) f.setMaxDelay(delay);
                         }
                     }
