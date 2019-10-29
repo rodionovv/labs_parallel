@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class AirportsData {
 
-    final int LIMIT = 2;
+    private static  final int LIMIT = 2;
 
 
 
@@ -27,19 +27,20 @@ public class AirportsData {
     }
 
 
-    public JavaPairRDD<String, String> makeSplit() {
-        this.airports.mapToPair(
-          s -> {
-              String[] parts = ParseCSV.splitComma(s, LIMIT);
-              String airportID = ParseCSV.getKey(parts);
-              String airportName = ParseCSV.getValue(parts);
-              return new Tuple2<>(airportID, airportName);
-          }
-        );
+    public void makeSplit() {
+        this.splittedAirports = this.airports.mapToPair(
+              s -> {
+                  String[] parts = ParseCSV.splitComma(s, LIMIT);
+                  String airportID = ParseCSV.getKey(parts);
+                  String airportName = ParseCSV.getValue(parts);
+                  return new Tuple2<>(airportID, airportName);
+              }
+            );
     }
 
-    public Broadcast<Map<String, String>> makeBroadcast(JavaSparkContext sc, JavaRDD<String> airports) {
-
+    public void  makeBroadcast(JavaSparkContext sc, JavaRDD<String> airports) {
+        Map<String, String> airportsMap = this.splittedAirports.collectAsMap();
+        this.broadcastAirports = airportsMap.
     }
 
 }
