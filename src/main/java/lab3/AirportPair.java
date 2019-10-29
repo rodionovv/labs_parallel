@@ -42,7 +42,7 @@ public class AirportPair implements Serializable {
 
     @Override
     public String toString() {
-        return "Flight from " + originAirport + " to " + destAirport;
+        return "Flight from " + originAirport + " to " + destAirport + ": ";
     }
 }
 
