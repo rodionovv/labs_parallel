@@ -15,7 +15,7 @@ public class Main {
 
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
-        AirportsData airports = AirportsData(sc, args[0], "Code,Description");
+        AirportsData airportsData = new AirportsData(sc, args[0], "Code,Description");
         JavaRDD<String> flights = ParseCSV.readCSV(sc, args[1], "\"YEAR\",\"QUARTER\"");
         JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
                                                         (s) -> {

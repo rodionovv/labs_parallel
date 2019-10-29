@@ -22,8 +22,15 @@ public class AirportsData {
     }
 
 
+    public JavaPairRDD<String, String> makeSplit() {
+        this.airports.mapToPair(
+          s -> {
 
-    public static Broadcast<Map<String, String>> makeBroadcast(JavaSparkContext sc, JavaRDD<String> airports) {
+          }
+        );
+    }
+
+    public Broadcast<Map<String, String>> makeBroadcast(JavaSparkContext sc, JavaRDD<String> airports) {
 
     }
 
