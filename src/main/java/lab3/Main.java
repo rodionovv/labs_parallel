@@ -7,15 +7,9 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.broadcast.Broadcast;
 import scala.Tuple2;
 
-import java.io.Serializable;
 import java.util.Map;
 
 public class Main {
-
-
-
-
-
 
     public static void main(String args[]){
 

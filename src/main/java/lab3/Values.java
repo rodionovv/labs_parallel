@@ -2,7 +2,7 @@ package lab3;
 
 import java.io.Serializable;
 
-public static class Values implements Serializable {
+public class Values implements Serializable {
 
     private String delay;
     private String cancelled;

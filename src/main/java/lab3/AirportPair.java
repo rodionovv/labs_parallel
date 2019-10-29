@@ -1,8 +1,9 @@
 package lab3;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class AirportPair {
+public class AirportPair implements Serializable {
 
 
     private String originAirport;
