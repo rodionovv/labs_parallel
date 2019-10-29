@@ -12,8 +12,6 @@ public class AirportsData {
 
     private static  final int LIMIT = 2;
 
-
-
     private JavaSparkContext sc;
     private JavaRDD<String>  airports;
     private Broadcast<Map<String, String>> broadcastAirports;
@@ -28,6 +26,9 @@ public class AirportsData {
 
 
     public JavaPairRDD<String, String> makeSplit() {
+        if (this.splittedAirports != null) {
+            return  this.splittedAirports;
+        }
         this.splittedAirports = this.airports.mapToPair(
               s -> {
                   String[] parts = ParseCSV.splitComma(s, LIMIT);
@@ -36,7 +37,7 @@ public class AirportsData {
                   return new Tuple2<>(airportID, airportName);
               }
             );
-        return splittedAirports;
+        return this.splittedAirports;
     }
 
 

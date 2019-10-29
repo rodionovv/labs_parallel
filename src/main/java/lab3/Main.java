@@ -5,7 +5,6 @@ import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.broadcast.Broadcast;
-import scala.Tuple2;
 
 import java.util.Map;
 
@@ -20,7 +19,6 @@ public class Main {
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         AirportsData airportsData = new AirportsData(sc, args[0], AIRPORTS_HEADER);
-        JavaPairRDD<String, String> splitAirports = airportsData.makeSplit();
         final Broadcast<Map<String, String>> broadcastAirports = airportsData.makeBroadcast();
 
         FlightsData flightsData = new FlightsData(sc, args[1], FLIGHTS_HEADER);

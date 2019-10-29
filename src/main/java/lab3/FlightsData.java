@@ -27,6 +27,9 @@ public class FlightsData {
     }
 
     public JavaPairRDD<AirportPair, Values> makeSplit() {
+        if (this.splittedFlights != null) {
+            return this.splittedFlights;
+        }
         this.splittedFlights = this.flights.mapToPair(
                 s -> {
                     String[] parts = ParseCSV.splitComma(s);

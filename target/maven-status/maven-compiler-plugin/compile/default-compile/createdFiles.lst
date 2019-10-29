@@ -1,4 +1,6 @@
+lab3/AirportsData.class
+lab3/AirportPair.class
+lab3/FlightsData.class
 lab3/Main.class
-lab3/Main$Values.class
 lab3/ParseCSV.class
-lab3/Main$AirportPair.class
+lab3/Values.class
