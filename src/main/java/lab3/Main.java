@@ -57,7 +57,8 @@ public class Main {
     }
 
 
-    public static class Values implements Serializable{
+    public static class Values implements Serializable {
+
         private String delay;
         private String cancelled;
         private float maxDelay;
