@@ -27,7 +27,7 @@ public class AirportsData {
     }
 
 
-    public void makeSplit() {
+    public JavaPairRDD<String, String> makeSplit() {
         this.splittedAirports = this.airports.mapToPair(
               s -> {
                   String[] parts = ParseCSV.splitComma(s, LIMIT);
@@ -36,16 +36,15 @@ public class AirportsData {
                   return new Tuple2<>(airportID, airportName);
               }
             );
+        return splittedAirports;
     }
 
-    public Broadcast<Map<String, String>> broadcastAirports() {
-        return this.broadcastAirports;
-    }
 
-    public void  makeBroadcast() {
+    public Broadcast<Map<String, String>>   makeBroadcast() {
         if (this.splittedAirports == null) makeSplit();
         Map<String, String> airportsMap = this.splittedAirports.collectAsMap();
         this.broadcastAirports = this.sc.broadcast(airportsMap);
+        return this.broadcastAirports;
     }
 
 }

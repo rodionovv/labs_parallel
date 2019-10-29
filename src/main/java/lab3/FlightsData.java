@@ -8,6 +8,13 @@ import scala.Tuple2;
 
 public class FlightsData {
 
+    private static final int ORIGIN_AIRPORT = 11;
+    private static final int DEST_AIRPORT = 14;
+    private static final int DELAY = 17;
+    private static final int CANCELED = 19;
+
+
+
     private JavaRDD<String> flights;
     private JavaPairRDD<AirportPair, Values> splittedFlights;
     private JavaPairRDD<AirportPair, Values> reducedFlights;
@@ -19,20 +26,22 @@ public class FlightsData {
         this.reducedFlights = null;
     }
 
-    public void makeSplit() {
+    public JavaPairRDD<AirportPair, Values> makeSplit() {
         this.splittedFlights = this.flights.mapToPair(
                 s -> {
                     String[] parts = ParseCSV.splitComma(s);
-                    String originAirport = ParseCSV.getKey(parts, 11);
-                    String destAirport = ParseCSV.getKey(parts, 14);
-                    String delay = ParseCSV.getValue(parts, 17);
-                    String cancelled = ParseCSV.getValue(parts, 19);
+                    String originAirport = ParseCSV.getKey(parts, ORIGIN_AIRPORT);
+                    String destAirport = ParseCSV.getKey(parts, DEST_AIRPORT);
+                    String delay = ParseCSV.getValue(parts, DELAY);
+                    String cancelled = ParseCSV.getValue(parts, CANCELED);
                     return new Tuple2<>(new AirportPair(originAirport, destAirport), new Values(delay, cancelled));
                 }
         );
+        return this. splittedFlights;
     }
 
-    public void reduce() {
+    public JavaPairRDD<AirportPair, Values> reduce() {
+        if (splittedFlights == null) this.makeSplit();
         this.reducedFlights = this.splittedFlights.reduceByKey(
                 (f, s) -> {
                     f.addFlights(s.getCountFlights());
@@ -48,6 +57,7 @@ public class FlightsData {
                     return f;
                 }
         );
+        return this.reducedFlights;
     }
 
 
