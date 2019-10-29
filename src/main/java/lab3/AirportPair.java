@@ -22,7 +22,7 @@ public class AirportPair {
 
     @Override
     public boolean equals(Object obj) {
-        Main.AirportPair p = (Main.AirportPair) obj;
+        AirportPair p = (AirportPair) obj;
         if (this.originAirport.equals(p.originAirport)){
             if (this.destAirport.equals(p.destAirport)){
                 return true;
@@ -45,4 +45,3 @@ public class AirportPair {
     }
 }
 
-}
