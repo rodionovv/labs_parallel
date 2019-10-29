@@ -40,7 +40,7 @@ public class AirportsData {
 
     public void  makeBroadcast(JavaSparkContext sc, JavaRDD<String> airports) {
         Map<String, String> airportsMap = this.splittedAirports.collectAsMap();
-        this.broadcastAirports = airportsMap.
+        this.broadcastAirports = airports   
     }
 
 }
