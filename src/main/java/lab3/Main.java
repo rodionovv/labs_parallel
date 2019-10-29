@@ -15,20 +15,14 @@ public class Main {
 
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
+
+
         AirportsData airportsData = new AirportsData(sc, args[0], "Code,Description");
-        JavaRDD<String> flights = ParseCSV.readCSV(sc, args[1], "\"YEAR\",\"QUARTER\"");
-        JavaPairRDD<String, String> splitterAirports = airports.mapToPair(
-                                                        (s) -> {
-                                                            String[] parts = ParseCSV.splitComma(s, 2);
-                                                            String airportID = ParseCSV.getKey(parts);
-                                                            String airportName = ParseCSV.getValue(parts);
-                                                            return new Tuple2<>(airportID, airportName);
-                                                        }
-                                                    );
+        airportsData.makeSplit();
+        airportsData.makeBroadcast();
 
-        Map<String, String> airportsMap = splitterAirports.collectAsMap();
-        final Broadcast<Map<String, String>> broadcastAirports = makeBroadCast(sc, airports);
 
+        FlightsData flightsData = new FlightsData(sc, args[1], "\"YEAR\",\"QUARTER\"");
         JavaPairRDD<AirportPair,Values> data = flights.mapToPair(
                                                 s -> {
                                                         String[] parts = ParseCSV.splitComma(s);
@@ -58,7 +52,7 @@ public class Main {
         JavaRDD<String> output = reducedData.map((s) -> {
                     String originAirportID = s._1.getOriginAirport();
                     String destAirportID = s._1.getDestAirport();
-                    String originAirportName = broadcastAirports.getValue().get(originAirportID);
+                    String originAirportName = airportsData.broadcastAirports().getValue().get(originAirportID);
                     String destAirportName = broadcastAirports.getValue().get(destAirportID);
                     AirportPair pair = new AirportPair(originAirportName, destAirportName);
                     Values info = s._2;

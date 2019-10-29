@@ -38,9 +38,14 @@ public class AirportsData {
             );
     }
 
-    public void  makeBroadcast(JavaSparkContext sc, JavaRDD<String> airports) {
+    public Broadcast<Map<String, String>> broadcastAirports() {
+        return this.broadcastAirports;
+    }
+
+    public void  makeBroadcast() {
+        if (this.splittedAirports == null) makeSplit();
         Map<String, String> airportsMap = this.splittedAirports.collectAsMap();
-        this.broadcastAirports = airports   
+        this.broadcastAirports = this.sc.broadcast(airportsMap);
     }
 
 }
