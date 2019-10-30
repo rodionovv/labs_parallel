@@ -60,6 +60,27 @@ public class FlightsData {
                     return f;
                 }
         );
+
+
+        return this.reducedFlights;
+    }
+
+    public JavaPairRDD<AirportPair, Values> reduce(JavaPairRDD<AirportPair, Values> splittedFlights) {
+        this.reducedFlights = splittedFlights.reduceByKey(
+                (f, s) -> {
+                    f.addFlights(s.getCountFlights());
+                    if (s.getCancelled().equals("1.00")) {
+                        f.addCanceled(s.getCountCanceled());
+                    } else if (!s.getDelay().equals("")) {
+                        float delay = Float.parseFloat(s.getDelay());
+                        if (delay > 0) {
+                            f.addDelayed(s.getCountDelay());
+                            if (delay > f.getMaxDelay()) f.setMaxDelay(delay);
+                        }
+                    }
+                    return f;
+                }
+        );
         return this.reducedFlights;
     }
 
