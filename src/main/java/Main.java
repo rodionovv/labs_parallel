@@ -11,6 +11,6 @@ class Main {
         final Http http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
         MainHttp instance = new MainHttp(system);
-        
+
     }
 }
