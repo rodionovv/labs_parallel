@@ -85,7 +85,9 @@ class Main extends AllDirectives {
         HttpPost post = new HttpPost("localhost:8080");
         StringBuilder json = new StringBuilder();
         json.append("{");
-        json("\"packageID")
+        json.append("\"packageId\":\"11\",");
+        json.append("\"jsScript\":\"var divideFn = function(a,b) {retrurn a/b}\",");
+        json.append("\"packageId\":\"11\",");
 
     }
 }
