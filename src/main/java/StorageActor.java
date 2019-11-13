@@ -19,7 +19,7 @@ public class StorageActor extends AbstractActor {
                         ActorRef.noSender()
                 )
         ).match(StorageCommand.class, msg -> {
-            if (data.containsKey(msg.getStorageID()))
+            if (data.containsKey(msg.getPackageID()))
         })
     }
 }

@@ -5,7 +5,7 @@ public class StorageCommand {
 
 
     public StorageCommand(int packageID, StorageMessage storageMessage) {
-        this.packageID = pa;
+        this.packageID = packageID;
         this.storageMessage = storageMessage;
     }
 
