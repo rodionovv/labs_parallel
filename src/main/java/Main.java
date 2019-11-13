@@ -15,9 +15,12 @@ import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import java.util.concurrent.CompletionStage;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import scala.concurrent.Future;
 
 import static akka.http.javadsl.server.Directives.*;
@@ -79,7 +82,7 @@ class Main extends AllDirectives {
                 )));
     }
 
-    private sendPost() throws Exception {
+    private static String sendPost() throws Exception {
 
         String result = "";
         HttpPost post = new HttpPost("localhost:8080");
@@ -100,5 +103,12 @@ class Main extends AllDirectives {
         json.append("\t},");
         json.append("]");
         json.append("}");
+        post.setEntity(new StringEntity(json.toString()));
+
+        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+             CloseableHttpResponse response = httpClient.execute(post)) {
+            result = EntityUtils.toString(response.getEntity());
+        }
+        return result;
     }
 }
