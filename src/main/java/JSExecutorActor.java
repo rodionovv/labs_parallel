@@ -30,9 +30,7 @@ public class JSExecutorActor extends AbstractActor {
                 check = "correct";
             }
 
-            StorageMessage storageMessage = new StorageMessage{
-                
-            }
+            StorageMessage storageMessage = new StorageMessage
         })
     }
 }
