@@ -35,12 +35,7 @@ class Main extends AllDirectives {
     public static void  main(String[] args)  throws Exception {
 
         Main obj = new Main();
-
-        try {
-            obj.sendPost();
-        } finally {
-            obj.close();
-        }
+        obj.sendPost();
 
 
 
