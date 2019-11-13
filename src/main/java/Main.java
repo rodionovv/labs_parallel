@@ -13,6 +13,8 @@ import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+
+import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -45,8 +47,8 @@ class Main extends AllDirectives {
                 } catch (InterruptedException e){}
                 try {
                     obj.sendPost();
-                } finally {
-                    obj.close();
+                } catch (IOException e){
+                    e.printStackTrace();
                 }
             }
         }
