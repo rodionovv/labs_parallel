@@ -19,7 +19,7 @@ public class MainActor extends AbstractActor {
                         executor.tell(new ExcuteMessage(i, pack), storage);
                     }
                 }
-        )
+        ).match()
     }
 
     public MainActor() {
