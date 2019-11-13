@@ -32,6 +32,26 @@ class Main extends AllDirectives {
     private static final int PORT = 8080;
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
 
+    private static class Requests extends Thread {
+        @Override
+        public void run() {
+            try {
+                sleep(10000);
+            } catch (InterruptedException e){}
+            Main obj = new Main();
+            for (int i = 0; i < 3; i++) {
+                try {
+                    sleep(5000);
+                } catch (InterruptedException e){}
+                try {
+                    obj.sendPost();
+                } finally {
+                    obj.close();
+                }
+            }
+        }
+    }
+
     public static void  main(String[] args)  throws Exception {
 
 
