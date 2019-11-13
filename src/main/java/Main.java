@@ -1,4 +1,5 @@
 import akka.NotUsed;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
@@ -22,6 +23,7 @@ import static akka.http.javadsl.server.Directives.*;
 
 class Main extends AllDirectives {
 
+    static ActorRef mainActor;
     private static final String LOCALHOST = "localhost";
     private static final int PORT = 8080;
 
@@ -54,5 +56,12 @@ class Main extends AllDirectives {
                                 }
                         )
                 ),
+                post(
+                        () -> entity(Jackson.unmarshaller(FunctionPackage.class)),
+                                msg -> {
+                                    mainActor.tell(msg, ActorRef.noSender());
+                                    return  complete("message posted" );
+                                }
+                );
     }
 }
