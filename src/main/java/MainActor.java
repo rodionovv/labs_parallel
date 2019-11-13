@@ -16,7 +16,7 @@ public class MainActor extends AbstractActor {
                 Functions.class, pack -> {
                     int testLength = pack.getTests().length;
                     for (int i = 0; i < testLength; i++) {
-                        executor.tell(new ExcuteMSG(i, pack), storage);
+                        executor.tell(new ExcuteMessage(i, pack), storage);
                     }
                 }
         )
