@@ -8,6 +8,7 @@ import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Complete;
 import akka.http.javadsl.server.Route;
+import akka.http.scaladsl.model.headers.Host;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
@@ -18,8 +19,8 @@ import static akka.http.javadsl.server.Directives.*;
 
 class Main extends AllDirectives {
 
-    private final String
-
+    private static final String LOCALHOST = "localhost";
+    private static final int PORT = 8080;
 
     public static void  main(String[] args)  throws IOException {
         ActorSystem system = ActorSystem.create("routes");
@@ -27,8 +28,9 @@ class Main extends AllDirectives {
         final ActorMaterializer materializer = ActorMaterializer.create(system);
         Main app = new Main();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute().flow(system,materializer);
-        final CompletionStage<ServerBinding> binding = http.bindAndHandle(routeFlow,
-                ConnectHttp.toHost("localhost", 8080),
+        final CompletionStage<ServerBinding> binding = http.bindAndHandle(
+                routeFlow,
+                ConnectHttp.toHost(LOCALHOST, PORT),
                 materializer);
         System.out.println("Server online at http://localhost:8080/\nPress RETURN to stop...");
         System.in.read();
