@@ -2,7 +2,6 @@
 import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
-import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -55,7 +54,7 @@ class Main extends AllDirectives {
                         )
                 ),
                 post(
-                        () -> entity(Jackson.unmarshaller(FunctionPackage.class),
+                        () -> entity(Jackson.unmarshaller(Functions.class),
                                 msg -> {
                                     mainActor.tell(msg, ActorRef.noSender());
                                     return  complete("message posted" );
