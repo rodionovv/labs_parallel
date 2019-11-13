@@ -23,7 +23,7 @@ public class MainActor extends AbstractActor {
     }
 
     public MainActor() {
-        this.executor = getContext().actorOf(new RoundRobinPool(new RoundRobinPool(NUM_ROUNDS).props(Props.create(JSExecutorActor.class))));
+        this.executor = getContext().actorOf(new RoundRobinPool(NUM_ROUNDS).props(Props.create(JSExecutorActor.class)));
         this.storage = getContext().actorOf(Props.create(StorageActor.class));
     }
 }
