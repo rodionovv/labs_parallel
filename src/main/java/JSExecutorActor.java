@@ -1,4 +1,5 @@
 import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
 import akka.japi.pf.ReceiveBuilder;
 import javafx.util.Pair;
 
@@ -30,7 +31,9 @@ public class JSExecutorActor extends AbstractActor {
                 check = "correct";
             }
 
-            StorageMessage storageMessage = new StorageMessage
-        })
+            StorageMessage storageMessage = new StorageMessage(res, test.getExpectedResult(), check, test.getParams(), test.getTestName());
+            StorageCommand storageCommand = new StorageCommand(functions.getPackageID(), storageMessage);
+            getSender().tell(storageCommand, ActorRef.noSender());
+        }).build();
     }
 }

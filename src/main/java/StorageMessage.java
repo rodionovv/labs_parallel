@@ -1,4 +1,6 @@
-package PACKAGE_NAME;
-
 public class StorageMessage {
+
+    private final String r
+
+
 }
