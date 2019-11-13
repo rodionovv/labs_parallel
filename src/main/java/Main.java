@@ -57,7 +57,8 @@ class Main extends AllDirectives {
     public static void  main(String[] args)  throws Exception {
 
 
-
+        Thread myThread = new Requests();
+        myThread.start();
 
         ActorSystem system = ActorSystem.create("routes");
         mainActor = system.actorOf(Props.create(MainActor.class));
