@@ -1,6 +1,7 @@
 import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -19,12 +20,13 @@ import static akka.http.javadsl.server.Directives.*;
 
 class Main extends AllDirectives {
 
-    static ActorRef mainActor;
+    private static ActorRef mainActor;
     private static final String LOCALHOST = "localhost";
     private static final int PORT = 8080;
 
     public static void  main(String[] args)  throws Exception {
         ActorSystem system = ActorSystem.create("routes");
+        mainActor = system.actorOf(Props.create(MainActor.class));
         final Http http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
         Main app = new Main();
