@@ -14,6 +14,10 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import java.util.concurrent.CompletionStage;
+
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import scala.concurrent.Future;
 
 import static akka.http.javadsl.server.Directives.*;
@@ -23,11 +27,17 @@ class Main extends AllDirectives {
     private static ActorRef mainActor;
     private static final String LOCALHOST = "localhost";
     private static final int PORT = 8080;
-    private final 
+    private final CloseableHttpClient httpClient = HttpClients.createDefault();
 
     public static void  main(String[] args)  throws Exception {
 
+        Main obj = new Main();
 
+        try {
+            obj.sendPost();
+        } finally {
+            obj.close();
+        }
 
 
 
@@ -67,5 +77,10 @@ class Main extends AllDirectives {
                                     return  complete("message posted" );
                                 }
                 )));
+    }
+
+    private sendPost() throws Exception {
+        HttpPost post = new HttpPost("localhost:8080");
+        
     }
 }
