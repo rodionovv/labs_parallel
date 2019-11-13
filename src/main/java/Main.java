@@ -3,6 +3,7 @@ import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
+import akka.http.javadsl.marshallers.jackson.Jackson;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
@@ -44,11 +45,14 @@ class Main extends AllDirectives {
     private Route createRoute() {
         return concat(
                 get(
-                        () -> parameter("packageID", (packageID)) -> {
-                                    Future<Object> result = Patterns.ask(mainActor,
+                        () -> parameter("packageID", (packageID) -> {
+                                    Future<Object> result = Patterns.ask(
+                                            mainActor,
                                             new GetMessage(Integer.parseInt(packageID)),
                                             5000);
+                                    return completeOKWithFuture(result, Jackson.marshaller());
                                 }
+                        )
                 ),
     }
 }
