@@ -2,8 +2,10 @@ import akka.actor.AbstractActor;
 import akka.japi.pf.ReceiveBuilder;
 import javafx.util.Pair;
 
+import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 public class JSExecutorActor extends AbstractActor {
 
@@ -17,8 +19,12 @@ public class JSExecutorActor extends AbstractActor {
             Test test = functions.getTests()[index];
             ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
             try {
-                
+                engine.eval(functions.getScript());
+            } catch (ScriptException e) {
+                e.printStackTrace();
             }
+            Invocable invocable = (Invocable) engine;
+            String e
         })
     }
 }
