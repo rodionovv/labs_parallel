@@ -34,8 +34,6 @@ class Main extends AllDirectives {
 
     public static void  main(String[] args)  throws Exception {
 
-        Main obj = new Main();
-        obj.sendPost();
 
 
 
@@ -54,6 +52,9 @@ class Main extends AllDirectives {
         binding
                 .thenCompose(ServerBinding::unbind)
                 .thenAccept(unbound -> system.terminate());
+
+        Main obj = new Main();
+        obj.sendPost();
     }
 
     private Route createRoute() {
