@@ -6,7 +6,7 @@ public class StorageMessage {
     private final String checker;
     private final Object[] param;
 
-    private StorageMessage(String result,
+    StorageMessage(String result,
                            String expectedResult,
                            String checker,
                            Object[] param,
