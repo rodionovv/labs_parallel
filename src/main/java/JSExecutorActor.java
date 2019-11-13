@@ -24,7 +24,13 @@ public class JSExecutorActor extends AbstractActor {
                 e.printStackTrace();
             }
             Invocable invocable = (Invocable) engine;
-            String res
+            String res = invocable.invokeFunction(functions.getFunctionName(), test.getParams()).toString();
+            String check = "incorrect";
+            if (res.equals(test.getExpectedResult())) {
+                check = "correct";
+            }
+
+            StorageMessage storageMessage = new StorageMessage
         })
     }
 }
