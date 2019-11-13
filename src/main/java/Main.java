@@ -40,14 +40,14 @@ class Main extends AllDirectives {
             try {
                 sleep(10000);
             } catch (InterruptedException e){}
-            Main obj = new Main();
             for (int i = 0; i < 3; i++) {
                 try {
                     sleep(5000);
                 } catch (InterruptedException e){}
                 try {
-                    obj.sendPost();
-                } catch (IOException e){
+                    String result = sendPost();
+                    System.out.println(result);
+                } catch (Exception e){
                     e.printStackTrace();
                 }
             }
