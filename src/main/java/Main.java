@@ -57,11 +57,11 @@ class Main extends AllDirectives {
                         )
                 ),
                 post(
-                        () -> entity(Jackson.unmarshaller(FunctionPackage.class)),
+                        () -> entity(Jackson.unmarshaller(FunctionPackage.class),
                                 msg -> {
                                     mainActor.tell(msg, ActorRef.noSender());
                                     return  complete("message posted" );
                                 }
-                );
+                )));
     }
 }
