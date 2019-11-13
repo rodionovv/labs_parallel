@@ -24,7 +24,7 @@ public class JSExecutorActor extends AbstractActor {
                 e.printStackTrace();
             }
             Invocable invocable = (Invocable) engine;
-            String e
+            String res
         })
     }
 }
