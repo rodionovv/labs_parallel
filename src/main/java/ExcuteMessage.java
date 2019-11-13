@@ -1,4 +1,4 @@
 public class ExcuteMessage {
 
-    
+    private
 }
