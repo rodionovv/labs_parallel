@@ -26,7 +26,7 @@ public class StorageActor extends AbstractActor {
             } else {
                 ArrayList<StorageMessage> tests = new ArrayList<>();
                 tests.add(msg.getStorageMessage());
-                data.put(msg.getPackageID(), tests)
+                data.put(msg.getPackageID(), tests);
             }
         })
     }
