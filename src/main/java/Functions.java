@@ -19,5 +19,24 @@ public class Functions {
         this.script = script;
     }
 
-    
+    public String getScript() {
+        return script;
+    }
+
+
+    public int getPackageID() {
+        return packageID;
+    }
+
+    public String getFunctionName() {
+        return functionName;
+    }
+
+    public Test[] getTests() {
+        return tests;
+    }
+
+    public Test getTests(int i) {
+        return tests[i];
+    }
 }
