@@ -9,11 +9,13 @@ import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Complete;
 import akka.http.javadsl.server.Route;
 import akka.http.scaladsl.model.headers.Host;
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Future;
 
 import static akka.http.javadsl.server.Directives.*;
 
@@ -41,6 +43,12 @@ class Main extends AllDirectives {
 
     private Route createRoute() {
         return concat(
-                get()
+                get(
+                        () -> parameter("packageID", (packageID)) -> {
+                                    Future<Object> result = Patterns.ask(mainActor,
+                                            new GetMessage(Integer.parseInt(packageID)),
+                                            5000);
+                                }
+                ),
     }
 }
