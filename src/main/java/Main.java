@@ -84,7 +84,8 @@ class Main extends AllDirectives {
         String result = "";
         HttpPost post = new HttpPost("localhost:8080");
         StringBuilder json = new StringBuilder();
-        json.append()
+        json.append("{");
+        json("")
 
     }
 }
