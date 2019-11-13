@@ -52,6 +52,7 @@ class Main extends AllDirectives {
         binding
                 .thenCompose(ServerBinding::unbind)
                 .thenAccept(unbound -> system.terminate());
+         System.out.println("here");
 
         Main obj = new Main();
         obj.sendPost();
