@@ -6,5 +6,8 @@ public class MainActor {
     private final ActorRef storage;
 
 
-
+    public MainActor() {
+        this.executor = getContext().a;
+        this.storage = storage;
+    }
 }
