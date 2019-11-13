@@ -80,7 +80,11 @@ class Main extends AllDirectives {
     }
 
     private sendPost() throws Exception {
+
+        String result = "";
         HttpPost post = new HttpPost("localhost:8080");
-        
+        StringBuilder json = new StringBuilder();
+        json.append()
+
     }
 }
