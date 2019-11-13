@@ -81,7 +81,7 @@ class Main extends AllDirectives {
     private static String sendPost() throws Exception {
 
         String result = "";
-        HttpPost post = new HttpPost("localhost:8080");
+        HttpPost post = new HttpPost("http://localhost:8080/");
         StringBuilder json = new StringBuilder();
         json.append("{");
         json.append("\"packageId\":\"11\",");
