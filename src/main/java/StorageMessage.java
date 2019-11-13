@@ -16,8 +16,26 @@ public class StorageMessage {
         this.checker = checker;
         this.param = param;
         this.testName = testName;
-        th
     }
 
 
+    public Object[] getParam() {
+        return param;
+    }
+
+    public String getChecker() {
+        return checker;
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public String getExpectedResult() {
+        return expectedResult;
+    }
+
+    public String getResult() {
+        return result;
+    }
 }
