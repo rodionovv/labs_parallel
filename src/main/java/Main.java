@@ -46,12 +46,12 @@ class Main extends AllDirectives {
                     sleep(5000);
                 } catch (InterruptedException e){}
                 try {
-                    String result = sendPost();
-                    System.out.println(result);
+                    sendPost();
                 } catch (Exception e){
                     e.printStackTrace();
                 }
             }
+            senGet();
         }
     }
 
@@ -101,7 +101,7 @@ class Main extends AllDirectives {
                 )));
     }
 
-    private static String sendPost() throws Exception {
+    private static void sendPost() throws Exception {
 
         String result = "";
         HttpPost post = new HttpPost("http://localhost:8080/");
@@ -129,6 +129,10 @@ class Main extends AllDirectives {
         post.setEntity(new StringEntity(json.toString()));
         post.setEntity(requestEntity);
         httpClient.execute(post);
-        return result;
+    }
+
+    private  static void sendGet() {
+
     }
 }
+
