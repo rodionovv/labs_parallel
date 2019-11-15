@@ -127,7 +127,7 @@ class Main extends AllDirectives {
              CloseableHttpResponse response = httpClient.execute(post)) {
             result = EntityUtils.toString(response.getEntity());
         }
-        System.out.println(res);
+        System.out.println(result);
         return result;
     }
 }
