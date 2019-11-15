@@ -17,16 +17,20 @@ import scala.concurrent.Future;
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
+import static akka.http.javadsl.server.Directives.*;
+
 public class HttpServer {
 
     private final String host;
     private final int port;
     private final ActorSystem system;
+    private final ActorRef mainActor;
 
     HttpServer(String host, int port, ActorSystem system){
         this.host = host;
         this.port = port;
         this.system = system;
+        this.mainActor = system.actorOf(Props.create(MainActor.class));
     }
 
     public void start() throws IOException {
@@ -34,7 +38,7 @@ public class HttpServer {
         final Http http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
         Main app = new Main();
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute().flow(system,materializer);
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = createRoute().flow(system,materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost(this.host, this.port),
