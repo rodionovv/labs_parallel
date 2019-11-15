@@ -118,15 +118,15 @@ class Main extends AllDirectives {
         json.append("\"jsScript\":\"var divideFn = function(a,b) {retrurn a/b}\",");
         json.append("\"packageId\":\"11\",");
         json.append("\"functionName\":\"divideFn\",");
-        json.append("\"tests\":[");
-        json.append("\t{\"testName\":\"test1\",");
-        json.append("\t\"expectedResult\":\"2.0\",");
-        json.append("\t\"params\":\"[2,1]\",");
-        json.append("\t},");
-        json.append("\t{\"testName\":\"test2\",");
-        json.append("\t\"expectedResult\":\"2.0\",");
-        json.append("\t\"params\":\"[4,2]\",");
-        json.append("\t},");
+        json.append( "\"tests\":[");
+        json.append("{\"testName\":\"test1\",");
+        json.append("\"expectedResult\":\"2.0\",");
+        json.append("\"params\":\"[2,1]\",");
+        json.append("},");
+        json.append("{\"testName\":\"test2\",");
+        json.append("\"expectedResult\":\"2.0\",");
+        json.append("\"params\":\"[4,2]\",");
+        json.append("},");
         json.append("]");
         json.append("}");
         StringEntity requestEntity  = new StringEntity(
