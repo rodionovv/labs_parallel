@@ -8,7 +8,7 @@ public class Functions {
     private final String script;
     private final String functionName;
     private final Test[] tests;
-    private final Vector<Integer> packageIdList = new Vector<>();
+    public static  Vector<Integer> packageIdList = new Vector<>();
 
     @JsonCreator
     public Functions(
@@ -24,7 +24,7 @@ public class Functions {
     }
 
 
-    
+
 
     public String getScript() {
         return script;

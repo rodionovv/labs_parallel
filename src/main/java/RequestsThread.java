@@ -8,6 +8,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
+import scala.Int;
 
 import java.io.File;
 import java.io.FileReader;
@@ -19,7 +20,7 @@ public class RequestsThread extends Thread{
     private final File folder;
 
     private static final String URL = "http://localhost:8080/";
-    private static final String KEY = "?packageID=11";
+    private static final String KEY = "?packageID=";
 
     RequestsThread(String path) {
         this.httpClient = HttpClients.createDefault();
@@ -40,8 +41,10 @@ public class RequestsThread extends Thread{
             }
         }
         try {
-            String result = sendGet();
-            System.out.println(result);
+            for (Integer packageId : Functions.packageIdList) {
+                String result = sendGet(packageId);
+                System.out.println(result);
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -70,9 +73,9 @@ public class RequestsThread extends Thread{
 
     }
 
-    private String sendGet() throws Exception {
+    private String sendGet(int packageID) throws Exception {
         String result = "";
-        HttpGet request = new HttpGet(URL + KEY);
+        HttpGet request = new HttpGet(URL + KEY + packageID);
         try (CloseableHttpResponse response = this.httpClient.execute(request)){
             HttpEntity entity = response.getEntity();
             if (entity != null){
