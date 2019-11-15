@@ -143,7 +143,7 @@ class Main extends AllDirectives {
 
     private  static String sendGet() throws Exception {
         String result = "here";
-        HttpGet request = new HttpGet("GET http://localhost:8080/?packageId=11");
+        HttpGet request = new HttpGet("GET http://localhost:8080/?packageID=11");
         try (CloseableHttpResponse response = httpClient.execute(request)){
             HttpEntity entity = response.getEntity();
             if (entity != null){
