@@ -117,6 +117,7 @@ class Main extends AllDirectives {
         HttpPost post = new HttpPost("http://localhost:8080/");
         JSONParser jsonParser = new JSONParser();
         try(FileReader reader = new FileReader("tests.json")){
+            System.out.println("here");
             Object obj = jsonParser.parse(reader);
             JSONArray list = (JSONArray) obj;
             System.out.println(list);
