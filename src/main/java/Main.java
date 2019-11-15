@@ -77,8 +77,6 @@ class Main extends AllDirectives {
                 .thenAccept(unbound -> system.terminate());
          System.out.println("here");
 
-        Main obj = new Main();
-        obj.sendPost();
     }
 
     private Route createRoute() {
@@ -106,7 +104,6 @@ class Main extends AllDirectives {
 
         String result = "";
         HttpPost post = new HttpPost("http://localhost:8080/");
-        System.out.println("here  1");
         StringBuilder json = new StringBuilder();
         json.append("{");
         json.append("\"packageId\":\"11\",");
@@ -130,7 +127,7 @@ class Main extends AllDirectives {
              CloseableHttpResponse response = httpClient.execute(post)) {
             result = EntityUtils.toString(response.getEntity());
         }
-        System.out.println("here  2");
+        System.out.println(res);
         return result;
     }
 }

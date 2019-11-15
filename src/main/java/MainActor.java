@@ -7,7 +7,7 @@ import akka.routing.RoundRobinPool;
 public class MainActor extends AbstractActor {
     private final static int NUM_ROUNDS = 5;
     private final ActorRef executor;
-    private final ActorRef storage;
+        private final ActorRef storage;
 
 
     @Override
