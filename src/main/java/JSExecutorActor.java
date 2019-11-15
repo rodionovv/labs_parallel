@@ -10,6 +10,10 @@ import javax.script.ScriptException;
 
 public class JSExecutorActor extends AbstractActor {
 
+    private final static String NASHORN = "nashorn";
+    private final static String CORRECT = "correct";
+    private final static String INCORRECT = "incorrect";
+
 
     @Override
     public Receive createReceive() {
@@ -18,7 +22,7 @@ public class JSExecutorActor extends AbstractActor {
             int index = msg.getKey();
             Functions functions = msg.getValue();
             Test test = functions.getTests()[index];
-            ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+            ScriptEngine engine = new ScriptEngineManager().getEngineByName(NASHORN);
             try {
                 engine.eval(functions.getScript());
             } catch (ScriptException e) {
@@ -26,11 +30,11 @@ public class JSExecutorActor extends AbstractActor {
             }
             Invocable invocable = (Invocable) engine;
             String res = invocable.invokeFunction(functions.getFunctionName(), test.getParams()).toString();
-            String check = "incorrect";
+            String check = CORRECT;
             if (res.equals(test.getExpectedResult())) {
-                check = "correct";
+                check = INCORRECT;
             }
-
+            System.out.println(res);
             StorageMessage storageMessage = new StorageMessage(res, test.getExpectedResult(), check, test.getParams(), test.getTestName(), test.getFuncName());
             StorageCommand storageCommand = new StorageCommand(functions.getPackageID(), storageMessage);
             getSender().tell(storageCommand, ActorRef.noSender());
