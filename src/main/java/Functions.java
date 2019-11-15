@@ -1,15 +1,14 @@
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Set;
-
+import java.util.HashSet;
 
 public class Functions {
     private final int packageId;
     private final String script;
     private final String functionName;
     private final Test[] tests;
-    public static Set<Integer> packageIdList = new Set();
+    public static HashSet<Integer> packageIdList = new HashSet<>();
 
     @JsonCreator
     public Functions(
