@@ -1,7 +1,4 @@
 import akka.actor.ActorSystem;
-
-
-
 class Main {
 
     private  static  final String TESTS_DIR = "/home/vasya/IdeaProjects/lab_parallel/tests";
