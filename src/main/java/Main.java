@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -132,7 +133,9 @@ class Main extends AllDirectives {
     }
 
     private  static String sendGet() {
+        HttpGet request = new HttpGet("GET http://localhost:8080/?packageId=11");
         
+        return "";
     }
 }
 
