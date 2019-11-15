@@ -9,20 +9,21 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 
+import java.io.File;
 import java.io.FileReader;
 
 public class RequestsThread extends Thread{
 
 
     private final CloseableHttpClient httpClient;
-    private final String path;
+    private final File folder;
 
     private static final String URL = "http://localhost:8080/";
     private static final String KEY = "?packageID=11";
 
     RequestsThread(String path) {
         this.httpClient = HttpClients.createDefault();
-        this.path = path;
+        this.folder = new File(path);
     }
 
     @Override
@@ -30,10 +31,10 @@ public class RequestsThread extends Thread{
         try {
             sleep(5000);
         } catch (InterruptedException e){}
-        for (int i = 0; i < 3; i++) {
+        for (final File file : folder.listFiles()){
             try {
                 sleep(1000);
-                sendPost();
+                sendPost(file.getName());
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -47,12 +48,12 @@ public class RequestsThread extends Thread{
     }
 
 
-    private void sendPost() throws Exception {
+    private void sendPost(String fileName) throws Exception {
 
         String result = "";
         HttpPost post = new HttpPost(URL);
         JSONParser jsonParser = new JSONParser();
-        try(FileReader reader = new FileReader("/home/vasya/IdeaProjects/lab_parallel/tests.json")){
+        try(FileReader reader = new FileReader(folder.toString() + fileName)){
             Object obj = jsonParser.parse(reader);
 
             StringEntity requestEntity  = new StringEntity(
