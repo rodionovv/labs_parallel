@@ -13,7 +13,14 @@ import java.io.FileReader;
 
 public class RequestsThread  extends Thread{
 
-    private static final CloseableHttpClient httpClient = HttpClients.createDefault();
+
+    private final CloseableHttpClient httpClient;
+    private static final String URL = "http://localhost:8080/";
+    private static final String KEY = "?packageID=11";
+
+    RequestsThread() {
+        this.httpClient = HttpClients.createDefault();
+    }
 
     @Override
     public void run() {
@@ -39,10 +46,10 @@ public class RequestsThread  extends Thread{
     }
 
 
-    private static void sendPost() throws Exception {
+    private void sendPost() throws Exception {
 
         String result = "";
-        HttpPost post = new HttpPost("http://localhost:8080/");
+        HttpPost post = new HttpPost(URL);
         JSONParser jsonParser = new JSONParser();
         try(FileReader reader = new FileReader("/home/vasya/IdeaProjects/lab_parallel/tests.json")){
             Object obj = jsonParser.parse(reader);
@@ -61,10 +68,10 @@ public class RequestsThread  extends Thread{
 
     }
 
-    private  static String sendGet() throws Exception {
+    private String sendGet() throws Exception {
         String result = "here";
-        HttpGet request = new HttpGet("http://localhost:8080/?packageID=11");
-        try (CloseableHttpResponse response = httpClient.execute(request)){
+        HttpGet request = new HttpGet(URL + KEY);
+        try (CloseableHttpResponse response = this.httpClient.execute(request)){
             HttpEntity entity = response.getEntity();
             if (entity != null){
                 result = EntityUtils.toString(entity);
