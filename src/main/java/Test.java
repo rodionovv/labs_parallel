@@ -8,19 +8,16 @@ public class Test {
     private final String realResult;
     private final String checker;
     private  final Object[] params;
-    private final String functionName;
 
     @JsonCreator
     public Test(@JsonProperty("testName") String testName,
                 @JsonProperty("expectedResult") String expectedResult,
-                @JsonProperty("params") Object[] params,
-                @JsonProperty("functionName") String functionName) {
+                @JsonProperty("params") Object[] params) {
         this.testName = testName;
         this.expectedResult = expectedResult;
         this.params = params;
         this.realResult = "";
         this.checker = "";
-        this.functionName = functionName;
     }
 
 
@@ -43,8 +40,5 @@ public class Test {
     public String getTestName() {
         return testName;
     }
-
-    public String getFuncName() {
-        return functionName;
-    }
+    
 }
