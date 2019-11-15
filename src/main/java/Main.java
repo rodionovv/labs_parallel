@@ -131,8 +131,8 @@ class Main extends AllDirectives {
         httpClient.execute(post);
     }
 
-    private  static void sendGet() {
-
+    private  static String sendGet() {
+        
     }
 }
 
