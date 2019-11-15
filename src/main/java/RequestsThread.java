@@ -11,7 +11,7 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
 
-public class RequestsThread  extends Thread{
+public class RequestsThread extends Thread{
 
 
     private final CloseableHttpClient httpClient;
