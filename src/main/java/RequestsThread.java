@@ -33,8 +33,6 @@ public class RequestsThread extends Thread{
         for (int i = 0; i < 3; i++) {
             try {
                 sleep(1000);
-            } catch (InterruptedException e){}
-            try {
                 sendPost();
             } catch (Exception e){
                 e.printStackTrace();

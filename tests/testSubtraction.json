@@ -1,0 +1,15 @@
+{
+  "packageId":"11",
+  "jsScript":"var subFn = function(a,b) { return a - b} ",
+  "functionName":"subFn",
+  "tests": [
+    {"testName":"test1",
+      "expectedResult":"1",
+      "params":[2,1]
+    },
+    {"testName":"test2",
+      "expectedResult":"2",
+      "params":[4,2]
+    }
+  ]
+}
