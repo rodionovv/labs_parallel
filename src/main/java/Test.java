@@ -8,7 +8,7 @@ public class Test {
     private final String realResult;
     private final String checker;
     private  final Object[] params;
-    private final String funcName;
+    private final String functionName;
 
     @JsonCreator
     public Test(@JsonProperty("testName") String testName,
@@ -20,7 +20,7 @@ public class Test {
         this.params = params;
         this.realResult = "";
         this.checker = "";
-        this.funcName = funcName;
+        this.functionName = funcName;
     }
 
 
@@ -45,6 +45,6 @@ public class Test {
     }
 
     public String getFuncName() {
-        return funcName;
+        return functionName;
     }
 }
