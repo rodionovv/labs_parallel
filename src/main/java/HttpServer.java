@@ -70,7 +70,7 @@ public class HttpServer {
                         () -> entity(Jackson.unmarshaller(Functions.class),
                                 msg -> {
                                     mainActor.tell(msg, ActorRef.noSender());
-                                    return  complete(POST_MESSAGE);
+                                    return complete(POST_MESSAGE);
                                 }
                         )));
     }
