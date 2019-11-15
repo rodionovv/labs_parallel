@@ -17,6 +17,7 @@ import akka.stream.javadsl.Flow;
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -52,7 +53,11 @@ class Main extends AllDirectives {
                     e.printStackTrace();
                 }
             }
-            senGet();
+            try {
+                String result = sendGet();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -132,10 +137,16 @@ class Main extends AllDirectives {
         httpClient.execute(post);
     }
 
-    private  static String sendGet() {
+    private  static String sendGet() throws Exception {
+        String result = "";
         HttpGet request = new HttpGet("GET http://localhost:8080/?packageId=11");
-        
-        return "";
+        try (CloseableHttpResponse response = httpClient.execute(request)){
+            HttpEntity entity = response.getEntity();
+            if (entity != null){
+                result = EntityUtils.toString(entity);
+            }
+        }
+        return result;
     }
 }
 
