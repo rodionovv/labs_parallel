@@ -118,8 +118,17 @@ class Main extends AllDirectives {
         JSONParser jsonParser = new JSONParser();
         try(FileReader reader = new FileReader("/home/vasya/IdeaProjects/lab_parallel/tests.json")){
             Object obj = jsonParser.parse(reader);
-//            JSONArray list = (JSONArray) obj;
-            System.out.println(obj.toString());
+
+            StringEntity requestEntity  = new StringEntity(
+                    obj.toString(),
+                    ContentType.APPLICATION_JSON
+            );
+            post.setEntity(new StringEntity(obj.toString()));
+            post.setEntity(requestEntity);
+            try (CloseableHttpResponse response = httpClient.execute(post)){
+                result = EntityUtils.toString(response.getEntity());
+                System.out.println(result);
+            }
         }
 
 
