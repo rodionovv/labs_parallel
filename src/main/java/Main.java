@@ -126,7 +126,7 @@ class Main extends AllDirectives {
         json.append("{\"testName\":\"test2\",\n");
         json.append("\"expectedResult\":\"2.0\",\n");
         json.append("\"params\":[4,2],\n");
-        json.append("},\n");
+        json.append("}\n");
         json.append("]\n");
         json.append("}\n");
         System.out.println(json.toString());
