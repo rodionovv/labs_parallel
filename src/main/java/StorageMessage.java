@@ -41,4 +41,8 @@ public class StorageMessage {
     public String getResult() {
         return result;
     }
+
+    public String getFuncName() {
+        return funcName;
+    }
 }
