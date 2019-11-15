@@ -27,6 +27,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import scala.concurrent.Future;
 
@@ -117,7 +118,8 @@ class Main extends AllDirectives {
         JSONParser jsonParser = new JSONParser();
         try(FileReader reader = new FileReader("~/IdeaProjects/lab_parallel/tests.json")){
             Object obj = jsonParser.parse(reader);
-            System.out.println(obj.toString());
+            JSONArray list = (JSONArray) obj;
+            System.out.println(list);
         }
 
 
