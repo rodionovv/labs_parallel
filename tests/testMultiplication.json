@@ -1,5 +1,5 @@
 {
-  "packageId":"11",
+  "packageId":"12",
   "jsScript":"var multFn = function(a,b) { return a * b} ",
   "functionName":"multFn",
   "tests": [
