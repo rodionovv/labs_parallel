@@ -135,7 +135,10 @@ class Main extends AllDirectives {
         );
         post.setEntity(new StringEntity(json.toString()));
         post.setEntity(requestEntity);
-        httpClient.execute(post);
+        try (CloseableHttpResponse response = httpClient.execute(post)){
+            result = EntityUtils.toString(response.getEntity());
+            System.out.println(result);
+        }
     }
 
     private  static String sendGet() throws Exception {
