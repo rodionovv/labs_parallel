@@ -30,9 +30,9 @@ public class JSExecutorActor extends AbstractActor {
             }
             Invocable invocable = (Invocable) engine;
             String res = invocable.invokeFunction(functions.getFunctionName(), test.getParams()).toString();
-            String check = CORRECT;
+            String check = INCORRECT;
             if (res.equals(test.getExpectedResult())) {
-                check = INCORRECT;
+                check = CORRECT;
             }
             System.out.println(res);
             StorageMessage storageMessage = new StorageMessage(res, test.getExpectedResult(), check, test.getParams(), test.getTestName(), test.getFuncName());
