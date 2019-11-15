@@ -64,8 +64,9 @@ public class HttpServer {
                                                 mainActor,
                                                 new Messages(Integer.parseInt(packageID)),
                                                 TIMEOUT);
-                                        return StatusCodes.NOT_FOUND
                                         return completeOKWithFuture(result, Jackson.marshaller());
+                                    } else {
+                                        return complete(StatusCodes.NOT_FOUND, "404");
                                     }
                                 }
                         )
