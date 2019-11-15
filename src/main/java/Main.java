@@ -73,42 +73,10 @@ class Main extends AllDirectives {
 
         ActorSystem system = ActorSystem.create("routes");
         mainActor = system.actorOf(Props.create(MainActor.class));
-        final Http http =  Http.get(system);
-        final ActorMaterializer materializer = ActorMaterializer.create(system);
-        Main app = new Main();
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute().flow(system,materializer);
-        final CompletionStage<ServerBinding> binding = http.bindAndHandle(
-                routeFlow,
-                ConnectHttp.toHost(LOCALHOST, PORT),
-                materializer);
-        System.out.println("Server online at http://localhost:8080/\nPress RETURN to stop...");
-        System.in.read();
-        binding
-                .thenCompose(ServerBinding::unbind)
-                .thenAccept(unbound -> system.terminate());
 
     }
 
-    private Route createRoute() {
-        return concat(
-                get(
-                        () -> parameter("packageID", (packageID) -> {
-                                    Future<Object> result = Patterns.ask(
-                                            mainActor,
-                                            new Messages(Integer.parseInt(packageID)),
-                                            5000);
-                                    return completeOKWithFuture(result, Jackson.marshaller());
-                                }
-                        )
-                ),
-                post(
-                        () -> entity(Jackson.unmarshaller(Functions.class),
-                                msg -> {
-                                    mainActor.tell(msg, ActorRef.noSender());
-                                    return  complete("message posted" );
-                                }
-                )));
-    }
+
 
     @SuppressWarnings("unchecked")
     private static void sendPost() throws Exception {
