@@ -67,7 +67,7 @@ class Main extends AllDirectives {
 
     public static void  main(String[] args)  throws Exception {
 
-//
+
         Thread myThread = new Requests();
         myThread.start();
 
@@ -130,7 +130,7 @@ class Main extends AllDirectives {
                 System.out.println(result);
             }
         }
-        
+
     }
 
     private  static String sendGet() throws Exception {
