@@ -1,0 +1,15 @@
+{
+  "packageId":"11",
+  "jsScript":"var sumFn = function(a,b) { return a+b} ",
+  "functionName":"sumFn",
+  "tests": [
+    {"testName":"test1",
+      "expectedResult":"3",
+      "params":[2,1]
+    },
+    {"testName":"test2",
+      "expectedResult":"6",
+      "params":[4,2]
+    }
+  ]
+}
