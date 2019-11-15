@@ -15,11 +15,14 @@ public class RequestsThread  extends Thread{
 
 
     private final CloseableHttpClient httpClient;
+    private final String path;
+
     private static final String URL = "http://localhost:8080/";
     private static final String KEY = "?packageID=11";
 
-    RequestsThread() {
+    RequestsThread(String path) {
         this.httpClient = HttpClients.createDefault();
+        this.path = path;
     }
 
     @Override

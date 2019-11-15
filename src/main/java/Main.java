@@ -35,6 +35,7 @@ import static akka.http.javadsl.server.Directives.*;
 
 class Main {
 
+    private  static  final String TESTS_DIR = "/home/vasya/IdeaProjects/lab_parallel/tests";
     private static final String LOCALHOST = "localhost";
     private static final int PORT = 8080;
     private static final CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -45,16 +46,13 @@ class Main {
 
 
 
-        Thread myThread = new RequestsThread();
+        Thread myThread = new RequestsThread(TESTS_DIR);
         myThread.start();
 
         ActorSystem system = ActorSystem.create("routes");
         HttpServer server = new HttpServer(LOCALHOST, PORT, system);
         server.start();
     }
-
-
-
 
 }
 
