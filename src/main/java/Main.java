@@ -130,36 +130,7 @@ class Main extends AllDirectives {
                 System.out.println(result);
             }
         }
-
-
-//        StringBuilder json = new StringBuilder();
-//        json.append("{\n");
-//        json.append("\"packageId\":\"11\",\n");
-//        json.append("\"jsScript\":\"var divideFn = function(a,b) {return a/b}\",\n");
-//        json.append("\"packageId\":\"11\",\n");
-//        json.append("\"functionName\":\"divideFn\",\n");
-//        json.append( "\"tests\":[\n");
-//        json.append("{\"testName\":\"test1\",\n");
-//        json.append("\"expectedResult\":\"2.0\",\n");
-//        json.append("\"params\":[2,1],\n");
-//        json.append("},\n");
-//        json.append("{\"testName\":\"test2\",\n");
-//        json.append("\"expectedResult\":\"2.0\",\n");
-//        json.append("\"params\":[4,2],\n");
-//        json.append("}\n");
-//        json.append("]\n");
-//        json.append("}\n");
-//        System.out.println(json.toString());
-//        StringEntity requestEntity  = new StringEntity(
-//                json.toString(),
-//                ContentType.APPLICATION_JSON
-//        );
-//        post.setEntity(new StringEntity(json.toString()));
-//        post.setEntity(requestEntity);
-//        try (CloseableHttpResponse response = httpClient.execute(post)){
-//            result = EntityUtils.toString(response.getEntity());
-//            System.out.println(result);
-//        }
+        
     }
 
     private  static String sendGet() throws Exception {
