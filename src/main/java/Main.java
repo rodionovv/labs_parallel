@@ -55,6 +55,7 @@ class Main extends AllDirectives {
             }
             try {
                 String result = sendGet();
+                System.out.println(result);
             } catch (Exception e){
                 e.printStackTrace();
             }
