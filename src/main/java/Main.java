@@ -19,6 +19,7 @@ import java.util.concurrent.CompletionStage;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -32,7 +33,7 @@ class Main extends AllDirectives {
     private static ActorRef mainActor;
     private static final String LOCALHOST = "localhost";
     private static final int PORT = 8080;
-    private final CloseableHttpClient httpClient = HttpClients.createDefault();
+    private static final CloseableHttpClient httpClient = HttpClients.createDefault();
 
     private static class Requests extends Thread {
         @Override
@@ -121,13 +122,13 @@ class Main extends AllDirectives {
         json.append("\t},");
         json.append("]");
         json.append("}");
+        StringEntity requestEntity  = new StringEntity(
+                json.toString(),
+                ContentType.APPLICATION_JSON
+        );
         post.setEntity(new StringEntity(json.toString()));
-
-        try (CloseableHttpClient httpClient = HttpClients.createDefault();
-             CloseableHttpResponse response = httpClient.execute(post)) {
-            result = EntityUtils.toString(response.getEntity());
-        }
-        System.out.println(result);
+        post.setEntity(requestEntity);
+        httpClient.execute(post);
         return result;
     }
 }
