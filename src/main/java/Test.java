@@ -22,8 +22,8 @@ public class Test {
         this.testName = testName;
         this.expectedResult = expectedResult;
         this.params = params;
-        this.realResult = "NONE";
-        this.checker = "NOT READY YET";
+        this.realResult = "";
+        this.checker = "";
         this.funcName = funcName;
     }
 
