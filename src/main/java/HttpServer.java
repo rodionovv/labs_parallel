@@ -58,11 +58,14 @@ public class HttpServer {
         return concat(
                 get(
                         () -> parameter(PACKAGE_ID, (packageID) -> {
-                                    Future<Object> result = Patterns.ask(
-                                            mainActor,
-                                            new Messages(Integer.parseInt(packageID)),
-                                            TIMEOUT);
-                                    return completeOKWithFuture(result, Jackson.marshaller());
+                                    if (Functions.packageIdList.contains(packageID)) {
+                                        Future<Object> result = Patterns.ask(
+                                                mainActor,
+                                                new Messages(Integer.parseInt(packageID)),
+                                                TIMEOUT);
+                                        return complet
+                                        return completeOKWithFuture(result, Jackson.marshaller());
+                                    }
                                 }
                         )
                 ),
