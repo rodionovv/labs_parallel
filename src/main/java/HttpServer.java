@@ -26,6 +26,9 @@ public class HttpServer {
     private final ActorSystem system;
     private final ActorRef mainActor;
 
+    private final static String PACKAGE_ID = "packageID";
+    private final static int TIMEOUT = 5000;
+
     HttpServer(String host, int port, ActorSystem system){
         this.host = host;
         this.port = port;
@@ -53,11 +56,11 @@ public class HttpServer {
     private Route createRoute() {
         return concat(
                 get(
-                        () -> parameter("packageID", (packageID) -> {
+                        () -> parameter(PACKAGE_ID, (packageID) -> {
                                     Future<Object> result = Patterns.ask(
                                             mainActor,
                                             new Messages(Integer.parseInt(packageID)),
-                                            5000);
+                                            completeOKWithFuture);
                                     return completeOKWithFuture(result, Jackson.marshaller());
                                 }
                         )
