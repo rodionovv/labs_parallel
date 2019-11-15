@@ -59,7 +59,7 @@ public class HttpServer {
         return concat(
                 get(
                         () -> parameter(PACKAGE_ID, (packageID) -> {
-                                    if (Functions.packageIdList.contains(packageID)) {
+                                    if (Functions.packageIdList.contains(Integer.parseInt(packageID))) {
                                         Future<Object> result = Patterns.ask(
                                                 mainActor,
                                                 new Messages(Integer.parseInt(packageID)),
