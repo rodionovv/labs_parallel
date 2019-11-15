@@ -8,7 +8,7 @@ public class Functions {
     private final String script;
     private final String functionName;
     private final Test[] tests;
-    public static HashSet<Integer> packageIdList = new HashSet<>();
+    private static HashSet<Integer> packageIdList = new HashSet<>();
 
     @JsonCreator
     public Functions(
@@ -23,7 +23,9 @@ public class Functions {
         packageIdList.add(Integer.parseInt(packageId));
     }
 
-
+    public static HashSet<Integer> getPackageIdList() {
+        return packageIdList;
+    }
 
 
     public String getScript() {

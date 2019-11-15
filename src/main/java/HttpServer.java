@@ -42,7 +42,6 @@ public class HttpServer {
 
         final Http http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        Main app = new Main();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = createRoute().flow(system,materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
@@ -59,7 +58,7 @@ public class HttpServer {
         return concat(
                 get(
                         () -> parameter(PACKAGE_ID, (packageID) -> {
-                                    if (Functions.packageIdList.contains(Integer.parseInt(packageID))) {
+                                    if (Functions.getPackageIdList().contains(Integer.parseInt(packageID))) {
                                         Future<Object> result = Patterns.ask(
                                                 mainActor,
                                                 new Messages(Integer.parseInt(packageID)),

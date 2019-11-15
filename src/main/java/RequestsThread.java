@@ -12,6 +12,7 @@ import scala.Int;
 
 import java.io.File;
 import java.io.FileReader;
+import java.util.HashSet;
 
 public class RequestsThread extends Thread{
 
@@ -20,7 +21,7 @@ public class RequestsThread extends Thread{
     private final File folder;
 
     private static final String URL = "http://localhost:8080/";
-    private static final String KEY = "?packageID=";
+    private static final String PARAMETR = "?packageID=";
 
     RequestsThread(String path) {
         this.httpClient = HttpClients.createDefault();
@@ -41,7 +42,8 @@ public class RequestsThread extends Thread{
             }
         }
         try {
-            for (Integer packageId : Functions.packageIdList) {
+            HashSet<Integer> packageIdList = Functions.getPackageIdList();
+            for (Integer packageId : packageIdList) {
                 String result = sendGet(packageId);
                 System.out.println(result);
             }
@@ -75,7 +77,7 @@ public class RequestsThread extends Thread{
 
     private String sendGet(int packageID) throws Exception {
         String result = "";
-        HttpGet request = new HttpGet(URL + KEY + packageID);
+        HttpGet request = new HttpGet(URL + PARAMETR + packageID);
         try (CloseableHttpResponse response = this.httpClient.execute(request)){
             HttpEntity entity = response.getEntity();
             if (entity != null){
