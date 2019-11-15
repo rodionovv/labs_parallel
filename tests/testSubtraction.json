@@ -4,11 +4,11 @@
   "functionName":"subFn",
   "tests": [
     {"testName":"test1",
-      "expectedResult":"1",
+      "expectedResult":"1.0",
       "params":[2,1]
     },
     {"testName":"test2",
-      "expectedResult":"2",
+      "expectedResult":"2.0",
       "params":[4,2]
     }
   ]

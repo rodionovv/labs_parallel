@@ -4,11 +4,11 @@
   "functionName":"sumFn",
   "tests": [
     {"testName":"test1",
-      "expectedResult":"3",
+      "expectedResult":"3.0",
       "params":[2,1]
     },
     {"testName":"test2",
-      "expectedResult":"6",
+      "expectedResult":"6.0",
       "params":[4,2]
     }
   ]
