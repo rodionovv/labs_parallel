@@ -115,7 +115,7 @@ class Main extends AllDirectives {
         StringBuilder json = new StringBuilder();
         json.append("{");
         json.append("\"packageId\":\"11\",");
-        json.append("\"jsScript\":\"var divideFn = function(a,b) {retrurn a/b}\",");
+        json.append("\"jsScript\":\"var divideFn = function(a,b) {return a/b}\",");
         json.append("\"packageId\":\"11\",");
         json.append("\"functionName\":\"divideFn\",");
         json.append( "\"tests\":[");
