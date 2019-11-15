@@ -36,7 +36,7 @@ public class Functions {
         return tests;
     }
 
-    public Test getTests(int i) {
+    public Test getTest(int i) {
         return tests[i];
     }
 }

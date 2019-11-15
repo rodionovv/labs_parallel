@@ -71,7 +71,7 @@ public class RequestsThread extends Thread{
     }
 
     private String sendGet() throws Exception {
-        String result = "here";
+        String result = "";
         HttpGet request = new HttpGet(URL + KEY);
         try (CloseableHttpResponse response = this.httpClient.execute(request)){
             HttpEntity entity = response.getEntity();
