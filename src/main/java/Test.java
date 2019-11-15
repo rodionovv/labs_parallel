@@ -14,13 +14,13 @@ public class Test {
     public Test(@JsonProperty("testName") String testName,
                 @JsonProperty("expectedResult") String expectedResult,
                 @JsonProperty("params") Object[] params,
-                @JsonProperty("functionName") String funcName) {
+                @JsonProperty("functionName") String functionName) {
         this.testName = testName;
         this.expectedResult = expectedResult;
         this.params = params;
         this.realResult = "";
         this.checker = "";
-        this.functionName = funcName;
+        this.functionName = functionName;
     }
 
 
