@@ -53,7 +53,7 @@ public class RequestsThread extends Thread{
         String result = "";
         HttpPost post = new HttpPost(URL);
         JSONParser jsonParser = new JSONParser();
-        try(FileReader reader = new FileReader(folder.toString() + fileName)){
+        try(FileReader reader = new FileReader(folder.toString() + "/" + fileName)){
             Object obj = jsonParser.parse(reader);
 
             StringEntity requestEntity  = new StringEntity(
