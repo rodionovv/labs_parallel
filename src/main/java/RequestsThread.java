@@ -4,12 +4,16 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
 
 public class RequestsThread  extends Thread{
+
+    private static final CloseableHttpClient httpClient = HttpClients.createDefault();
 
     @Override
     public void run() {
