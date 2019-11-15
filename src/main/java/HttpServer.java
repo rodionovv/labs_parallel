@@ -8,6 +8,7 @@ import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.marshallers.jackson.Jackson;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
+import akka.http.javadsl.model.StatusCodes;
 import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
@@ -63,7 +64,7 @@ public class HttpServer {
                                                 mainActor,
                                                 new Messages(Integer.parseInt(packageID)),
                                                 TIMEOUT);
-                                        return StatusCodes.
+                                        return StatusCodes.NOT_FOUND
                                         return completeOKWithFuture(result, Jackson.marshaller());
                                     }
                                 }
