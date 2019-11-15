@@ -6,7 +6,7 @@ import org.apache.http.impl.client.HttpClients;
 
 class Main {
 
-    private  static  final String TESTS_DIR = "/home/vasya/IdeaProjects/lab_parallel/tests/";
+    private  static  final String TESTS_DIR = "/home/vasya/IdeaProjects/lab_parallel/tests";
     private static final String LOCALHOST = "localhost";
     private static final int PORT = 8080;
 
