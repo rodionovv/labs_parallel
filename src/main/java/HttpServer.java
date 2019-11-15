@@ -28,6 +28,7 @@ public class HttpServer {
 
     private final static String PACKAGE_ID = "packageID";
     private final static int TIMEOUT = 5000;
+    private final static String POST_MESSAGE = "message send"
 
     HttpServer(String host, int port, ActorSystem system){
         this.host = host;
@@ -60,7 +61,7 @@ public class HttpServer {
                                     Future<Object> result = Patterns.ask(
                                             mainActor,
                                             new Messages(Integer.parseInt(packageID)),
-                                            completeOKWithFuture);
+                                            TIMEOUT);
                                     return completeOKWithFuture(result, Jackson.marshaller());
                                 }
                         )
@@ -69,7 +70,7 @@ public class HttpServer {
                         () -> entity(Jackson.unmarshaller(Functions.class),
                                 msg -> {
                                     mainActor.tell(msg, ActorRef.noSender());
-                                    return  complete("message posted" );
+                                    return  complete(POST_MESSAGE);
                                 }
                         )));
     }
