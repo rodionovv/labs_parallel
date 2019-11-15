@@ -40,5 +40,5 @@ public class Test {
     public String getTestName() {
         return testName;
     }
-    
+
 }

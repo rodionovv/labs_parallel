@@ -28,7 +28,7 @@ public class HttpServer {
 
     private final static String PACKAGE_ID = "packageID";
     private final static int TIMEOUT = 5000;
-    private final static String POST_MESSAGE = "message send"
+    private final static String POST_MESSAGE = "message send";
 
     HttpServer(String host, int port, ActorSystem system){
         this.host = host;
