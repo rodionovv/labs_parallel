@@ -1,11 +1,14 @@
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Vector;
+
 public class Functions {
     private final int packageId;
     private final String script;
     private final String functionName;
     private final Test[] tests;
+    private final Vector<Integer> packageIdList = new Vector<>();
 
     @JsonCreator
     public Functions(
@@ -17,7 +20,11 @@ public class Functions {
         this.functionName = functionName;
         this.tests = tests;
         this.script = script;
+        packageIdList.add(Integer.parseInt(packageId));
     }
+
+
+    
 
     public String getScript() {
         return script;
