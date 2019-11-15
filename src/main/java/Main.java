@@ -129,6 +129,7 @@ class Main extends AllDirectives {
         json.append("},");
         json.append("]");
         json.append("}");
+        System.out.println(json.toString());
         StringEntity requestEntity  = new StringEntity(
                 json.toString(),
                 ContentType.APPLICATION_JSON
