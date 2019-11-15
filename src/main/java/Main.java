@@ -14,6 +14,7 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
@@ -26,6 +27,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.parser.JSONParser;
 import scala.concurrent.Future;
 
 import static akka.http.javadsl.server.Directives.*;
@@ -107,10 +109,17 @@ class Main extends AllDirectives {
                 )));
     }
 
+    @SuppressWarnings("unchecked")
     private static void sendPost() throws Exception {
 
         String result = "";
         HttpPost post = new HttpPost("http://localhost:8080/");
+        JSONParser jsonParser = new JSONParser();
+        try(FileReader reader = new FileReader("~/IdeaProjects/lab_parallel/tests.json")){
+            Object obj = jsonParser.parse(reader);
+            System.out.println(obj.toString());
+        }
+
 
 //        StringBuilder json = new StringBuilder();
 //        json.append("{\n");
@@ -130,16 +139,16 @@ class Main extends AllDirectives {
 //        json.append("]\n");
 //        json.append("}\n");
 //        System.out.println(json.toString());
-        StringEntity requestEntity  = new StringEntity(
-                json.toString(),
-                ContentType.APPLICATION_JSON
-        );
-        post.setEntity(new StringEntity(json.toString()));
-        post.setEntity(requestEntity);
-        try (CloseableHttpResponse response = httpClient.execute(post)){
-            result = EntityUtils.toString(response.getEntity());
-            System.out.println(result);
-        }
+//        StringEntity requestEntity  = new StringEntity(
+//                json.toString(),
+//                ContentType.APPLICATION_JSON
+//        );
+//        post.setEntity(new StringEntity(json.toString()));
+//        post.setEntity(requestEntity);
+//        try (CloseableHttpResponse response = httpClient.execute(post)){
+//            result = EntityUtils.toString(response.getEntity());
+//            System.out.println(result);
+//        }
     }
 
     private  static String sendGet() throws Exception {
