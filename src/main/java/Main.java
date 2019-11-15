@@ -44,11 +44,11 @@ class Main extends AllDirectives {
         @Override
         public void run() {
             try {
-                sleep(10000);
+                sleep(5000);
             } catch (InterruptedException e){}
             for (int i = 0; i < 3; i++) {
                 try {
-                    sleep(5000);
+                    sleep(1000);
                 } catch (InterruptedException e){}
                 try {
                     sendPost();
@@ -117,10 +117,9 @@ class Main extends AllDirectives {
         HttpPost post = new HttpPost("http://localhost:8080/");
         JSONParser jsonParser = new JSONParser();
         try(FileReader reader = new FileReader("/home/vasya/IdeaProjects/lab_parallel/tests.json")){
-            System.out.println("here");
             Object obj = jsonParser.parse(reader);
-            JSONArray list = (JSONArray) obj;
-            System.out.println(list);
+//            JSONArray list = (JSONArray) obj;
+            System.out.println(obj.toString());
         }
 
 
