@@ -31,7 +31,7 @@ public class JSExecutorActor extends AbstractActor {
                 check = "correct";
             }
 
-            StorageMessage storageMessage = new StorageMessage(res, test.getExpectedResult(), check, test.getParams(), test.getTestName());
+            StorageMessage storageMessage = new StorageMessage(res, test.getExpectedResult(), check, test.getParams(), test.getTestName(), test.getFuncName());
             StorageCommand storageCommand = new StorageCommand(functions.getPackageID(), storageMessage);
             getSender().tell(storageCommand, ActorRef.noSender());
         }).build();

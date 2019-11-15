@@ -5,17 +5,20 @@ public class StorageMessage {
     private final String testName;
     private final String checker;
     private final Object[] param;
+    private final String funcName;
 
     StorageMessage(String result,
                            String expectedResult,
                            String checker,
                            Object[] param,
-                           String testName) {
+                           String testName,
+                           String funcName) {
         this.result = result;
         this.expectedResult = expectedResult;
         this.checker = checker;
         this.param = param;
         this.testName = testName;
+        this.funcName = funcName;
     }
 
 
