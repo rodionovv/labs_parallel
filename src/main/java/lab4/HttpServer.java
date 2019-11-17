@@ -1,3 +1,5 @@
+package lab4;
+
 import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -17,9 +19,8 @@ import akka.stream.javadsl.Flow;
 import scala.concurrent.Future;
 
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.concurrent.CompletionStage;
-
-import static akka.http.javadsl.server.Directives.*;
 
 public class HttpServer extends AllDirectives {
 

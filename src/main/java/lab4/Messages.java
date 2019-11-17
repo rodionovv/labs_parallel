@@ -1,3 +1,5 @@
+package lab4;
+
 public class Messages {
 
     private int packageId;

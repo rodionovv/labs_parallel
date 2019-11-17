@@ -1,3 +1,5 @@
+package lab4;
+
 public class StorageCommand {
 
     private final int packageID;

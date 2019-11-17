@@ -1,3 +1,5 @@
+package lab4;
+
 import javafx.util.Pair;
 
 public class ExcuteMessage {

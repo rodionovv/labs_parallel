@@ -1,3 +1,5 @@
+package lab4;
+
 public class StorageMessage {
 
     private final String result;
