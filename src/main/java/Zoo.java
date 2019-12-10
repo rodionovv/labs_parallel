@@ -39,11 +39,23 @@ public class Zoo {
     }
 
 
-    private static class UpdateWatcher implements Watcher {
+    private class UpdateWatcher implements Watcher {
 
         @Override
         public void process(WatchedEvent watchedEvent) {
-            List<String>
+            List<String> servers = new ArrayList<>();
+            try {
+                servers = zoo.getChildren(ZOO_KEEPER_SERVER_DIR, this);
+            } catch (KeeperException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            List<String> serversData = new ArrayList<>();
+            for (String s : servers) {
+                try {
+                    servers.add(new Sting(zoo.getData(ZOO_KEEPER_CHILD_DIR + s, false, null)));
+                }
+            }
         }
     }
 
