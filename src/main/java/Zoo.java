@@ -57,7 +57,7 @@ public class Zoo {
                     e.printStackTrace();
                 }
             }
-            //starage.tell
+            //stirage.tell
         }
     }
 
