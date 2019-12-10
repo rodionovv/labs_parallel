@@ -59,10 +59,8 @@ public class Zoo {
             } catch (KeeperException | InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("here");
             List<String> serversData = new ArrayList<>();
             for (String s : servers) {
-                System.out.println("new server" + s);
                 try {
                     servers.add(new String(zoo.getData(ZOO_KEEPER_CHILD_DIR + s, false, null)));
                 } catch (KeeperException | InterruptedException e) {
