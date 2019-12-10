@@ -53,7 +53,7 @@ public class Zoo {
             List<String> serversData = new ArrayList<>();
             for (String s : servers) {
                 try {
-                    servers.add(new Sting(zoo.getData(ZOO_KEEPER_CHILD_DIR + s, false, null)));
+                    servers.add(new String(zoo.getData(ZOO_KEEPER_CHILD_DIR + s, false, null)));
                 }
             }
         }
