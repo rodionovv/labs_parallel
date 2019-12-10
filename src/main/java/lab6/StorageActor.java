@@ -13,6 +13,11 @@ public class StorageActor extends AbstractActor {
     @Override
     public Receive createReceive() {
         return ReceiveBuilder.create().match(
+                ServerMessage.class,
+                msg -> {
+                    serversData = msg.getServersData();
+                }
+        ).match(
                 PortMessage.class,
                 msg -> {
                     Random rand = new Random();
@@ -22,11 +27,6 @@ public class StorageActor extends AbstractActor {
                         randomPort = rand.nextInt(len);
                     }
                     getSender().tell(Integer.parseInt(serversData.get(randomPort)), ActorRef.noSender());
-                }
-        ).match(
-                ServerMessage.class,
-                msg -> {
-                    serversData = msg.getServersData();
                 }
         ).build();
     }
