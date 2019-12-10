@@ -64,7 +64,7 @@ class Main extends AllDirectives {
                                     if (parsedCount != 0 ) {
                                         CompletionStage<HttpResponse> response = Patterns.ask(
                                                 //storageActor,
-                                                new G
+                                                
                                         )
                                     }
                                 }
