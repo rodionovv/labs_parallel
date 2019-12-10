@@ -26,7 +26,7 @@ class Main extends AllDirectives {
 
 
     private final static String LOCALHOST = "localhost";
-    private final static int TIMEOUT = 
+    private final static int TIMEOUT = 5000;
 
     public static void  main(String[] args)  throws IOException {
 
@@ -67,9 +67,11 @@ class Main extends AllDirectives {
                                         CompletionStage<HttpResponse> response = Patterns.ask(
                                                 //storageActor,
                                                 //port,
-                                                java.time.Duration.ofMillis(TIMEOUT);
-                                        )
+                                                java.time.Duration.ofMillis(TIMEOUT)
+                                        );
+                                        return completeWithFuture(response);
                                     }
+                                    
                                 }
                         )
                 )
