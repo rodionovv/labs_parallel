@@ -107,8 +107,8 @@ class Main extends AllDirectives {
 
     CompletionStage<HttpResponse> makeRequestToServer(String url, int port, int parsedCount) {
         try {
+            parsedCount -= 1;
             return http.singleRequest(
-                    parsedCount -= 1;
                     HttpRequest.create(HTTP_LOCALHOST + port + "/&url=" + url + "&count=" + parsedCount);
             );
         } catch (Exception e) {
