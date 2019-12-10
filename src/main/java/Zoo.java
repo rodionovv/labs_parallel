@@ -1,3 +1,5 @@
+import akka.actor.Actor;
+import akka.actor.ActorRef;
 import org.apache.zookeeper.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +15,16 @@ public class Zoo {
 
     private String port;
     private ZooKeeper zoo;
+    private ActorRef storageActor;
 
-    Zoo(int port) throws IOException {
+    Zoo(int port, ActorRef storageActor) throws IOException {
         this.port = Integer.toString(port);
         this.zoo = new ZooKeeper(
                 ZOO_KEEPER_HOST,
                 TIMEOUT,
                 new UpdateWatcher()
         );
+        this.storageActor = storageActor;
     }
 
     public void create() throws KeeperException, InterruptedException {
@@ -57,7 +61,10 @@ public class Zoo {
                     e.printStackTrace();
                 }
             }
-            //stirage.tell
+            storageActor.tell(
+                    //msg(serversData),
+                    ActorRef.noSender()
+            );
         }
     }
 
