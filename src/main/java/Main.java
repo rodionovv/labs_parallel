@@ -109,7 +109,7 @@ class Main extends AllDirectives {
         try {
             parsedCount -= 1;
             return http.singleRequest(
-                    HttpRequest.create(HTTP_LOCALHOST + port + "/&url=" + url + "&count=" + parsedCount);
+                    HttpRequest.create(HTTP_LOCALHOST + port + "/&url=" + url + "&count=" + parsedCount)
             );
         } catch (Exception e) {
             e.printStackTrace();
