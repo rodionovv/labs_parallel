@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 
 import static akka.http.javadsl.server.Directives.*;
 
@@ -72,7 +73,10 @@ class Main extends AllDirectives {
                                         return completeWithFuture(response);
                                     }
                                     try {
-                                        return complete(make_request(url))
+                                        return complete(make_request(url));
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        e.printStackTrace();
+                                        return complete(err_message)
                                     }
                                 }
                         )
