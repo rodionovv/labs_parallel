@@ -35,6 +35,7 @@ class Main extends AllDirectives {
 
     private static Http http;
     private static int newPort;
+    private static ActorRef storageActor;
 
     public static void  main(String[] args)  throws IOException {
 
@@ -44,8 +45,8 @@ class Main extends AllDirectives {
 
 
         ActorSystem system = ActorSystem.create("routes");
-        ActorRef storageActor = system.actorOf(Props.create(
-                storageActor
+        storageActor = system.actorOf(Props.create(
+                StorageActor
         ));
 
 
