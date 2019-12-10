@@ -52,7 +52,9 @@ class Main extends AllDirectives {
 
         try {
             Zoo zoo = new Zoo(newPort, storageActor);
+            System.out.println("1");
             zoo.create();
+            System.out.println("2");
         } catch (KeeperException | InterruptedException e) {
         }
 
