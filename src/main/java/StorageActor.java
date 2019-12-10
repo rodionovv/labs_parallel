@@ -12,7 +12,7 @@ public class StorageActor extends AbstractActor {
 
                 }
         ).match(
-                //messagefromserver.class,
+                ServerMessage.class
                 msg -> {
 
                 }
