@@ -83,7 +83,7 @@ class Main extends AllDirectives {
                                                 storageActor,
                                                 newPort,
                                                 java.time.Duration.ofMillis(TIMEOUT)
-                                        ).thenCompose(req -> makeRequestToServer(url, req, parsedCount));
+                                        ).thenCompose(req -> makeRequestToServer(url,(int) req, parsedCount));
                                         return completeWithFuture(response);
                                     }
                                     try {
