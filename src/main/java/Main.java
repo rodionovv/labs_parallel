@@ -13,6 +13,7 @@ import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import org.omg.CORBA.TIMEOUT;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +26,7 @@ class Main extends AllDirectives {
 
 
     private final static String LOCALHOST = "localhost";
+    private final static int TIMEOUT = 
 
     public static void  main(String[] args)  throws IOException {
 
@@ -64,7 +66,8 @@ class Main extends AllDirectives {
                                     if (parsedCount != 0 ) {
                                         CompletionStage<HttpResponse> response = Patterns.ask(
                                                 //storageActor,
-                                                
+                                                //port,
+                                                java.time.Duration.ofMillis(TIMEOUT);
                                         )
                                     }
                                 }
