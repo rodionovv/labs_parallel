@@ -10,6 +10,7 @@ import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Complete;
 import akka.http.javadsl.server.Route;
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
@@ -59,7 +60,13 @@ class Main extends AllDirectives {
                 get(
                         () -> parameter(
                                 "url", url -> parameter("count", count -> {
-                                                                 
+                                    int parsedCount = Integer.parseInt(count);
+                                    if (parsedCount != 0 ) {
+                                        CompletionStage<HttpResponse> response = Patterns.ask(
+                                                //storageActor,
+                                                new G
+                                        )
+                                    }
                                 }
                         )
                 )
