@@ -83,7 +83,13 @@ class Main extends AllDirectives {
                 )
             )
         );
+    }
 
-        CompletionStage<HttpRequest> 
+    CompletionStage<HttpResponse> makeRequest(String url) {
+        try {
+            return http.singleRequest(
+                    HttpRequest
+            )
+        }
     }
 }
