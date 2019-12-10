@@ -27,6 +27,7 @@ class Main extends AllDirectives {
 
     private final static String LOCALHOST = "localhost";
     private final static int TIMEOUT = 5000;
+    private final static String ERROR_MESSAGE = "Unable to establish connection to current url";
 
     private static Http http;
 
@@ -74,10 +75,10 @@ class Main extends AllDirectives {
                                         return completeWithFuture(response);
                                     }
                                     try {
-                                        return complete(makeReauest(url));
+                                        return complete(makeRequest(url);
                                     } catch (InterruptedException | ExecutionException e) {
                                         e.printStackTrace();
-                                        return complete(err_message);
+                                        return complete(ERROR_MESSAGE);
                                     }
                                 }
                         )
@@ -86,9 +87,9 @@ class Main extends AllDirectives {
         );
     }
 
-    CompletionStage<HttpResponse> makeRequest(String url) {
+    HttpResponse makeRequest(String url) throws ExecutionException, InterruptedException {
         return http.singleRequest(
                 HttpRequest.create(url)
-        );
+        ).toCompletableFuture().get();
     }
 }
