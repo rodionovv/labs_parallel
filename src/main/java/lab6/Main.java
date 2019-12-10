@@ -54,7 +54,6 @@ class Main extends AllDirectives {
             Zoo zoo = new Zoo(newPort, storageActor);
             zoo.create();
         } catch (KeeperException | InterruptedException e) {
-            e.printStackTrace();
         }
 
         http =  Http.get(system);
