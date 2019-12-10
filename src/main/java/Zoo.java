@@ -1,3 +1,5 @@
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 
@@ -20,11 +22,13 @@ public class Zoo {
         );
     }
 
-    public void create() {
-        ZOO_KEEPER_CHILD_DIR + port,
-        port.getBytes(),
-        ZooDefs.Ids.OPEN_ACL_UNSAFE,
-        
+    public void create() throws KeeperException, InterruptedException {
+        this.zoo.create(
+                ZOO_KEEPER_CHILD_DIR + port,
+                port.getBytes(),
+                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL
+        );
     }
 
 }
