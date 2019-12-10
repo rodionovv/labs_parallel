@@ -35,13 +35,15 @@ class Main extends AllDirectives {
 
 
         Scanner in = new Scanner(System.in);
-        int new_port = in.nextInt();
+        int newPort = in.nextInt();
 
 
         ActorSystem system = ActorSystem.create("routes");
         ActorRef storageActor = system.actorOf(Props.create(
                 //ScorageActor;
         ));
+
+        Zoo zoo = new Zoo(newPort);
 
 
         http =  Http.get(system);
@@ -50,7 +52,7 @@ class Main extends AllDirectives {
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute().flow(system,materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
-                ConnectHttp.toHost(LOCALHOST, new_port),
+                ConnectHttp.toHost(LOCALHOST, newPort),
                 materializer
         );
         System.out.println("Server online at http://localhost:8080/\nPress RETURN to stop...");
@@ -75,7 +77,7 @@ class Main extends AllDirectives {
                                         return completeWithFuture(response);
                                     }
                                     try {
-                                        return complete(makeRequest(url);
+                                        return complete(makeRequest(url));
                                     } catch (InterruptedException | ExecutionException e) {
                                         e.printStackTrace();
                                         return complete(ERROR_MESSAGE);
