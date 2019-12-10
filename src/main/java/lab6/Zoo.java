@@ -29,12 +29,12 @@ public class Zoo {
     }
 
     public void create() throws KeeperException, InterruptedException {
-        zoo.create(
-                ZOO_KEEPER_SERVER_DIR,
-                "parent".getBytes(),
-                ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.PERSISTENT
-        );
+//        zoo.create(
+//                ZOO_KEEPER_SERVER_DIR,
+//                "parent".getBytes(),
+//                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+//                CreateMode.PERSISTENT
+//        );
         zoo.create(
                 ZOO_KEEPER_CHILD_DIR + port,
                 port.getBytes(),
