@@ -71,7 +71,9 @@ class Main extends AllDirectives {
                                         );
                                         return completeWithFuture(response);
                                     }
-                                    
+                                    try {
+                                        return complete(make_request(url))
+                                    }
                                 }
                         )
                 )
