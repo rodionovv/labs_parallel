@@ -64,10 +64,10 @@ public class Zoo {
                 try {
                     servers.add(new String(zoo.getData(ZOO_KEEPER_CHILD_DIR + s, false, null)));
                 } catch (KeeperException | InterruptedException e) {
-
                     System.out.println("in mistake");
                     e.printStackTrace();
                 }
+                System.out.println("in loop");
             }
             System.out.println("here");
             storageActor.tell(
