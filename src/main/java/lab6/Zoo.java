@@ -53,7 +53,7 @@ public class Zoo {
             } catch (KeeperException | InterruptedException e) {
                 e.printStackTrace();
             }
-
+            System.out.println("here");
             List<String> serversData = new ArrayList<>();
             for (String s : servers) {
                 System.out.println("new server" + s);
