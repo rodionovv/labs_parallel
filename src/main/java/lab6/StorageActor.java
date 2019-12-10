@@ -9,7 +9,6 @@ import java.util.Random;
 public class StorageActor extends AbstractActor {
 
     List<String> serversData;
-    int len;
 
     @Override
     public Receive createReceive() {
@@ -17,7 +16,7 @@ public class StorageActor extends AbstractActor {
                 PortMessage.class,
                 msg -> {
                     Random rand = new Random();
-                    
+                    int len = serversData.size();
                     int randomPort = rand.nextInt(len);
                     while(serversData.get(randomPort).equals(msg.getPort())) {
                         randomPort = rand.nextInt(len);
@@ -28,7 +27,6 @@ public class StorageActor extends AbstractActor {
                 ServerMessage.class,
                 msg -> {
                     serversData = msg.getServersData();
-                    len = serversData.size();
                 }
         ).build();
     }
