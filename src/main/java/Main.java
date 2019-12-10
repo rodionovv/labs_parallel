@@ -25,9 +25,10 @@ import static akka.http.javadsl.server.Directives.*;
 
 class Main extends AllDirectives {
 
-
     private final static String LOCALHOST = "localhost";
     private final static int TIMEOUT = 5000;
+
+    private static Http http;
 
     public static void  main(String[] args)  throws IOException {
 
@@ -42,7 +43,7 @@ class Main extends AllDirectives {
         ));
 
 
-        final Http http =  Http.get(system);
+        http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
         Main app = new Main();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute().flow(system,materializer);
@@ -73,7 +74,7 @@ class Main extends AllDirectives {
                                         return completeWithFuture(response);
                                     }
                                     try {
-                                        return complete(make_request(url));
+                                        return complete(makeReauest(url));
                                     } catch (InterruptedException | ExecutionException e) {
                                         e.printStackTrace();
                                         return complete(err_message);
@@ -86,10 +87,8 @@ class Main extends AllDirectives {
     }
 
     CompletionStage<HttpResponse> makeRequest(String url) {
-        try {
-            return http.singleRequest(
-                    HttpRequest
-            )
-        }
+        return http.singleRequest(
+                HttpRequest.create(url)
+        );
     }
 }
