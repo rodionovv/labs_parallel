@@ -12,6 +12,7 @@ import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.concurrent.CompletionStage;
 
 import static akka.http.javadsl.server.Directives.*;
@@ -21,6 +22,10 @@ class Main extends AllDirectives {
 
 
     public static void  main(String[] args)  throws IOException {
+
+        Scanner in = new Scanner(System.in);
+        int cut 
+
         ActorSystem system = ActorSystem.create("routes");
         final Http http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
