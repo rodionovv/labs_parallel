@@ -30,7 +30,8 @@ class Main extends AllDirectives {
     private final static String LOCALHOST = "localhost";
     private final static int TIMEOUT = 5000;
     private final static String ERROR_MESSAGE = "Unable to establish connection to current url";
-    private final static String HTTP_LOCALHOST = 
+    private final static String HTTP_LOCALHOST = "http://localhost:";
+    private final static String CODE_404 = "404";
 
     private static Http http;
     private static int newPort;
@@ -107,11 +108,12 @@ class Main extends AllDirectives {
     CompletionStage<HttpResponse> makeRequestToServer(String url, int port, int parsedCount) {
         try {
             return http.singleRequest(
-                    HttpRequest.create(HTTP_LOCALHOST + port + "/&url=" + url + "&count=" + parsedCount - 1)
+                    parsedCount -= 1;
+                    HttpRequest.create(HTTP_LOCALHOST + port + "/&url=" + url + "&count=" + parsedCount);
             );
         } catch (Exception e) {
             e.printStackTrace();
-            return CompletableFuture.completedFuture(HttpResponse.create().withEntity(ERROR_404);
+            return CompletableFuture.completedFuture(HttpResponse.create().withEntity(CODE_404);
         }
     }
 
