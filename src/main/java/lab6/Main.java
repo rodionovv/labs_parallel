@@ -82,7 +82,7 @@ class Main extends AllDirectives {
                                     if (parsedCount != 0 ) {
                                         CompletionStage<HttpResponse> response = Patterns.ask(
                                                 storageActor,
-                                                newPort,
+                                                new PortMessage(Integer.toString(newPort)),
                                                 java.time.Duration.ofMillis(TIMEOUT)
                                         ).thenCompose(req -> makeRequestToServer(url,(int) req, parsedCount));
                                         return completeWithFuture(response);
