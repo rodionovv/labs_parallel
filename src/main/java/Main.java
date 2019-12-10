@@ -14,6 +14,7 @@ import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Scanner;
 import java.util.concurrent.CompletionStage;
 
@@ -55,8 +56,11 @@ class Main extends AllDirectives {
 
     private Route createRoute() {
         return concat(
-                path("hello", () ->
-                        get(() ->
-                            complete("<h1>Say hello to akka-http</h1>"))));
+                get(
+                        () -> parameter(
+                                "url", url -> parameter("count", count) ->
+                        )
+                )
+        );
     }
 }
