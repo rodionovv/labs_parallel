@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 class Main extends AllDirectives {
 
     private final static String LOCALHOST = "localhost";
-    private final static int TIMEOUT = 5000;
+    private final static int TIMEOUT = 10000;
     private final static String ERROR_MESSAGE = "Unable to establish connection to current url";
     private final static String HTTP_LOCALHOST = "http://localhost:";
     private final static String CODE_404 = "404";
