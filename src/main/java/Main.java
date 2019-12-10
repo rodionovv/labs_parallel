@@ -19,6 +19,7 @@ import org.omg.CORBA.TIMEOUT;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
@@ -29,6 +30,7 @@ class Main extends AllDirectives {
     private final static String LOCALHOST = "localhost";
     private final static int TIMEOUT = 5000;
     private final static String ERROR_MESSAGE = "Unable to establish connection to current url";
+    private final static String HTTP_LOCALHOST = 
 
     private static Http http;
     private static int newPort;
@@ -109,7 +111,7 @@ class Main extends AllDirectives {
             );
         } catch (Exception e) {
             e.printStackTrace();
-            return CompletableFuture.completedFuture(HttpResponse.create().withEntity(NOT_FOUND));
+            return CompletableFuture.completedFuture(HttpResponse.create().withEntity(ERROR_404);
         }
     }
 
