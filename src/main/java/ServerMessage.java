@@ -1,3 +1,14 @@
+import java.util.List;
+
 public class ServerMessage {
-    List<String> serverdData
+    private List<String> serversData;
+
+    ServerMessage(List<String> serversData){
+        this.serversData = serversData;
+    }
+
+    public List<String> getServersData() {
+        return serversData;
+    }
 }
+
