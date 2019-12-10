@@ -80,7 +80,7 @@ class Main extends AllDirectives {
                                                 //storageActor,
                                                 newPort,
                                                 java.time.Duration.ofMillis(TIMEOUT)
-                                        );
+                                        ).thenCompose(port -> makeRequestToServer());
                                         return completeWithFuture(response);
                                     }
                                     try {
@@ -101,4 +101,16 @@ class Main extends AllDirectives {
                 HttpRequest.create(url)
         ).toCompletableFuture().get();
     }
+
+    CompletionStage<HttpResponse> makeRequestToServer(String url, int port, int parsedCount) {
+        try {
+            return http.singleRequest(
+                    HttpRequest.create(HTTP_LOCALHOST + port + "/&url=" + url + "&count=" + parsedCount - 1)
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 
+        }
+    }
+
 }
