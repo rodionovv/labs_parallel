@@ -16,11 +16,10 @@ public class Zoo {
 
     Zoo(int port) {
         this.port = Integer.toString(port);
-        this.watcher = new UpdateWatcher();
         this.zoo = new ZooKeeper(
                 ZOO_KEEPER_HOST,
                 TIMEOUT,
-                //watcher
+                new UpdateWatcher()
         );
     }
 
