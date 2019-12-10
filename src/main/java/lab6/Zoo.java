@@ -1,4 +1,5 @@
-import akka.actor.Actor;
+package lab6;
+
 import akka.actor.ActorRef;
 import org.apache.zookeeper.*;
 import java.util.ArrayList;

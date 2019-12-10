@@ -1,3 +1,5 @@
+package lab6;
+
 import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -8,22 +10,17 @@ import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
-import akka.http.javadsl.server.Complete;
 import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.KeeperException;
-import org.omg.CORBA.TIMEOUT;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
-
-import static akka.http.javadsl.server.Directives.*;
 
 class Main extends AllDirectives {
 
