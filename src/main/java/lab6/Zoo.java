@@ -29,7 +29,7 @@ public class Zoo {
     }
 
     public void create() throws KeeperException, InterruptedException {
-        this.zoo.create(
+        zoo.create(
                 ZOO_KEEPER_CHILD_DIR + port,
                 port.getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
