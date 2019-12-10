@@ -37,11 +37,11 @@ public class Zoo {
     }
 
 
-    public static class UpdateWatcher implements Watcher {
+    private static class UpdateWatcher implements Watcher {
 
         @Override
         public void process(WatchedEvent watchedEvent) {
-
+            List<String>
         }
     }
 
