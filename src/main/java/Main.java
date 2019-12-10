@@ -113,7 +113,7 @@ class Main extends AllDirectives {
             );
         } catch (Exception e) {
             e.printStackTrace();
-            return CompletableFuture.completedFuture(HttpResponse.create().withEntity(CODE_404);
+            return CompletableFuture.completedFuture(HttpResponse.create().withEntity(CODE_404));
         }
     }
 
