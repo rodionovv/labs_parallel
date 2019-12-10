@@ -46,7 +46,7 @@ class Main extends AllDirectives {
 
         ActorSystem system = ActorSystem.create("routes");
         storageActor = system.actorOf(Props.create(
-                StorageActor
+                StorageActor.class
         ));
 
 
