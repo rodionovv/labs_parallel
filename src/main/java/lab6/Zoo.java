@@ -67,6 +67,7 @@ public class Zoo {
                     e.printStackTrace();
                 }
             }
+            System.out.println("here");
             storageActor.tell(
                     new ServerMessage(serversData),
                     ActorRef.noSender()
