@@ -62,7 +62,7 @@ public class Zoo {
                 }
             }
             storageActor.tell(
-                    //msg(serversData),
+                    new ServerMessage(serversData),
                     ActorRef.noSender()
             );
         }
