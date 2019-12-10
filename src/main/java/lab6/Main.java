@@ -50,9 +50,7 @@ class Main extends AllDirectives {
         ));
 
         Zoo zoo = new Zoo(newPort, storageActor);
-        System.out.println("1");
         zoo.create();
-        System.out.println("2");
 
         http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
