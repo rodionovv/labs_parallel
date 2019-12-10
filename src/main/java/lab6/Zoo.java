@@ -31,7 +31,7 @@ public class Zoo {
     public void create() throws KeeperException, InterruptedException {
         this.zoo.create(
                 ZOO_KEEPER_CHILD_DIR + port,
-                Integer.toString(port).getBytes(),
+                port.getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL
         );
