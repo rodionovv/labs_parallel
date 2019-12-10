@@ -75,7 +75,6 @@ class Main extends AllDirectives {
                 get(
                         () -> parameter(
                                 URL, url -> parameter(COUNT, count -> {
-                                    System.out.println(url + " " + count);
                                     int parsedCount = Integer.parseInt(count);
                                     if (parsedCount != 0 ) {
                                         CompletionStage<HttpResponse> response = Patterns.ask(
