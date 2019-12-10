@@ -80,10 +80,10 @@ class Main extends AllDirectives {
                                     int parsedCount = Integer.parseInt(count);
                                     if (parsedCount != 0 ) {
                                         CompletionStage<HttpResponse> response = Patterns.ask(
-                                                //storageActor,
+                                                storageActor,
                                                 newPort,
                                                 java.time.Duration.ofMillis(TIMEOUT)
-                                        ).thenCompose(port -> makeRequestToServer(url, (int) port, parsedCount));
+                                        ).thenCompose(req -> makeRequestToServer(url, req, parsedCount));
                                         return completeWithFuture(response);
                                     }
                                     try {
