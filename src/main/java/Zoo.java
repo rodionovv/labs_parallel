@@ -1,4 +1,5 @@
 import org.apache.zookeeper.*;
+import scala.collection.immutable.List;
 
 import java.io.IOException;
 
