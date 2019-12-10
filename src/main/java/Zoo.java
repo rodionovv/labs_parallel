@@ -12,9 +12,11 @@ public class Zoo {
 
     private String port;
     private ZooKeeper zoo;
+    private UpdateWatcher watcher;
 
     Zoo(int port) {
         this.port = Integer.toString(port);
+        this.watcher = new UpdateWatcher();
         this.zoo = new ZooKeeper(
                 ZOO_KEEPER_HOST,
                 TIMEOUT,
