@@ -33,9 +33,7 @@ public class Zoo {
 
         zoo.getChildren(
                 ZOO_KEEPER_SERVER_DIR,
-                //watcher
-         );
-
+                new UpdateWatcher()
+        );
     }
-
 }
