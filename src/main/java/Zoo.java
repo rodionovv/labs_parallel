@@ -1,7 +1,6 @@
-import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.ZooDefs;
-import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.*;
+
+import java.io.IOException;
 
 public class Zoo {
 
@@ -14,7 +13,7 @@ public class Zoo {
     private ZooKeeper zoo;
     private UpdateWatcher watcher;
 
-    Zoo(int port) {
+    Zoo(int port) throws IOException {
         this.port = Integer.toString(port);
         this.zoo = new ZooKeeper(
                 ZOO_KEEPER_HOST,
@@ -36,4 +35,15 @@ public class Zoo {
                 new UpdateWatcher()
         );
     }
+
+
+    public static class UpdateWatcher implements Watcher {
+
+        @Override
+        public void process(WatchedEvent watchedEvent) {
+
+        }
+    }
+
+
 }
