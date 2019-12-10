@@ -29,7 +29,12 @@ public class Zoo {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL
         );
-        
+
+        zoo.getChildren(
+                ZOO_KEEPER_SERVER_DIR,
+                //watcher
+         );
+
     }
 
 }
