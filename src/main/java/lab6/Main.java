@@ -109,6 +109,7 @@ class Main extends AllDirectives {
     CompletionStage<HttpResponse> makeRequestToServer(String url, int port, int parsedCount) {
         try {
             parsedCount -= 1;
+            System.out.println(HTTP_LOCALHOST + port + "/&url=" + url + "&count=" + parsedCount);
             return http.singleRequest(
                     HttpRequest.create(HTTP_LOCALHOST + port + "/&url=" + url + "&count=" + parsedCount)
             );
