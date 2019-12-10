@@ -32,6 +32,9 @@ class Main extends AllDirectives {
     private final static String ERROR_MESSAGE = "Unable to establish connection to current url";
     private final static String HTTP_LOCALHOST = "http://localhost:";
     private final static String CODE_404 = "404";
+    private final static String URL = "url";
+    private final static String COUNT = "count";
+    private final static String ROUTES = "routes";
 
     private static Http http;
     private static int newPort;
@@ -44,7 +47,7 @@ class Main extends AllDirectives {
         newPort = in.nextInt();
 
 
-        ActorSystem system = ActorSystem.create("routes");
+        ActorSystem system = ActorSystem.create(ROUTES);
         storageActor = system.actorOf(Props.create(
                 StorageActor.class
         ));
@@ -77,7 +80,7 @@ class Main extends AllDirectives {
         return concat(
                 get(
                         () -> parameter(
-                                "url", url -> parameter("count", count -> {
+                                URL, url -> parameter(COUNT, count -> {
                                     int parsedCount = Integer.parseInt(count);
                                     if (parsedCount != 0 ) {
                                         CompletionStage<HttpResponse> response = Patterns.ask(
