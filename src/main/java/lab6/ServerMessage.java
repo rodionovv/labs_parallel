@@ -10,7 +10,7 @@ public class ServerMessage {
     }
 
     public List<String> getServersData() {
-        return serversData;
+        return this.serversData;
     }
 }
 
