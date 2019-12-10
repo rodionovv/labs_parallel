@@ -1,4 +1,5 @@
 import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
 import akka.japi.pf.ReceiveBuilder;
 import java.util.List;
 import java.util.Random;
@@ -13,11 +14,12 @@ public class StorageActor extends AbstractActor {
         return ReceiveBuilder.create().match(
                 PortMessage.class,
                 msg -> {
-                    int randomPort;
-                    Random rand = new Random()
-                    while(serversData.get(new Random().nextInt(len)).equals(msg.getPort())) {
-                        randomPort =
+                    Random rand = new Random();
+                    int randomPort = rand.nextInt(len);
+                    while(serversData.get(randomPort).equals(msg.getPort())) {
+                        randomPort = rand.nextInt(len);
                     }
+                    getSender().tell(Integer.parseInt(serversData.get(randomPort)), ActorRef.noSender());
                 }
         ).match(
                 ServerMessage.class,
