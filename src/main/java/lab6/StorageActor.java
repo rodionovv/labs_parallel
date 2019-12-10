@@ -17,6 +17,7 @@ public class StorageActor extends AbstractActor {
                 PortMessage.class,
                 msg -> {
                     Random rand = new Random();
+                    
                     int randomPort = rand.nextInt(len);
                     while(serversData.get(randomPort).equals(msg.getPort())) {
                         randomPort = rand.nextInt(len);
