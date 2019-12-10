@@ -13,6 +13,7 @@ import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import org.apache.zookeeper.KeeperException;
 import org.omg.CORBA.TIMEOUT;
 
 import java.io.IOException;
@@ -30,12 +31,13 @@ class Main extends AllDirectives {
     private final static String ERROR_MESSAGE = "Unable to establish connection to current url";
 
     private static Http http;
+    private static int newPort;
 
     public static void  main(String[] args)  throws IOException {
 
 
         Scanner in = new Scanner(System.in);
-        int newPort = in.nextInt();
+        newPort = in.nextInt();
 
 
         ActorSystem system = ActorSystem.create("routes");
@@ -43,8 +45,13 @@ class Main extends AllDirectives {
                 //ScorageActor;
         ));
 
-        Zoo zoo = new Zoo(newPort);
 
+        try {
+            Zoo zoo = new Zoo(newPort);
+            zoo.create();
+        } catch (KeeperException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
         http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
@@ -71,7 +78,7 @@ class Main extends AllDirectives {
                                     if (parsedCount != 0 ) {
                                         CompletionStage<HttpResponse> response = Patterns.ask(
                                                 //storageActor,
-                                                //port,
+                                                newPort,
                                                 java.time.Duration.ofMillis(TIMEOUT)
                                         );
                                         return completeWithFuture(response);

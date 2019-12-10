@@ -13,7 +13,6 @@ public class Zoo {
 
     private String port;
     private ZooKeeper zoo;
-    private UpdateWatcher watcher;
 
     Zoo(int port) throws IOException {
         this.port = Integer.toString(port);
