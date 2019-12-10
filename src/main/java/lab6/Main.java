@@ -37,7 +37,7 @@ class Main extends AllDirectives {
     private static int newPort;
     private static ActorRef storageActor;
 
-    public static void  main(String[] args)  throws IOException {
+    public static void  main(String[] args) throws IOException, KeeperException, InterruptedException {
 
 
         Scanner in = new Scanner(System.in);
@@ -49,14 +49,10 @@ class Main extends AllDirectives {
                 StorageActor.class
         ));
 
-
-        try {
-            Zoo zoo = new Zoo(newPort, storageActor);
-            System.out.println("1");
-            zoo.create();
-            System.out.println("2");
-        } catch (KeeperException | InterruptedException e) {
-        }
+        Zoo zoo = new Zoo(newPort, storageActor);
+        System.out.println("1");
+        zoo.create();
+        System.out.println("2");
 
         http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
