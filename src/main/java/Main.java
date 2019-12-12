@@ -25,7 +25,13 @@ class Main{
             boolean more;
 
             while (!Thread.currentThread().isInterrupted()) {
-                
+                items.poll();
+                if (items.pollin(0)) {
+                    while (true) {
+                        ZMsg mesaage = frontend.recv(0);
+                        
+                    }
+                }
             }
         }
 
