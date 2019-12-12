@@ -48,7 +48,7 @@ class Main{
                         ZFrame adress = message.pop();
                         String[] interval = message.popString().split("-");
                         System.out.println(interval[0] + " " + interval[1]);
-                        hashStorage.put(message.pop(), new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
+                        hashStorage.put(adress, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                         message.send(frontend);
                         if (!more) {
                             break;
