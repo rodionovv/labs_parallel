@@ -46,7 +46,7 @@ class Main{
                                         break;
                                     }
                                 }
-                                System.out.println("before send");
+                                System.out.println(getMessage.toString());
                                 getMessage.send(backend);
                                 System.out.println("after send");
                                 break;
