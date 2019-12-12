@@ -15,7 +15,6 @@ public class Client {
             req.connect(FRONTEND_ADDRESS);
             Scanner in = new Scanner(System.in);
             while (true) {
-                System.out.println("here");
                 String[] command = in.nextLine().split(" ");
                 if (command[0].equals("Stop")) {
                     break;
@@ -26,9 +25,7 @@ public class Client {
                     message.add(command[i]);
                 }
                 message.send(req);
-                System.out.println("before");
                 ZMsg response = ZMsg.recvMsg(req);
-                System.out.println("after my");
                 response.destroy();
                 message.destroy();
             }

@@ -35,17 +35,14 @@ class Main{
                 if (items.pollin(0)) {
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
-                        System.out.println(message.toString());
                         ZFrame address = message.pop();
                         emptyFrame = message.pop();
                         for (ZFrame f : message) {
                             if (f.toString().equals("Get")) {
-                                System.out.println("in first if");
                                 ZMsg getMessage = new ZMsg();
                                 int index = Integer.parseInt(message.getLast().toString());
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index <= entry.getValue().getValue()) {
-                                        System.out.println("in second if");
                                         getMessage.add(entry.getKey().duplicate());
                                         getMessage.add(address);
                                         getMessage.add(message.getLast());

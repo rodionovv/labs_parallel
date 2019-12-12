@@ -46,6 +46,18 @@ public class CacheStorage {
                         System.out.println(responseMessage.toString());
                         responseMessage.send(dealer);
                     }
+                    if (messageReceive.size() == 3) {
+                        ZMsg responseMessage = new ZMsg();
+                        String value = messageReceive.pollLast().toString();
+                        int index = Integer.parseInt(messageReceive.pollLast().toString());
+                        responseMessage.add("SET");
+                        ZFrame address = messageReceive.pop();
+                        responseMessage.add(address);
+                        str.replace
+                        responseMessage.add("" + str.charAt(index - left - 1));
+                        System.out.println(responseMessage.toString());
+                        responseMessage.send(dealer);
+                    }
                 }
             }
         }
