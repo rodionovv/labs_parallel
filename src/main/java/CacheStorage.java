@@ -28,6 +28,7 @@ public class CacheStorage {
                     start = System.currentTimeMillis();
                 }
                 if (poller.pollin(0)) {
+                    System.out.println("here");
                     ZMsg messageReceive = ZMsg.recvMsg(dealer);
                     for (ZFrame f : messageReceive) {
                         System.out.println(f.toString());
