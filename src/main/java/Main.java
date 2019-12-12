@@ -23,7 +23,7 @@ class Main{
             items.register(frontend, ZMQ.Poller.POLLIN);
             items.register(backend, ZMQ.Poller.POLLIN);
 
-            
+            frontend.hasReceiveMore();
         }
 
     }
