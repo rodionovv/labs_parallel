@@ -40,7 +40,7 @@ class Main{
                             if (f.toString().equals("Get")) {
                                 int index = Integer.parseInt(message.getLast().toString());
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
-                                    
+
                                 }
                                 messageSend.add(message.getLast());
                             }
