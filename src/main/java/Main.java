@@ -22,7 +22,11 @@ class Main{
             ZMQ.Poller items = context.createPoller(2);
             items.register(frontend, ZMQ.Poller.POLLIN);
             items.register(backend, ZMQ.Poller.POLLIN);
-            
+            boolean more;
+
+            while (!Thread.currentThread().isInterrupted()) {
+                
+            }
         }
 
     }
