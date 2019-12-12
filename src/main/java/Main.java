@@ -12,7 +12,7 @@ class Main{
     private static final String FRONTEND_ADDRESS = "tcp://localhost:5559";
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
 
-    private static HashMap<String, Pair<Integer, Integer>> hashStorage = new HashMap<>();
+    private static HashMap<ZFrame, Pair<Integer, Integer>> hashStorage = new HashMap<>();
 
     public static void  main(String[] args) {
 
@@ -39,7 +39,7 @@ class Main{
                             if (f.toString().equals("Get")) {
                                 ZMsg getMessage = new ZMsg();
                                 int index = Integer.parseInt(message.getLast().toString());
-                                for (Map.Entry<String, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
+                                for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
                                         getMessage.add(entry.getKey());
                                         getMessage.add(message.getLast());
@@ -54,7 +54,7 @@ class Main{
                             if (f.toString().equals("Set")) {
                                 ZMsg setMessage = new ZMsg();
                                 int index = Integer.parseInt(message.getLast().toString());
-                                for (Map.Entry<String, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
+                                for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
                                         setMessage.add(entry.getKey());
                                         setMessage.add(message.pollLast());
@@ -73,7 +73,7 @@ class Main{
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
                         more = backend.hasReceiveMore();
-                        String address = message.pop().toString();
+                        ZFrame address = message.pop();
                         String[] interval = message.popString().split("-");
                         hashStorage.put(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                         System.out.println("after insert");
