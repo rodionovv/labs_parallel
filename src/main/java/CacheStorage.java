@@ -2,15 +2,15 @@ import org.zeromq.*;
 
 public class CacheStorage {
     private static String str;
-    private static String left;
+    private static int left;
     private static String right;
 
 
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
 
     public static void main(String[] args) {
-        left = args[1];
-        right = args[2];
+        left = Integer.parseInt(args[1]);
+        right = Integer.parseInt(args[2]);
         str = args[0].substring(Integer.parseInt(left), Integer.parseInt(right));
         try (ZContext context = new ZContext()) {
             ZMQ.Socket dealer = context.createSocket(SocketType.DEALER);
@@ -32,8 +32,12 @@ public class CacheStorage {
                     start = System.currentTimeMillis();
                 }
                 if (poller.pollin(0)) {
-                    System.out.println("here");
                     ZMsg messageReceive = ZMsg.recvMsg(dealer);
+                    if (messageReceive.size() == 2) {
+                        ZMsg responseMessage = new ZMsg();
+                        int index = Integer.parseInt(messageReceive.getLast().toString());
+                        responseMessage.add("" + str.charAt(index - Integer.parseInt(left)));
+                    }
                     for (ZFrame f : messageReceive) {
                         System.out.println(f.toString());
                     }
