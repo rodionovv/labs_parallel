@@ -73,10 +73,21 @@ class Main{
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
                         ZFrame address = message.pop();
-                        String[] interval = message.popString().split("-");
-                        hashStorage.put(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
-                        System.out.println("after insert");
-                        message.send(frontend);
+                        String checkFrame = message.popString();
+                        String[] interval;
+                        switch (checkFrame){
+                            case "NEW":
+                                interval = message.popString().split("-");
+                                hashStorage.put(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
+                                break;
+                            case "NOTIFY":
+                                interval = message.popString().split("-");
+                                hashStorage.replace(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
+                                break;
+                            case "GET":
+                                message.send(frontend);
+                                break;
+                        }
                         more = backend.hasReceiveMore();
                         if (!more) {
                             break;

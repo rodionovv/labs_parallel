@@ -20,7 +20,7 @@ public class CacheStorage {
             ZMQ.Poller poller = context.createPoller(1);
             poller.register(dealer, ZMQ.Poller.POLLIN);
             ZMsg messageSend = new ZMsg();
-            messageSend.add("")
+            messageSend.add("NEW");
             messageSend.addString(left + "-" + right);
             messageSend.send(dealer);
 
@@ -28,6 +28,7 @@ public class CacheStorage {
                 poller.poll(1);
                 if (System.currentTimeMillis() - start > 5000) {
                     messageSend = new ZMsg();
+                    messageSend.add("NOTIFY");
                     messageSend.addString(left + "-" + right);
                     messageSend.send(dealer);
                     start = System.currentTimeMillis();
@@ -37,6 +38,7 @@ public class CacheStorage {
                     if (messageReceive.size() == 2) {
                         ZMsg responseMessage = new ZMsg();
                         int index = Integer.parseInt(messageReceive.getLast().toString());
+                        responseMessage.add("GET");
                         responseMessage.add("" + str.charAt(index - left));
                         responseMessage.send(dealer);
                     }
