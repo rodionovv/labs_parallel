@@ -12,8 +12,6 @@ public class CacheStorage {
         str = args[0].substring(left, right);
         try (ZContext ctx = new ZContext()) {
             ZMQ.Socket worker = ctx.createSocket(SocketType.DEALER);
-            worker.setHWM(0);
-            worker.setIdentity("W".getBytes(ZMQ.CHARSET));
             worker.connect("tcp://localhost:5560");
             long start = System.currentTimeMillis();
 
@@ -25,6 +23,7 @@ public class CacheStorage {
                 if (System.currentTimeMillis() - start > 5000) {
                     System.out.println("5 secs later");
                     message.addString(left + "-" + right);
+                    message.send(worker);
                     start = System.currentTimeMillis();
                 }
                 if (poller.pollin(0)) {
