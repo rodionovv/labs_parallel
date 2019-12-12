@@ -75,6 +75,7 @@ class Main{
                         String address = message.pop().toString();
                         String[] interval = message.popString().split("-");
                         hashStorage.put(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
+                        System.out.println("after insert");
                         message.send(frontend);
                         if (!more) {
                             break;
