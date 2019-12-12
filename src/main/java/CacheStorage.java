@@ -17,19 +17,17 @@ public class CacheStorage {
             worker.connect("tcp://localhost:5560");
             long start = System.currentTimeMillis();
             while (!Thread.currentThread().isInterrupted()) {
+                ZMsg message = new ZMsg();
                 if (System.currentTimeMillis() - start > 5000) {
                     System.out.println("5 secs later");
-                    ZMsg msgSend = new ZMsg();
-                    msgSend.addString(left + "-" + right);
-                    msgSend.send(worker);
+                    message.addString(left + "-" + right);
                     start = System.currentTimeMillis();
                 } else {
-//                System.out.println("after if");
-//                    ZMsg msgRecieve = ZMsg.recvMsg(worker);
-//                    ZFrame content = msgRecieve.getLast();
-//                    String s = content.toString();
-//                    System.out.println(s);
-//                    msgRecieve.send(worker);
+                    message = ZMsg.recvMsg(worker);
+                    ZFrame content = message.getLast();
+                    String s = content.toString();
+                    System.out.println(s);
+                    message.send(worker);
                 }
             }
         }
