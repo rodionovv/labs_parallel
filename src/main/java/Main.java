@@ -13,6 +13,7 @@ class Main{
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
 
     private static HashMap<ZFrame, Pair<Integer, Integer>> hashStorage = new HashMap<>();
+    private static ZFrame emptyFrame;
 
     public static void  main(String[] args) {
 
@@ -36,6 +37,7 @@ class Main{
                         ZMsg message = ZMsg.recvMsg(frontend);
                         System.out.println(message.toString());
                         ZFrame adress = message.pop();
+                        emptyFrame = message.pop();
                         for (ZFrame f : message) {
                             if (f.toString().equals("Get")) {
                                 ZMsg getMessage = new ZMsg();
@@ -89,10 +91,9 @@ class Main{
                             case "GET":
                                 ZMsg responseMessage = new ZMsg();
                                 responseMessage.add(message.pop());
-                                ZFrame fr = new ZFrame();
-                                responseMessage.add(fr);
-                                
-                                message.send(frontend);
+                                responseMessage.add(emptyFrame);
+                                responseMessage.add(message.pop());
+                                responseMessage.send(frontend);
                         }
                         more = backend.hasReceiveMore();
                         if (!more) {
