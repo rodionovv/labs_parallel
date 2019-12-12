@@ -47,7 +47,6 @@ class Main{
                         more = backend.hasReceiveMore();
                         ZFrame address = message.pop();
                         String[] interval = message.popString().split("-");
-                        
                         System.out.println(interval[0] + " " + interval[1]);
                         hashStorage.put(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                         message.send(frontend);
