@@ -17,7 +17,7 @@ public class CacheStorage {
             dealer.connect(BACKEND_ADDRESS);
             long start = System.currentTimeMillis();
 
-            ZMQ.Poller poller = ctx.createPoller(2);
+            ZMQ.Poller poller = ctx.createPoller(1);
             poller.register(dealer, ZMQ.Poller.POLLIN);
 
             while (!Thread.currentThread().isInterrupted()) {
