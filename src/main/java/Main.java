@@ -34,6 +34,9 @@ class Main{
                     System.out.println("in frontend");
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
+                        for (ZFrame f : message) {
+                            System.out.println(f.toString());
+                        }
                         more = frontend.hasReceiveMore();
                         message.send(backend);
                         if (!more) {
@@ -47,7 +50,6 @@ class Main{
                         more = backend.hasReceiveMore();
                         ZFrame address = message.pop();
                         String[] interval = message.popString().split("-");
-                        System.out.println(interval[0] + " " + interval[1]);
                         hashStorage.put(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                         message.send(frontend);
                         if (!more) {
