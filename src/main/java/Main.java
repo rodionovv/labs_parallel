@@ -45,7 +45,6 @@ class Main{
                                 int index = Integer.parseInt(message.getLast().toString());
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index <= entry.getValue().getValue()) {
-
                                         System.out.println("in second if");
                                         getMessage.add(entry.getKey());
                                         getMessage.add(address);
@@ -53,6 +52,7 @@ class Main{
                                         break;
                                     }
                                 }
+                                System.out.println(getMessage);
                                 getMessage.send(backend);
                                 break;
                             }
