@@ -25,11 +25,11 @@ public class CacheStorage {
                     start = System.currentTimeMillis();
                 } else {
 //                System.out.println("after if");
-                    ZMsg msgRecieve = ZMsg.recvMsg(worker);
-                    ZFrame content = msgRecieve.getLast();
-                    String s = content.toString();
-                    System.out.println(s);
-                    msgRecieve.send(worker);
+//                    ZMsg msgRecieve = ZMsg.recvMsg(worker);
+//                    ZFrame content = msgRecieve.getLast();
+//                    String s = content.toString();
+//                    System.out.println(s);
+//                    msgRecieve.send(worker);
                 }
             }
         }
