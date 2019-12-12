@@ -16,13 +16,17 @@ public class CacheStorage {
             worker.setIdentity("W".getBytes(ZMQ.CHARSET));
             worker.connect("tcp://localhost:5560");
             long start = System.currentTimeMillis();
+
+            
+
             while (!Thread.currentThread().isInterrupted()) {
                 ZMsg message = new ZMsg();
                 if (System.currentTimeMillis() - start > 5000) {
                     System.out.println("5 secs later");
                     message.addString(left + "-" + right);
                     start = System.currentTimeMillis();
-                } else {
+                }
+                if (poller.pollin(0)) {
                     message = ZMsg.recvMsg(worker);
                     ZFrame content = message.getLast();
                     String s = content.toString();
