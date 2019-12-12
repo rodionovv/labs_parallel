@@ -34,7 +34,6 @@ public class CacheStorage {
                     start = System.currentTimeMillis();
                 }
                 if (poller.pollin(0)) {
-                    System.out.println("here");
                     ZMsg messageReceive = ZMsg.recvMsg(dealer);
                     if (messageReceive.size() == 2) {
                         ZMsg responseMessage = new ZMsg();
