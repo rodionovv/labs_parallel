@@ -15,24 +15,25 @@ public class CacheStorage {
             worker.setHWM(0);
             worker.setIdentity("W".getBytes(ZMQ.CHARSET));
             worker.connect("tcp://localhost:5560");
-            //ZMQ.Poller poller = ctx.createPoller(1);
-            //poller.register(worker, ZMQ.Poller.POLLIN);
             long start = System.currentTimeMillis();
+//            ZMQ.Poller poller = ctx.createPoller(1);
+//            poller.register(worker, ZMQ.Poller.POLLIN);
             while (!Thread.currentThread().isInterrupted()) {
+//                poller.poll();
                 System.out.println("in loop");
-                if (System.currentTimeMillis() - start > 5000) {
+//                if (System.currentTimeMillis() - start > 5000) {
                     System.out.println("5 secs later");
                     ZMsg msgSend = new ZMsg();
                     msgSend.addString(left + "-" + right);
                     msgSend.send(worker);
                     start = System.currentTimeMillis();
-                }
+//                }
                 System.out.println("after if");
-                ZMsg msgRecieve = ZMsg.recvMsg(worker);
-                ZFrame content = msgRecieve.getLast();
-                String s = content.toString();
-                System.out.println(s);
-                msgRecieve.send(worker);
+//                ZMsg msgRecieve = ZMsg.recvMsg(worker);
+//                ZFrame content = msgRecieve.getLast();
+//                String s = content.toString();
+//                System.out.println(s);
+//                msgRecieve.send(worker);
             }
         }
     }
