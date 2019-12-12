@@ -19,6 +19,7 @@ public class CacheStorage {
             //poller.register(worker, ZMQ.Poller.POLLIN);
             long start = System.currentTimeMillis();
             while (!Thread.currentThread().isInterrupted()) {
+                System.out.println("in loop");
                 if (System.currentTimeMillis() - start > 5000) {
                     System.out.println("5 secs later");
                     ZMsg msgSend = new ZMsg();
@@ -26,6 +27,7 @@ public class CacheStorage {
                     msgSend.send(worker);
                     start = System.currentTimeMillis();
                 }
+                System.out.println("after if");
                 ZMsg msgRecieve = ZMsg.recvMsg(worker);
                 ZFrame content = msgRecieve.getLast();
                 String s = content.toString();
