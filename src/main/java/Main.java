@@ -46,7 +46,7 @@ class Main{
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index <= entry.getValue().getValue()) {
 
-                                        System.out.println("in first if");
+                                        System.out.println("in second if");
                                         getMessage.add(entry.getKey());
                                         getMessage.add(address);
                                         getMessage.add(message.getLast());
@@ -62,7 +62,7 @@ class Main{
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
                                         setMessage.add(entry.getKey());
-                                        setMessage.add(adress);
+                                        setMessage.add(address);
                                         setMessage.add(message.pollLast());
                                         setMessage.add(message.pollLast());
                                     }
