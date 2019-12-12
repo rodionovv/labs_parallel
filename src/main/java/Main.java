@@ -74,6 +74,7 @@ class Main{
                         ZMsg message = ZMsg.recvMsg(backend);
                         ZFrame address = message.pop();
                         String checkFrame = message.popString();
+                        System.out.println(checkFrame);
                         String[] interval;
                         switch (checkFrame){
                             case "NEW":
