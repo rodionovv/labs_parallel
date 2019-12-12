@@ -2,6 +2,9 @@ import org.zeromq.*;
 
 public class CacheStorage {
 
+    private static String str;
+    private static int left;
+    private static int right;
     left = Integer.parseInt(args[1]);
     right = Integer.parseInt(args[2]);
     str = args[0].substring(left, right);
