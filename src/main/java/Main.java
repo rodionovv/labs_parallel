@@ -72,12 +72,12 @@ class Main{
                 if (items.pollin(1)) {
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
-                        more = backend.hasReceiveMore();
                         ZFrame address = message.pop();
                         String[] interval = message.popString().split("-");
                         hashStorage.put(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                         System.out.println("after insert");
                         message.send(frontend);
+                        more = backend.hasReceiveMore();
                         if (!more) {
                             break;
                         }

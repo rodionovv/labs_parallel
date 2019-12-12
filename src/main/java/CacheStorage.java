@@ -3,7 +3,7 @@ import org.zeromq.*;
 public class CacheStorage {
     private static String str;
     private static int left;
-    private static String right;
+    private static int right;
 
 
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
@@ -11,7 +11,7 @@ public class CacheStorage {
     public static void main(String[] args) {
         left = Integer.parseInt(args[1]);
         right = Integer.parseInt(args[2]);
-        str = args[0].substring(Integer.parseInt(left), Integer.parseInt(right));
+        str = args[0].substring(left, right);
         try (ZContext context = new ZContext()) {
             ZMQ.Socket dealer = context.createSocket(SocketType.DEALER);
             dealer.connect(BACKEND_ADDRESS);
@@ -20,6 +20,7 @@ public class CacheStorage {
             ZMQ.Poller poller = context.createPoller(1);
             poller.register(dealer, ZMQ.Poller.POLLIN);
             ZMsg messageSend = new ZMsg();
+            messageSend.add("")
             messageSend.addString(left + "-" + right);
             messageSend.send(dealer);
 
@@ -36,12 +37,10 @@ public class CacheStorage {
                     if (messageReceive.size() == 2) {
                         ZMsg responseMessage = new ZMsg();
                         int index = Integer.parseInt(messageReceive.getLast().toString());
-                        responseMessage.add("" + str.charAt(index - Integer.parseInt(left)));
+                        responseMessage.add("" + str.charAt(index - left));
+                        responseMessage.send(dealer);
                     }
-                    for (ZFrame f : messageReceive) {
-                        System.out.println(f.toString());
-                    }
-                    messageReceive.send(dealer);
+
                 }
             }
         }
