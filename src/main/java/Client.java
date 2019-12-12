@@ -21,6 +21,7 @@ public class Client {
                 }
                 ZMsg message = new ZMsg();
                 for (int i = 0; i < command.length; i++) {
+                    System.out.println(message[]);
                     message.add(command[i]);
                 }
                 message.send(req);
