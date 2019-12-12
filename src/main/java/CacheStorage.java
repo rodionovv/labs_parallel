@@ -20,16 +20,16 @@ public class CacheStorage {
             long start = System.currentTimeMillis();
             while (!Thread.currentThread().isInterrupted()) {
                 if (System.currentTimeMillis() - start > 5000) {
-                    ZMsg msg = new ZMsg();
-                    msg.addString(left + "-" + right);
-                    msg.send(worker);
+                    ZMsg msgSend = new ZMsg();
+                    msgSend.addString(left + "-" + right);
+                    msgSend.send(worker);
                     start = System.currentTimeMillis();
                 }
-                ZMsg msg = ZMsg.recvMsg(worker);
-                ZFrame content = msg.getLast();
+                ZMsg msgRecieve = ZMsg.recvMsg(worker);
+                ZFrame content = msgRecieve.getLast();
                 String s = content.toString();
                 System.out.println(s);
-                msg.send(worker);
+                msgRecieve.send(worker);
             }
         }
     }
