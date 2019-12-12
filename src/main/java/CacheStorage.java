@@ -14,7 +14,7 @@ public class CacheStorage {
             worker.connect("tcp://localhost:5560");
             long start = System.currentTimeMillis();
 
-            ZMQ.Poller poller = ctx.createPoller(1);
+            ZMQ.Poller poller = ctx.createPoller(2);
             poller.register(worker, ZMQ.Poller.POLLIN);
 
             while (!Thread.currentThread().isInterrupted()) {
