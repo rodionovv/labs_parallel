@@ -35,6 +35,7 @@ public class CacheStorage {
                 }
                 if (poller.pollin(0)) {
                     ZMsg messageReceive = ZMsg.recvMsg(dealer);
+                    System.out.println(messageReceive.toString());
                     if (messageReceive.size() == 2) {
                         ZMsg responseMessage = new ZMsg();
                         int index = Integer.parseInt(messageReceive.getLast().toString());
