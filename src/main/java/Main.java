@@ -30,7 +30,7 @@ class Main{
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
                         more = frontend.hasReceiveMore();
-                        backend.send(message.toString(), more ? ZMQ.SNDMORE : 0);
+                        message.send(backend);
                         if (!more) {
                             break;
                         }
@@ -40,13 +40,12 @@ class Main{
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
                         more = frontend.hasReceiveMore();
-                        frontend.send(message.toString(), more ? ZMQ.SNDMORE : 0);
+                        message.send(frontend);
                         if (!more) {
                             break;
                         }
                     }
                 }
-
             }
         }
     }
