@@ -29,9 +29,24 @@ class Main{
                 if (items.pollin(0)) {
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
-                        
+                        more = frontend.hasReceiveMore();
+                        backend.send(message.toString(), more ? ZMQ.SNDMORE : 0);
+                        if (!more) {
+                            break;
+                        }
                     }
                 }
+                if (items.pollin(1)) {
+                    while (true) {
+                        ZMsg message = ZMsg.recvMsg(backend);
+                        more = frontend.hasReceiveMore();
+                        frontend.send(message.toString(), more ? ZMQ.SNDMORE : 0);
+                        if (!more) {
+                            break;
+                        }
+                    }
+                }
+
             }
         }
 
