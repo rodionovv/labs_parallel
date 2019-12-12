@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 class Main{
 
-    private static final String FRONTEND_ADDRESS = "tcp://*:5559";
-    private static final String BACKEND_ADDRESS = "tcp://*:5560";
+    private static final String FRONTEND_ADDRESS = "tcp://localhost:5559";
+    private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
 
     private static HashMap<ZFrame, Pair<Integer, Integer>> hashStorage = new HashMap<>();
 

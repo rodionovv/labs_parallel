@@ -3,15 +3,27 @@ import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
 
+import java.util.Scanner;
+
 public class Client {
 
-    private static final String FRONTEND_ADDRESS = "tcp://*:5559";
+    private static final String FRONTEND_ADDRESS = "tcp://localhost:5559";
 
     public static void main(String[] args) {
         try (ZContext context = new ZContext()) {
             ZMQ.Socket req = context.createSocket(SocketType.REQ);
-            req.connect("tcp://*:5559");
-            
+            req.connect(FRONTEND_ADDRESS);
+            Scanner in = new Scanner(System.in);
+            while (true) {
+                String[] command = in.nextLine().split(" ");
+                if (command.equals("Stop")) {
+                    break;
+                }
+                ZMsg
+                for (int i = 0; i < command.length; i++) {
+
+                }
+            }
         }
     }
 }

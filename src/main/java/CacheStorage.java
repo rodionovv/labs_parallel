@@ -5,13 +5,16 @@ public class CacheStorage {
     private static String left;
     private static String right;
 
+
+    private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
+
     public static void main(String[] args) {
         left = args[1];
         right = args[2];
         str = args[0].substring(Integer.parseInt(left), Integer.parseInt(right));
         try (ZContext ctx = new ZContext()) {
             ZMQ.Socket dealer = ctx.createSocket(SocketType.DEALER);
-            dealer.connect("tcp://localhost:5560");
+            dealer.connect(BACKEND_ADDRESS);
             long start = System.currentTimeMillis();
 
             ZMQ.Poller poller = ctx.createPoller(2);
