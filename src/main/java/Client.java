@@ -26,6 +26,7 @@ public class Client {
                     message.add(command[i]);
                 }
                 message.send(req);
+                System.out.println("before");
                 ZMsg response = ZMsg.recvMsg(req);
                 System.out.println("after my");
                 response.destroy();
