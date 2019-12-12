@@ -13,7 +13,7 @@ class Main{
 
     private static HashMap<ZFrame, Pair<Integer, Integer>> hashStorage = new HashMap<>();
 
-    public static void  main(String[] args) throws IOException {
+    public static void  main(String[] args) {
 
         try (ZContext context = new ZContext()) {
 
