@@ -87,6 +87,7 @@ class Main{
                                 hashStorage.replace(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                                 break;
                             case "GET":
+                                System.out.println(message.toString());
                                 message.send(frontend);
                         }
                         more = backend.hasReceiveMore();

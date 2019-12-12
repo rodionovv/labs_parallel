@@ -40,8 +40,10 @@ public class CacheStorage {
                         ZMsg responseMessage = new ZMsg();
                         int index = Integer.parseInt(messageReceive.pollLast().toString());
                         responseMessage.add("GET");
-                        responseMessage.add(messageReceive.pop());
+                        ZFrame address = messageReceive.pop();
+                        responseMessage.add(address);
                         responseMessage.add("" + str.charAt(index - left));
+                        System.out.println(responseMessage.toString());
                         responseMessage.send(dealer);
                     }
                 }
