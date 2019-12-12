@@ -12,12 +12,12 @@ public class CacheStorage {
         left = args[1];
         right = args[2];
         str = args[0].substring(Integer.parseInt(left), Integer.parseInt(right));
-        try (ZContext ctx = new ZContext()) {
-            ZMQ.Socket dealer = ctx.createSocket(SocketType.DEALER);
+        try (ZContext context = new ZContext()) {
+            ZMQ.Socket dealer = context.createSocket(SocketType.DEALER);
             dealer.connect(BACKEND_ADDRESS);
             long start = System.currentTimeMillis();
 
-            ZMQ.Poller poller = ctx.createPoller(1);
+            ZMQ.Poller poller = context.createPoller(1);
             poller.register(dealer, ZMQ.Poller.POLLIN);
 
             while (!Thread.currentThread().isInterrupted()) {
