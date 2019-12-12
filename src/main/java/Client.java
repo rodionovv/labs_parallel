@@ -24,6 +24,7 @@ public class Client {
                     message.add(command[i]);
                 }
                 message.send(req);
+                ZMsg response = new Zm
             }
         }
     }
