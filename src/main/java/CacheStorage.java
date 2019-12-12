@@ -20,6 +20,7 @@ public class CacheStorage {
             long start = System.currentTimeMillis();
             while (!Thread.currentThread().isInterrupted()) {
                 if (System.currentTimeMillis() - start > 5000) {
+                    System.out.println("5 secs later");
                     ZMsg msgSend = new ZMsg();
                     msgSend.addString(left + "-" + right);
                     msgSend.send(worker);
