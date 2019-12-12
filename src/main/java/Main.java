@@ -32,7 +32,6 @@ class Main{
             while (!Thread.currentThread().isInterrupted()) {
                 items.poll();
                 if (items.pollin(0)) {
-                    System.out.println("in frontend");
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
                         for (ZFrame f : message) {
@@ -84,6 +83,7 @@ class Main{
                                 hashStorage.replace(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                                 break;
                             case "GET":
+                                System.out.println(message.toString());
                                 message.send(frontend);
                                 break;
                         }
