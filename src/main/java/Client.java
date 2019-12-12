@@ -25,9 +25,9 @@ public class Client {
                     message.add(command[i]);
                 }
                 message.send(req);
-                ZMsg response = ZMsg.recvMsg(req);
-                System.out.println(response.popString());
-                response.destroy();
+//                ZMsg response = ZMsg.recvMsg(req);
+//                System.out.println(response.popString());
+//                response.destroy();
                 message.destroy();
             }
         }
