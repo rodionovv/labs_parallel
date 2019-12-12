@@ -14,7 +14,7 @@ public class CacheStorage {
             ZMQ.Socket worker = ctx.createSocket(SocketType.DEALER);
             worker.setHWM(0);
             worker.setIdentity("W".getBytes(ZMQ.CHARSET));
-            worker.connect("tcp://localhost:5556");
+            worker.connect("tcp://localhost:5560");
             //ZMQ.Poller poller = ctx.createPoller(1);
             //poller.register(worker, ZMQ.Poller.POLLIN);
             long start = System.currentTimeMillis();
