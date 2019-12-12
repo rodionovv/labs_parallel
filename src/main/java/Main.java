@@ -48,6 +48,7 @@ class Main{
                                 }
                                 System.out.println("before send");
                                 getMessage.send(backend);
+                                System.out.println("after send");
                                 break;
                             }
                             if (f.toString().equals("Set")) {
