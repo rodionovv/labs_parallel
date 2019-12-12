@@ -11,6 +11,9 @@ class Main{
 
     public static void  main(String[] args) throws IOException {
 
+        private static final String FRONTEND_ADRES =
+        
+
         try (ZContext context = new ZContext()) {
 
             Socket frontend = context.createSocket(SocketType.ROUTER);
@@ -19,8 +22,10 @@ class Main{
             Socket backend = context.createSocket(SocketType.ROUTER);
             backend.bind("tcp://*:5560");
 
-            Poller items = new Poller(2);
-            items.register(frontend, Poller.POLLIN);
+            ZMQ.Poller items = context.createPoller(2);
+            items.register(frontend, ZMQ.Poller.POLLIN);
+            items.register(backend, ZMQ.Poller.POLLIN);
+
 
         }
 
