@@ -37,6 +37,7 @@ class Main{
                         ZMsg messageSend = new ZMsg();
                         for (ZFrame f : message) {
                             if (f.toString().equals("Get")) {
+                                int index = Integer.parseInt(message.getLast().toString());
                                 
                                 messageSend.add(message.getLast());
                             }
