@@ -90,7 +90,7 @@ class Main{
                                 interval = message.popString().split("-");
                                 hashStorage.replace(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                                 break;
-                            case "GET":
+                            default:
                                 ZMsg responseMessage = new ZMsg();
                                 responseMessage.add(message.pop());
                                 responseMessage.add(emptyFrame);
