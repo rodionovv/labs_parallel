@@ -39,7 +39,8 @@ class Main{
                 if (items.pollin(1)) {
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
-                        more = frontend.hasReceiveMore();
+                        more = backend.hasReceiveMore();
+                        
                         message.send(frontend);
                         if (!more) {
                             break;
