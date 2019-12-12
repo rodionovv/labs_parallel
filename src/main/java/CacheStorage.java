@@ -21,13 +21,13 @@ public class CacheStorage {
             poller.register(dealer, ZMQ.Poller.POLLIN);
 
             while (!Thread.currentThread().isInterrupted()) {
-                poller.poll();
                 if (System.currentTimeMillis() - start > 5000) {
                     ZMsg messageSend = new ZMsg();
                     messageSend.addString(left + "-" + right);
                     messageSend.send(dealer);
                     start = System.currentTimeMillis();
                 }
+                poller.poll();
                 if (poller.pollin(0)) {
                     System.out.println("here");
                     ZMsg messageReceive = ZMsg.recvMsg(dealer);
