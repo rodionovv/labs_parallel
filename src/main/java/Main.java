@@ -28,7 +28,7 @@ class Main{
                 items.poll();
                 if (items.pollin(0)) {
                     while (true) {
-                        ZMsg mesaage = frontend.recv(0);
+                        ZMsg message = ZMsg.recvMsg(frontend);
                         
                     }
                 }
