@@ -56,6 +56,7 @@ class Main{
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
                                         setMessage.add(entry.getKey());
+                                        setMessage.add(adress);
                                         setMessage.add(message.pollLast());
                                         setMessage.add(message.pollLast());
                                     }
@@ -86,7 +87,7 @@ class Main{
                                 break;
                             default:
                                 ZMsg sendMessage = new ZMsg();
-                                sendMessage.add(address);
+                                sendMessage.add(message.pop());
                                 sendMessage.add(message.pop());
                                 sendMessage.send(frontend);
                         }
