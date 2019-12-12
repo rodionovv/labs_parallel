@@ -82,10 +82,8 @@ class Main{
                                 interval = message.popString().split("-");
                                 hashStorage.replace(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                                 break;
-                            case "GET":
-                                System.out.println(message.toString());
+                            default:
                                 message.send(frontend);
-                                break;
                         }
                         more = backend.hasReceiveMore();
                         if (!more) {
