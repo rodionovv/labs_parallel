@@ -16,7 +16,7 @@ public class Client {
             Scanner in = new Scanner(System.in);
             while (true) {
                 String[] command = in.nextLine().split(" ");
-                if (command.equals("Stop")) {
+                if (command[0].equals("Stop")) {
                     break;
                 }
                 ZMsg message = new ZMsg();
