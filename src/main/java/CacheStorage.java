@@ -18,21 +18,20 @@ public class CacheStorage {
             ZMQ.Poller poller = ctx.createPoller(1);
             poller.register(worker, ZMQ.Poller.POLLIN);
 
-            while (!Thread.currentThread().isInterrupted()) {
-                ZMsg message = new ZMsg();
+            while (!Thread.currentThread().isInterrupted())
                 if (System.currentTimeMillis() - start > 5000) {
+                    ZMsg messageSend = new ZMsg();
                     System.out.println("5 secs later");
-                    message.addString(left + "-" + right);
-                    message.send(worker);
+                    messageSend.addString(left + "-" + right);
+                    messageSend.send(worker);
                     start = System.currentTimeMillis();
                 }
-                if (poller.pollin(0)) {
-                    message = ZMsg.recvMsg(worker);
-                    ZFrame content = message.getLast();
-                    String s = content.toString();
-                    System.out.println(s);
-                    message.send(worker);
-                }
+            if (poller.pollin(0)) {
+                ZMsg messageRecieved = ZMsg.recvMsg(worker);
+                ZFrame content = messageRecieved.getLast();
+                String s = content.toString();
+                System.out.println(s);
+                messageRecieved.send(worker);
             }
         }
     }
