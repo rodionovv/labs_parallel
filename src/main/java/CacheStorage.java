@@ -21,13 +21,13 @@ public class CacheStorage {
             while (!Thread.currentThread().isInterrupted()) {
 //                poller.poll();
                 System.out.println("in loop");
-//                if (System.currentTimeMillis() - start > 5000) {
+                if (System.currentTimeMillis() - start > 5000) {
                     System.out.println("5 secs later");
                     ZMsg msgSend = new ZMsg();
                     msgSend.addString(left + "-" + right);
                     msgSend.send(worker);
                     start = System.currentTimeMillis();
-//                }
+                }
                 System.out.println("after if");
 //                ZMsg msgRecieve = ZMsg.recvMsg(worker);
 //                ZFrame content = msgRecieve.getLast();
