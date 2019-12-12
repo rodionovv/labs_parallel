@@ -24,7 +24,7 @@ public class CacheStorage {
             messageSend.send(dealer);
 
             while (!Thread.currentThread().isInterrupted()) {
-                poller.poll();
+                poller.poll(1);
                 if (System.currentTimeMillis() - start > 5000) {
                     messageSend = new ZMsg();
                     messageSend.addString(left + "-" + right);
