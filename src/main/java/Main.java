@@ -40,7 +40,9 @@ class Main{
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
                         more = backend.hasReceiveMore();
-                        
+                        for (ZFrame frame : message) {
+                            System.out.println(frame);
+                        }
                         message.send(frontend);
                         if (!more) {
                             break;
