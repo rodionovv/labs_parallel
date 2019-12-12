@@ -13,7 +13,7 @@ class Main{
         try (ZContext context = new ZContext()) {
             Socket frontend = context.createSocket(SocketType.ROUTER);
             Socket backend = context.createSocket(SocketType.ROUTER);
-            
+            frontend.bind("tcp")
         }
 
     }
