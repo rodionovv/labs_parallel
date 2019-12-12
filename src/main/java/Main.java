@@ -64,6 +64,8 @@ class Main{
                                         setMessage.add(value);
                                     }
                                 }
+                                setMessage.send(backend);
+                                break;
                             }
                         }
                         more = frontend.hasReceiveMore();
