@@ -3,11 +3,15 @@ import org.zeromq.*;
 import org.zeromq.ZMQ.Socket;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 class Main{
 
     private static final String FRONTEND_ADDRESS = "tcp://*:5559";
     private static final String BACKEND_ADDRESS = "tcp://*:5560";
+
+    private static final HashMap<ZFrame, Pair<>>
+
 
     public static void  main(String[] args) throws IOException {
 
