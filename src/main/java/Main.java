@@ -11,7 +11,7 @@ class Main{
     private static final String FRONTEND_ADDRESS = "tcp://*:5559";
     private static final String BACKEND_ADDRESS = "tcp://*:5560";
 
-    private static HashMap<ZFrame, Pair<Integer, Integer>> hashStorage;
+    private static HashMap<ZFrame, Pair<Integer, Integer>> hashStorage = new HashMap<>();
 
     public static void  main(String[] args) throws IOException {
 
@@ -45,10 +45,11 @@ class Main{
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
                         more = backend.hasReceiveMore();
-                        ZFrame adress = message.pop();
+                        ZFrame address = message.pop();
                         String[] interval = message.popString().split("-");
+                        
                         System.out.println(interval[0] + " " + interval[1]);
-                        hashStorage.put(adress, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
+                        hashStorage.put(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                         message.send(frontend);
                         if (!more) {
                             break;
