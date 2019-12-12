@@ -28,11 +28,11 @@ public class CacheStorage {
                     start = System.currentTimeMillis();
                 }
                 if (poller.pollin(0)) {
-                    ZMsg messageRecieved = ZMsg.recvMsg(dealer);
-                    ZFrame content = messageRecieved.getLast();
-                    String s = content.toString();
-                    System.out.println(s);
-                    messageRecieved.send(dealer);
+                    ZMsg messageReceive = ZMsg.recvMsg(dealer);
+                    for (ZFrame f : messageReceive) {
+                        System.out.println(f.toString());
+                    }
+                    messageReceive.send(dealer);
                 }
             }
         }

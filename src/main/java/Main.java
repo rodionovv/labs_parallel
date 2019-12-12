@@ -12,7 +12,7 @@ class Main{
     private static final String FRONTEND_ADDRESS = "tcp://localhost:5559";
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
 
-    private static HashMap<ZFrame, Pair<Integer, Integer>> hashStorage = new HashMap<>();
+    private static HashMap<String, Pair<Integer, Integer>> hashStorage = new HashMap<>();
 
     public static void  main(String[] args) {
 
@@ -35,21 +35,33 @@ class Main{
                     System.out.println("in frontend");
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
-                        ZMsg messageSend = new ZMsg();
                         for (ZFrame f : message) {
                             if (f.toString().equals("Get")) {
+                                ZMsg getMessage = new ZMsg();
                                 int index = Integer.parseInt(message.getLast().toString());
-                                for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
-
+                                for (Map.Entry<String, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
+                                    if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
+                                        getMessage.add(entry.getKey());
+                                        getMessage.add(message.getLast());
+                                        break;
+                                    }
                                 }
-                                messageSend.add(message.getLast());
+                                getMessage.send(backend);
+                                break;
                             }
                             if (f.toString().equals("Set")) {
-                                messageSend.add(message.getLast());
+                                ZMsg setMessage = new ZMsg();
+                                int index = Integer.parseInt(message.getLast().toString());
+                                for (Map.Entry<String, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
+                                    if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
+                                        setMessage.add(entry.getKey());
+                                        setMessage.add(message.pollLast());
+                                        setMessage.add(message.pollLast());
+                                    }
+                                }
                             }
                         }
                         more = frontend.hasReceiveMore();
-                        message.send(backend);
                         if (!more) {
                             break;
                         }
@@ -59,7 +71,7 @@ class Main{
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
                         more = backend.hasReceiveMore();
-                        ZFrame address = message.pop();
+                        String address = message.pop().toString();
                         String[] interval = message.popString().split("-");
                         hashStorage.put(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                         message.send(frontend);
