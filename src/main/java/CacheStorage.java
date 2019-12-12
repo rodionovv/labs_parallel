@@ -1,7 +1,7 @@
 import org.zeromq.*;
 
 public class CacheStorage {
-    private static String str;
+    private static StringBuilder str;
     private static int left;
     private static int right;
 
@@ -11,7 +11,7 @@ public class CacheStorage {
     public static void main(String[] args) {
         left = Integer.parseInt(args[1]);
         right = Integer.parseInt(args[2]);
-        str = args[0].substring(left, right);
+        str = new StringBuilder(args[0].substring(left, right));
         try (ZContext context = new ZContext()) {
             ZMQ.Socket dealer = context.createSocket(SocketType.DEALER);
             dealer.connect(BACKEND_ADDRESS);
@@ -54,7 +54,7 @@ public class CacheStorage {
                         ZFrame address = messageReceive.pop();
                         responseMessage.add(address);
                         System.out.println(str);
-                        str.replace(str.charAt(index - left ), value.charAt(0));
+                        str.setCharAt(index, value.charAt(0));
                         System.out.println(str);
                         responseMessage.add("Value changed");
                         responseMessage.send(dealer);
