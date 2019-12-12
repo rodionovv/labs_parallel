@@ -46,13 +46,13 @@ class Main{
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index <= entry.getValue().getValue()) {
                                         System.out.println("in second if");
-                                        getMessage.add(entry.getKey());
+                                        ZFrame connection = entry.getKey();
+                                        getMessage.add(connection);
                                         getMessage.add(address);
                                         getMessage.add(message.getLast());
                                         break;
                                     }
                                 }
-                                System.out.println(getMessage);
                                 getMessage.send(backend);
                                 break;
                             }
