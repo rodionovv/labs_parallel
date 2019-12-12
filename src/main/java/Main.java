@@ -87,6 +87,11 @@ class Main{
                                 hashStorage.replace(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                                 break;
                             case "GET":
+                                ZMsg responseMessage = new ZMsg();
+                                responseMessage.add(message.pop());
+                                ZFrame fr = new ZFrame();
+                                responseMessage.add(fr);
+                                
                                 message.send(frontend);
                         }
                         more = backend.hasReceiveMore();
