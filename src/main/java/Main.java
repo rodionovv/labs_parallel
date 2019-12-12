@@ -54,13 +54,14 @@ class Main{
                             }
                             if (f.toString().equals("Set")) {
                                 ZMsg setMessage = new ZMsg();
-                                int index = Integer.parseInt(message.getLast().toString());
+                                ZFrame value = message.pollLast();
+                                int index = Integer.parseInt(message.pollLast().toString());
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
                                         setMessage.add(entry.getKey());
                                         setMessage.add(address);
-                                        setMessage.add(message.pollLast());
-                                        setMessage.add(message.pollLast());
+                                        setMessage.add("" + index);
+                                        setMessage.add(value);
                                     }
                                 }
                             }
