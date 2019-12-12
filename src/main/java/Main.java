@@ -34,6 +34,7 @@ class Main{
                 if (items.pollin(0)) {
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
+                        ZFrame adress = message.pop();
                         for (ZFrame f : message) {
                             if (f.toString().equals("Get")) {
                                 ZMsg getMessage = new ZMsg();
@@ -41,6 +42,7 @@ class Main{
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
                                         getMessage.add(entry.getKey());
+                                        getMessage.add(adress);
                                         getMessage.add(message.getLast());
                                         break;
                                     }
