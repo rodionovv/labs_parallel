@@ -58,7 +58,7 @@ class Main{
                                 int index = Integer.parseInt(message.pollLast().toString());
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
-                                        setMessage.add(entry.getKey());
+                                        setMessage.add(entry.getKey().duplicate());
                                         setMessage.add(address);
                                         setMessage.add("" + index);
                                         setMessage.add(value);
