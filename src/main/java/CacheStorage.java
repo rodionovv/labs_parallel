@@ -26,7 +26,6 @@ public class CacheStorage {
                     start = System.currentTimeMillis();
                 }
                 if (poller.pollin(0)) {
-                    //parse msg
                     ZMsg messageRecieved = ZMsg.recvMsg(worker);
                     ZFrame content = messageRecieved.getLast();
                     String s = content.toString();
