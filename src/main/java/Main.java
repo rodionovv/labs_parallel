@@ -27,6 +27,7 @@ class Main{
             while (!Thread.currentThread().isInterrupted()) {
                 items.poll();
                 if (items.pollin(0)) {
+                    System.out.println("in frontend");
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
                         more = frontend.hasReceiveMore();
@@ -37,6 +38,7 @@ class Main{
                     }
                 }
                 if (items.pollin(1)) {
+                    System.out.println("in backend");
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
                         more = backend.hasReceiveMore();
