@@ -54,7 +54,7 @@ public class CacheStorage {
                         ZFrame address = messageReceive.pop();
                         responseMessage.add(address);
                         System.out.println(str);
-                        str.setCharAt(index, value.charAt(0));
+                        str.setCharAt(index - left, value.charAt(0));
                         System.out.println(str);
                         responseMessage.add("Value changed");
                         responseMessage.send(dealer);
