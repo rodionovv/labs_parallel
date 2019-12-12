@@ -23,7 +23,7 @@ public class Client {
                 for (int i = 0; i < command.length; i++) {
                     message.add(command[i]);
                 }
-                
+                message.send(req);
             }
         }
     }
