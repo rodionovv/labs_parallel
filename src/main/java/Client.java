@@ -19,10 +19,11 @@ public class Client {
                 if (command.equals("Stop")) {
                     break;
                 }
-                ZMsg
+                ZMsg message = new ZMsg();
                 for (int i = 0; i < command.length; i++) {
-
+                    message.add(command[i]);
                 }
+                
             }
         }
     }
