@@ -84,6 +84,7 @@ class Main{
                                 break;
                             default:
                                 ZMsg sendMessage = new ZMsg();
+                                sendMessage.add(address);
                                 sendMessage.add(message.pop());
                                 sendMessage.send(frontend);
                         }
