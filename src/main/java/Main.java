@@ -34,9 +34,7 @@ class Main{
                     System.out.println("in frontend");
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
-                        for (ZFrame f : message) {
-                            System.out.println(f.toString());
-                        }
+                        System.out.println(message.pop().toString());
                         more = frontend.hasReceiveMore();
                         message.send(backend);
                         if (!more) {
