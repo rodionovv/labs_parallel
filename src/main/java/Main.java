@@ -46,8 +46,9 @@ class Main{
                         ZMsg message = ZMsg.recvMsg(backend);
                         more = backend.hasReceiveMore();
                         ZFrame adress = message.pop();
-                        String len 
-                        hashStorage.put(message.pop(), new Pair<>())
+                        String[] interval = message.popString().split("-");
+                        System.out.println(interval[0] + " " + interval[1]);
+                        hashStorage.put(message.pop(), new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                         message.send(frontend);
                         if (!more) {
                             break;

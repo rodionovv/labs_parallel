@@ -8,7 +8,7 @@ public class CacheStorage {
     public static void main(String[] args) {
         left = args[1];
         right = args[2];
-        str = args[0].substring(left, right);
+        str = args[0].substring(Integer.parseInt(left), Integer.parseInt(right));
         try (ZContext ctx = new ZContext()) {
             ZMQ.Socket worker = ctx.createSocket(SocketType.DEALER);
             worker.connect("tcp://localhost:5560");
