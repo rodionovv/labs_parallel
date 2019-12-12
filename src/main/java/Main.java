@@ -1,6 +1,7 @@
 import org.zeromq.ZContext;
 import org.zeromq.*;
 import org.zeromq.ZMQ.Socket;
+import zmq.poll.Poller;
 
 import java.io.IOException;
 
@@ -18,7 +19,8 @@ class Main{
             Socket backend = context.createSocket(SocketType.ROUTER);
             backend.bind("tcp://*:5560");
 
-            Poller items =
+            Poller items = new Poller(2);
+            items.register(frontend, Poller.POLLIN);
 
         }
 
