@@ -83,6 +83,8 @@ class Main{
                                 hashStorage.replace(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                                 break;
                             default:
+                                ZMsg sendMessage = new ZMsg();
+                                sendMessage.add()
                                 message.send(frontend);
                         }
                         more = backend.hasReceiveMore();
