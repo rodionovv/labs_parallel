@@ -42,7 +42,7 @@ public class CacheStorage {
                         responseMessage.add("GET");
                         ZFrame address = messageReceive.pop();
                         responseMessage.add(address);
-                        responseMessage.add("" + str.charAt(index - left));
+                        responseMessage.add("" + str.charAt(index - left - 1));
                         System.out.println(responseMessage.toString());
                         responseMessage.send(dealer);
                     }
