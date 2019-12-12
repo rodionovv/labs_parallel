@@ -1,7 +1,6 @@
 import org.zeromq.*;
 
 public class CacheStorage {
-
     private static String str;
     private static int left;
     private static int right;
@@ -18,7 +17,7 @@ public class CacheStorage {
             ZMQ.Poller poller = ctx.createPoller(1);
             poller.register(worker, ZMQ.Poller.POLLIN);
 
-            while (!Thread.currentThread().isInterrupted())
+            while (!Thread.currentThread().isInterrupted()) {
                 if (System.currentTimeMillis() - start > 5000) {
                     ZMsg messageSend = new ZMsg();
                     System.out.println("5 secs later");
@@ -26,12 +25,13 @@ public class CacheStorage {
                     messageSend.send(worker);
                     start = System.currentTimeMillis();
                 }
-            if (poller.pollin(0)) {
-                ZMsg messageRecieved = ZMsg.recvMsg(worker);
-                ZFrame content = messageRecieved.getLast();
-                String s = content.toString();
-                System.out.println(s);
-                messageRecieved.send(worker);
+                if (poller.pollin(0)) {
+                    ZMsg messageRecieved = ZMsg.recvMsg(worker);
+                    ZFrame content = messageRecieved.getLast();
+                    String s = content.toString();
+                    System.out.println(s);
+                    messageRecieved.send(worker);
+                }
             }
         }
     }
