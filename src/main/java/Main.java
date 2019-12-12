@@ -84,7 +84,7 @@ class Main{
                                 break;
                             default:
                                 ZMsg sendMessage = new ZMsg();
-                                sendMessage.add(sendMessage.pop());
+                                sendMessage.add(message.pop());
                                 sendMessage.send(frontend);
                         }
                         more = backend.hasReceiveMore();
