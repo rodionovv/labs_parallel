@@ -46,6 +46,7 @@ class Main{
                                         break;
                                     }
                                 }
+                                System.out.println("before send");
                                 getMessage.send(backend);
                                 break;
                             }
