@@ -1,3 +1,4 @@
+import javafx.util.Pair;
 import org.zeromq.ZContext;
 import org.zeromq.*;
 import org.zeromq.ZMQ.Socket;
@@ -10,8 +11,7 @@ class Main{
     private static final String FRONTEND_ADDRESS = "tcp://*:5559";
     private static final String BACKEND_ADDRESS = "tcp://*:5560";
 
-    private static final HashMap<ZFrame, Pair<>>
-
+    private static HashMap<ZFrame, Pair<Integer, Integer>> hashStorage;
 
     public static void  main(String[] args) throws IOException {
 
@@ -46,6 +46,7 @@ class Main{
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
                         more = backend.hasReceiveMore();
+                        System.out.println(message.pop());
                         for (ZFrame frame : message) {
                             System.out.println(frame);
                         }
