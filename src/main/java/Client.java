@@ -26,6 +26,7 @@ public class Client {
                 }
                 message.send(req);
                 ZMsg response = ZMsg.recvMsg(req);
+                System.out.println(response.pop().toString());
                 response.destroy();
                 message.destroy();
             }
