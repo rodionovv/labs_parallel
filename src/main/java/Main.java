@@ -91,6 +91,7 @@ class Main{
                                 ZMsg sendMessage = new ZMsg();
                                 sendMessage.add(message.pop());
                                 sendMessage.add(message.pop());
+                                System.out.println(sendMessage);
                                 sendMessage.send(frontend);
                         }
                         more = backend.hasReceiveMore();
