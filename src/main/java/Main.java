@@ -34,6 +34,7 @@ class Main{
                 if (items.pollin(0)) {
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
+                        System.out.println(message.toString());
                         ZFrame adress = message.pop();
                         for (ZFrame f : message) {
                             if (f.toString().equals("Get")) {
