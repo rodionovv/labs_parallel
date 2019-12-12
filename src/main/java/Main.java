@@ -42,14 +42,12 @@ class Main{
                     }
                 }
                 if (items.pollin(1)) {
-                    System.out.println("in backend");
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
                         more = backend.hasReceiveMore();
-                        System.out.println(message.pop());
-                        for (ZFrame frame : message) {
-                            System.out.println(frame);
-                        }
+                        ZFrame adress = message.pop();
+                        String len 
+                        hashStorage.put(message.pop(), new Pair<>())
                         message.send(frontend);
                         if (!more) {
                             break;

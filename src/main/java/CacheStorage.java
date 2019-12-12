@@ -2,12 +2,12 @@ import org.zeromq.*;
 
 public class CacheStorage {
     private static String str;
-    private static int left;
-    private static int right;
+    private static String left;
+    private static String right;
 
     public static void main(String[] args) {
-        left = Integer.parseInt(args[1]);
-        right = Integer.parseInt(args[2]);
+        left = args[1];
+        right = args[2];
         str = args[0].substring(left, right);
         try (ZContext ctx = new ZContext()) {
             ZMQ.Socket worker = ctx.createSocket(SocketType.DEALER);
