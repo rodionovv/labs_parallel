@@ -43,7 +43,6 @@ public class CacheStorage {
                         responseMessage.add("" + str.charAt(index - left));
                         responseMessage.send(dealer);
                     }
-
                 }
             }
         }
