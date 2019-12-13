@@ -53,7 +53,9 @@ class Main{
                                 if (found) {
                                     getMessage.send(backend);
                                 } else {
-                                    
+                                    ZMsg errorMessage = new ZMsg();
+                                    errorMessage.add("Cant find hash at " + index);
+                                    errorMessage.send(frontend);
                                 }
                                 break;
                             }
