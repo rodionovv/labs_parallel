@@ -91,7 +91,7 @@ class Main{
                         System.out.println(checkFrame);
                         String[] interval;
                         if (checkFrame == NEW || checkFrame == NOTIFY) {
-                            interval = message.popString().split("-");
+                            interval = message.popString().split();
                             hashStorage.put(new Pair<>(address, System.currentTimeMillis()), new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                         }
                         if (checkFrame == SET || checkFrame == GET) {
