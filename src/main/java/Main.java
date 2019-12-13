@@ -13,7 +13,7 @@ class Main{
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
 
     private static HashMap<Pair<ZFrame, Long>, Pair<Integer, Integer>> hashStorage = new HashMap<>();
-    
+
     public static void  main(String[] args) {
 
         try (ZContext context = new ZContext()) {
