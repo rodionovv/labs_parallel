@@ -76,6 +76,7 @@ class Main{
                 if (items.pollin(1)) {
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
+                        System.out.println(message.toString());
                         ZFrame address = message.pop();
                         String checkFrame = message.popString();
                         System.out.println(checkFrame);
