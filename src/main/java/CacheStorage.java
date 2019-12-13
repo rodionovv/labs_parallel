@@ -35,7 +35,6 @@ public class CacheStorage {
                 }
                 if (poller.pollin(0)) {
                     ZMsg messageReceive = ZMsg.recvMsg(dealer);
-                    System.out.println(messageReceive.toString());
                     if (messageReceive.size() == 2) {
                         ZMsg responseMessage = new ZMsg();
                         int index = Integer.parseInt(messageReceive.pollLast().toString());
@@ -43,7 +42,6 @@ public class CacheStorage {
                         ZFrame address = messageReceive.pop();
                         responseMessage.add(address);
                         responseMessage.add("" + str.charAt(index - left));
-                        System.out.println(responseMessage.toString());
                         responseMessage.send(dealer);
                     }
                     if (messageReceive.size() == 3) {
@@ -53,9 +51,7 @@ public class CacheStorage {
                         responseMessage.add("SET");
                         ZFrame address = messageReceive.pop();
                         responseMessage.add(address);
-                        System.out.println(str);
                         str.setCharAt(index - left, value.charAt(0));
-                        System.out.println(str);
                         responseMessage.add("Value changed");
                         responseMessage.send(dealer);
                     }
