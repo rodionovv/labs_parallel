@@ -123,7 +123,7 @@ class Main{
         } else {
             ZMsg errorMessage = new ZMsg();
             errorMessage.wrap(address);
-            errorMessage.add("Can't acsess hash at position " + index);
+            errorMessage.add("Can't access hash at position " + index);
         }
     }
 }
