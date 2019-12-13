@@ -93,7 +93,7 @@ class Main{
                 if (items.pollin(1)) {
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend, 10000);
-                        if (message != null) {
+                        if (message == null) {
                             System.out.println("dead");
                         }
                         ZFrame address = message.pop();
