@@ -92,11 +92,8 @@ class Main{
                                 break;
                             default:
                                 ZMsg responseMessage = new ZMsg();
-                                ZFrame frame = message.pop();
-                                System.out.println(frame.toString());
-                                responseMessage.add(frame);
-                                responseMessage.add(message.pop());
-                                responseMessage.send(frontend);
+                                message.wrap(message.pop());
+                                System.out.println(message.toString());
                         }
                         more = backend.hasReceiveMore();
                         if (!more) {
