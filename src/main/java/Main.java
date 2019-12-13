@@ -12,7 +12,7 @@ class Main{
     private static final String FRONTEND_ADDRESS = "tcp://localhost:5559";
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
 
-    private static HashMap<ZFrame, Pair<Integer, Integer>> hashStorage = new HashMap<>();
+    private static HashMap<Pair<ZFrame, Long>, Pair<Integer, Integer>> hashStorage = new HashMap<>();
 //    private static ZFrame emptyFrame;
 
     public static void  main(String[] args) {
@@ -41,10 +41,10 @@ class Main{
                                 ZMsg getMessage = new ZMsg();
                                 boolean found = false;
                                 int index = Integer.parseInt(message.getLast().toString());
-                                for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
+                                for (Map.Entry<Pair<ZFrame, Long>, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
                                         found = true;
-                                        getMessage.add(entry.getKey().duplicate());
+                                        getMessage.add(entry.getKey().getKey().duplicate());
                                         getMessage.add(address);
                                         getMessage.add(message.getLast());
                                         break;
