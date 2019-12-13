@@ -56,7 +56,7 @@ class Main{
                                     System.out.println("here");
                                     ZMsg errorMessage = new ZMsg();
                                     errorMessage.wrap(address);
-                                    errorMessage.add("Can't get hash at position" + index);
+                                    errorMessage.add("Can't get hash at position " + index);
                                     errorMessage.send(frontend);
                                 }
                                 break;
@@ -64,16 +64,25 @@ class Main{
                             if (f.toString().equals("Set")) {
                                 ZMsg setMessage = new ZMsg();
                                 ZFrame value = message.pollLast();
+                                boolean found = false;
                                 int index = Integer.parseInt(message.getLast().toString());
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
+                                        found = true;
                                         setMessage.add(entry.getKey().duplicate());
                                         setMessage.add(address);
                                         setMessage.add("" + index);
                                         setMessage.add(value);
                                     }
                                 }
-                                setMessage.send(backend);
+                                if (found) {
+                                    setMessage.send(backend);
+                                } else {
+                                    ZMsg errorMessage = new ZMsg();
+                                    errorMessage.wrap(address);
+                                    errorMessage.add("Can't change hash at position " + index);
+                                    errorMessage.send(frontend);
+                                }
                                 break;
                             }
                         }
