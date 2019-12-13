@@ -13,7 +13,7 @@ class Main{
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
 
     private static HashMap<ZFrame, Pair<Integer, Integer>> hashStorage = new HashMap<>();
-    private static ZFrame emptyFrame;
+//    private static ZFrame emptyFrame;
 
     public static void  main(String[] args) {
 
@@ -35,8 +35,7 @@ class Main{
                 if (items.pollin(0)) {
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(frontend);
-                        ZFrame address = message.pop();
-                        emptyFrame = message.pop();
+                        ZFrame address = message.unwrap();
                         for (ZFrame f : message) {
                             if (f.toString().equals("Get")) {
                                 ZMsg getMessage = new ZMsg();
