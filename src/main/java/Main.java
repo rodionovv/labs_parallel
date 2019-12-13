@@ -54,7 +54,8 @@ class Main{
                             if (f.toString().equals("Set")) {
                                 ZMsg setMessage = new ZMsg();
                                 ZFrame value = message.pollLast();
-                                int index = Integer.parseInt(message.pollLast().toString());
+                                int index = Integer.parseInt(message.getLast().toString());
+                                System.out.println(message);
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
                                         setMessage.add(entry.getKey().duplicate());
