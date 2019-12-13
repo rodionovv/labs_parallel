@@ -91,8 +91,8 @@ class Main{
                                 break;
                             default:
                                 ZMsg responseMessage = new ZMsg();
-                                responseMessage.add(message.pop());
-                                responseMessage.add(emptyFrame);
+                                ZFrame frame = message.pop();
+                                responseMessage.add(frame);
                                 responseMessage.add(message.pop());
                                 responseMessage.send(frontend);
                         }
