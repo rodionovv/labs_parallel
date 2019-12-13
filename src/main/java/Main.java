@@ -92,6 +92,7 @@ class Main{
                             default:
                                 ZMsg responseMessage = new ZMsg();
                                 ZFrame frame = message.pop();
+                                System.out.println(frame.toString());
                                 responseMessage.add(frame);
                                 responseMessage.add(message.pop());
                                 responseMessage.send(frontend);
