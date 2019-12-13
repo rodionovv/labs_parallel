@@ -55,7 +55,8 @@ class Main{
                                 } else {
                                     System.out.println("here");
                                     ZMsg errorMessage = new ZMsg();
-                                    errorMessage.add("Cant find hash at " + index);
+                                    errorMessage.wrap(address);
+                                    errorMessage.add("Can't get hash at position" + index);
                                     errorMessage.send(frontend);
                                 }
                                 break;
