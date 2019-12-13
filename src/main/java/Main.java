@@ -13,8 +13,7 @@ class Main{
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
 
     private static HashMap<Pair<ZFrame, Long>, Pair<Integer, Integer>> hashStorage = new HashMap<>();
-//    private static ZFrame emptyFrame;
-
+    
     public static void  main(String[] args) {
 
         try (ZContext context = new ZContext()) {
@@ -53,7 +52,6 @@ class Main{
                                 if (found) {
                                     getMessage.send(backend);
                                 } else {
-                                    System.out.println("here");
                                     ZMsg errorMessage = new ZMsg();
                                     errorMessage.wrap(address);
                                     errorMessage.add("Can't get hash at position " + index);
