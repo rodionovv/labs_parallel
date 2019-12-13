@@ -91,9 +91,8 @@ class Main{
                                 hashStorage.replace(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                                 break;
                             default:
-                                ZMsg responseMessage = new ZMsg();
                                 message.wrap(message.pop());
-                                System.out.println(message.toString());
+                                message.send(frontend);
                         }
                         more = backend.hasReceiveMore();
                         if (!more) {
