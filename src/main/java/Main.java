@@ -42,7 +42,7 @@ class Main{
                                 boolean found = false;
                                 int index = Integer.parseInt(message.getLast().toString());
                                 for (Map.Entry<Pair<ZFrame, Long>, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
-                                    if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
+                                    if (index >= entry.getValue().getKey() && index < entry.getValue().getValue() && isAlive(entry)) {
                                         found = true;
                                         getMessage.add(entry.getKey().getKey().duplicate());
                                         getMessage.add(address);
@@ -66,10 +66,10 @@ class Main{
                                 ZFrame value = message.pollLast();
                                 boolean found = false;
                                 int index = Integer.parseInt(message.getLast().toString());
-                                for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
+                                for (Map.Entry<Pair<ZFrame, Long>, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
                                         found = true;
-                                        setMessage.add(entry.getKey().duplicate());
+                                        setMessage.add(entry.getKey().getKey().duplicate());
                                         setMessage.add(address);
                                         setMessage.add("" + index);
                                         setMessage.add(value);
@@ -102,11 +102,11 @@ class Main{
                         switch (checkFrame){
                             case "NEW":
                                 interval = message.popString().split("-");
-                                hashStorage.put(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
+                                hashStorage.put(new Pair<>(address, System.currentTimeMillis()), new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                                 break;
                             case "NOTIFY":
                                 interval = message.popString().split("-");
-                                hashStorage.replace(address, new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
+                                hashStorage.replace(new Pair<>(address,System.currentTimeMillis()), new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                                 break;
                             default:
                                 message.wrap(message.pop());
@@ -121,4 +121,14 @@ class Main{
             }
         }
     }
+
+    private static boolean isAlive(Map.Entry<Pair<ZFrame, Long>, Pair<Integer, Integer>> entry) {
+        long now = System.currentTimeMillis();
+        if ( now - entry.getKey().getValue() > 10000) {
+            hashStorage.remove(entry);
+            return false;
+        }
+        return true;
+    }
+
 }
