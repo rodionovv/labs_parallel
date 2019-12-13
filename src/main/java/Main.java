@@ -15,6 +15,7 @@ class Main{
     private static  final String NEW = "NEW";
     private static  final String NOTIFY = "NOTIFY";
     private static final int DOUBLE_TIMEOUT = 10000;
+    private static final String DASH = "-";
 
     private static Socket frontend;
     private static Socket backend;
@@ -72,7 +73,7 @@ class Main{
                                         setMessage.add(value);
                                     }
                                 }
-                                send(setMessage, found);
+                                send(setMessage, found, address, index);
                                 break;
                             }
                         }
@@ -90,11 +91,11 @@ class Main{
                         String checkFrame = message.popString();
                         System.out.println(checkFrame);
                         String[] interval;
-                        if (checkFrame == NEW || checkFrame == NOTIFY) {
-                            interval = message.popString().split();
+                        if (checkFrame.equals(NEW) || checkFrame.equals(NOTIFY)) {
+                            interval = message.popString().split(DASH);
                             hashStorage.put(new Pair<>(address, System.currentTimeMillis()), new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
                         }
-                        if (checkFrame == SET || checkFrame == GET) {
+                        if (checkFrame.equals(SET) || checkFrame.equals(GET)) {
                             message.wrap(message.pop());
                             message.send(frontend);
                         }
