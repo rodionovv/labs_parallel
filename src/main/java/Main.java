@@ -3,7 +3,6 @@ import org.zeromq.ZContext;
 import org.zeromq.*;
 import org.zeromq.ZMQ.Socket;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +10,7 @@ class Main{
 
     private static final String FRONTEND_ADDRESS = "tcp://localhost:5559";
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
+    private static  final String GET = "Get";
 
     private static HashMap<Pair<ZFrame, Long>, Pair<Integer, Integer>> hashStorage = new HashMap<>();
 
@@ -36,7 +36,7 @@ class Main{
                         ZMsg message = ZMsg.recvMsg(frontend);
                         ZFrame address = message.unwrap();
                         for (ZFrame f : message) {
-                            if (f.toString().equals("Get")) {
+                            if (f.toString().equals(GET)) {
                                 ZMsg getMessage = new ZMsg();
                                 boolean found = false;
                                 int index = Integer.parseInt(message.getLast().toString());
@@ -92,10 +92,8 @@ class Main{
                 }
                 if (items.pollin(1)) {
                     while (true) {
-                        ZMsg message = ZMsg.recvMsg(backend, 10000);
-                        if (message == null) {
-                            System.out.println("dead");
-                        }
+                        ZMsg message = ZMsg.recvMsg(backend);
+
                         ZFrame address = message.pop();
                         String checkFrame = message.popString();
                         System.out.println(checkFrame);
