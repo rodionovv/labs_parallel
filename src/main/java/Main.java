@@ -19,7 +19,7 @@ class Main{
 
     private static Socket frontend;
     private static Socket backend;
-    private static HashMap<Pair<ZFrame, Long>, Pair<Integer, Integer>> hashStorage = new HashMap<>();
+    private static HashMap< Pair<Integer, Integer>, Pair<ZFrame, Long>> hashStorage = new HashMap<>();
 
     public static void  main(String[] args) {
 
@@ -47,10 +47,10 @@ class Main{
                                 ZMsg getMessage = new ZMsg();
                                 boolean found = false;
                                 int index = Integer.parseInt(message.getLast().toString());
-                                for (Map.Entry<Pair<ZFrame, Long>, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
-                                    if (index >= entry.getValue().getKey() && index < entry.getValue().getValue() && isAlive(entry)) {
+                                for (Map.Entry< Pair<Integer, Integer>, Pair<ZFrame, Long>> entry : hashStorage.entrySet()) {
+                                    if (index >= entry.getKey().getKey() && index < entry.getKey().getValue() && isAlive(entry)) {
                                         found = true;
-                                        getMessage.add(entry.getKey().getKey().duplicate());
+                                        getMessage.add(entry.getValue().getKey().duplicate());
                                         getMessage.add(address);
                                         getMessage.add(message.getLast());
                                         break;
@@ -64,10 +64,10 @@ class Main{
                                 ZFrame value = message.pollLast();
                                 boolean found = false;
                                 int index = Integer.parseInt(message.getLast().toString());
-                                for (Map.Entry<Pair<ZFrame, Long>, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
-                                    if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
+                                for (Map.Entry< Pair<Integer, Integer>, Pair<ZFrame, Long>> entry : hashStorage.entrySet()) {
+                                    if (index >= entry.getKey().getKey() && index < entry.getKey().getValue() && isAlive(entry)) {
                                         found = true;
-                                        setMessage.add(entry.getKey().getKey().duplicate());
+                                        setMessage.add(entry.getValue().getKey().duplicate());
                                         setMessage.add(address);
                                         setMessage.add("" + index);
                                         setMessage.add(value);
@@ -91,13 +91,19 @@ class Main{
                         String checkFrame = message.popString();
                         System.out.println(checkFrame);
                         String[] interval;
-                        if (checkFrame.equals(NEW) || checkFrame.equals(NOTIFY)) {
-                            interval = message.popString().split(DASH);
-                            hashStorage.put(new Pair<>(address, System.currentTimeMillis()), new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
-                        }
-                        if (checkFrame.equals(SET) || checkFrame.equals(GET)) {
-                            message.wrap(message.pop());
-                            message.send(frontend);
+
+                        switch (checkFrame) {
+                            case NEW:
+                                interval = message.popString().split(DASH);
+                                hashStorage.put(new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])), new Pair<>(address, System.currentTimeMillis()));
+                                break;
+                            case NOTIFY:
+                                interval = message.popString().split(DASH);
+                                hashStorage.replace(new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])), new Pair<>(address, System.currentTimeMillis()));
+                                break;
+                            default:
+                                message.wrap(message.pop());
+                                message.send(frontend);
                         }
                         more = backend.hasReceiveMore();
                         if (!more) {
