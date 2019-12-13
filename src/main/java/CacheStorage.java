@@ -7,6 +7,10 @@ public class CacheStorage {
 
 
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
+    private static final String VALUE_CHANGE = "Value changed";
+    private static final String GET = "Get";
+    private static final String SET = "Set";
+    private static final String NOTIFY = "NOTIFY";
 
     public static void main(String[] args) {
         left = Integer.parseInt(args[1]);
@@ -28,7 +32,7 @@ public class CacheStorage {
                 poller.poll(1);
                 if (System.currentTimeMillis() - start > 5000) {
                     messageSend = new ZMsg();
-                    messageSend.add("NOTIFY");
+                    messageSend.add(NOTIFY);
                     messageSend.addString(left + "-" + right);
                     messageSend.send(dealer);
                     start = System.currentTimeMillis();
@@ -38,7 +42,7 @@ public class CacheStorage {
                     if (messageReceive.size() == 2) {
                         ZMsg responseMessage = new ZMsg();
                         int index = Integer.parseInt(messageReceive.pollLast().toString());
-                        responseMessage.add("GET");
+                        responseMessage.add(GET);
                         ZFrame address = messageReceive.pop();
                         responseMessage.add(address);
                         responseMessage.add("" + str.charAt(index - left));
@@ -48,11 +52,11 @@ public class CacheStorage {
                         ZMsg responseMessage = new ZMsg();
                         String value = messageReceive.pollLast().toString();
                         int index = Integer.parseInt(messageReceive.pollLast().toString());
-                        responseMessage.add("SET");
+                        responseMessage.add(SET);
                         ZFrame address = messageReceive.pop();
                         responseMessage.add(address);
                         str.setCharAt(index - left, value.charAt(0));
-                        responseMessage.add("Value changed");
+                        responseMessage.add(VALUE_CHANGE);
                         responseMessage.send(dealer);
                     }
                 }

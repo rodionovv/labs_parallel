@@ -11,17 +11,23 @@ class Main{
     private static final String FRONTEND_ADDRESS = "tcp://localhost:5559";
     private static final String BACKEND_ADDRESS = "tcp://localhost:5560";
     private static  final String GET = "Get";
+    private static  final String SET = "Set";
+    private static  final String NEW = "NEW";
+    private static  final String NOTIFY = "NOTIFY";
+    private static final int DOUBLE_TIMEOUT = 10000;
 
+    private static Socket frontend;
+    private static Socket backend;
     private static HashMap<Pair<ZFrame, Long>, Pair<Integer, Integer>> hashStorage = new HashMap<>();
 
     public static void  main(String[] args) {
 
         try (ZContext context = new ZContext()) {
 
-            Socket frontend = context.createSocket(SocketType.ROUTER);
+            frontend = context.createSocket(SocketType.ROUTER);
             frontend.bind(FRONTEND_ADDRESS);
 
-            Socket backend = context.createSocket(SocketType.ROUTER);
+            backend = context.createSocket(SocketType.ROUTER);
             backend.bind(BACKEND_ADDRESS);
 
             ZMQ.Poller items = context.createPoller(2);
@@ -49,17 +55,10 @@ class Main{
                                         break;
                                     }
                                 }
-                                if (found) {
-                                    getMessage.send(backend);
-                                } else {
-                                    ZMsg errorMessage = new ZMsg();
-                                    errorMessage.wrap(address);
-                                    errorMessage.add("Can't get hash at position " + index);
-                                    errorMessage.send(frontend);
-                                }
+                                send(getMessage, found , address, index);
                                 break;
                             }
-                            if (f.toString().equals("Set")) {
+                            if (f.toString().equals(SET)) {
                                 ZMsg setMessage = new ZMsg();
                                 ZFrame value = message.pollLast();
                                 boolean found = false;
@@ -73,14 +72,7 @@ class Main{
                                         setMessage.add(value);
                                     }
                                 }
-                                if (found) {
-                                    setMessage.send(backend);
-                                } else {
-                                    ZMsg errorMessage = new ZMsg();
-                                    errorMessage.wrap(address);
-                                    errorMessage.add("Can't change hash at position " + index);
-                                    errorMessage.send(frontend);
-                                }
+                                send(setMessage, found);
                                 break;
                             }
                         }
@@ -98,18 +90,13 @@ class Main{
                         String checkFrame = message.popString();
                         System.out.println(checkFrame);
                         String[] interval;
-                        switch (checkFrame){
-                            case "NEW":
-                                interval = message.popString().split("-");
-                                hashStorage.put(new Pair<>(address, System.currentTimeMillis()), new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
-                                break;
-                            case "NOTIFY":
-                                interval = message.popString().split("-");
-                                hashStorage.replace(new Pair<>(address,System.currentTimeMillis()), new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
-                                break;
-                            default:
-                                message.wrap(message.pop());
-                                message.send(frontend);
+                        if (checkFrame == NEW || checkFrame == NOTIFY) {
+                            interval = message.popString().split("-");
+                            hashStorage.put(new Pair<>(address, System.currentTimeMillis()), new Pair<>(Integer.parseInt(interval[0]), Integer.parseInt(interval[1])));
+                        }
+                        if (checkFrame == SET || checkFrame == GET) {
+                            message.wrap(message.pop());
+                            message.send(frontend);
                         }
                         more = backend.hasReceiveMore();
                         if (!more) {
@@ -123,11 +110,20 @@ class Main{
 
     private static boolean isAlive(Map.Entry<Pair<ZFrame, Long>, Pair<Integer, Integer>> entry) {
         long now = System.currentTimeMillis();
-        if ( now - entry.getKey().getValue() > 10000) {
+        if ( now - entry.getKey().getValue() > DOUBLE_TIMEOUT) {
             hashStorage.remove(entry);
             return false;
         }
         return true;
     }
 
+    private static void send(ZMsg message, boolean found, ZFrame address, int index) {
+        if (found) {
+            message.send(backend);
+        } else {
+            ZMsg errorMessage = new ZMsg();
+            errorMessage.wrap(address);
+            errorMessage.add("Can't acsess hash at position " + index);
+        }
+    }
 }
