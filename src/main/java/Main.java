@@ -39,23 +39,28 @@ class Main{
                         for (ZFrame f : message) {
                             if (f.toString().equals("Get")) {
                                 ZMsg getMessage = new ZMsg();
+                                boolean found = false;
                                 int index = Integer.parseInt(message.getLast().toString());
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
-                                    if (index >= entry.getValue().getKey() && index <= entry.getValue().getValue()) {
+                                    if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
+                                        found = true;
                                         getMessage.add(entry.getKey().duplicate());
                                         getMessage.add(address);
                                         getMessage.add(message.getLast());
                                         break;
                                     }
                                 }
-                                getMessage.send(backend);
+                                if (found) {
+                                    getMessage.send(backend);
+                                } else {
+                                    
+                                }
                                 break;
                             }
                             if (f.toString().equals("Set")) {
                                 ZMsg setMessage = new ZMsg();
                                 ZFrame value = message.pollLast();
                                 int index = Integer.parseInt(message.getLast().toString());
-                                System.out.println(message);
                                 for (Map.Entry<ZFrame, Pair<Integer, Integer>> entry : hashStorage.entrySet()) {
                                     if (index >= entry.getValue().getKey() && index < entry.getValue().getValue()) {
                                         setMessage.add(entry.getKey().duplicate());
@@ -77,7 +82,6 @@ class Main{
                 if (items.pollin(1)) {
                     while (true) {
                         ZMsg message = ZMsg.recvMsg(backend);
-                        System.out.println(message.toString());
                         ZFrame address = message.pop();
                         String checkFrame = message.popString();
                         System.out.println(checkFrame);
