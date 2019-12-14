@@ -115,9 +115,9 @@ class Main{
         }
     }
 
-    private static boolean isAlive(Map.Entry<Pair<ZFrame, Long>, Pair<Integer, Integer>> entry) {
+    private static boolean isAlive(Map.Entry<Pair<Integer, Integer>, Pair<ZFrame, Long>> entry) {
         long now = System.currentTimeMillis();
-        if ( now - entry.getKey().getValue() > DOUBLE_TIMEOUT) {
+        if ( now - entry.getValue().getValue() > DOUBLE_TIMEOUT) {
             hashStorage.remove(entry);
             return false;
         }
