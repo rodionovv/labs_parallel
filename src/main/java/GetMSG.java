@@ -5,6 +5,9 @@ public class GetMSG {
 
     Pair<String, Integer> msgPair;
 
+    public GetMSG(Pair<String, Integer> msgPair) {
+        this.msgPair = msgPair;
+    }
 
     public Pair<String, Integer> getMsgPair() {
         return msgPair;
