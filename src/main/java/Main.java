@@ -13,6 +13,7 @@ import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
 import akka.util.ByteString;
 import javafx.util.Pair;
@@ -79,7 +80,13 @@ class Main extends AllDirectives {
                                                       Duration.ofMillis(MILLIS)
                                               ).thenCompose(
                                                       r -> {
-
+                                                          //TODO:if
+                                                          Sink<CompletionStage<Long>, CompletionStage<Integer>> fold = Sink
+                                                                  .fold(0, (ac, element) -> {
+                                                                      long el = element.toCompletableFuture().get();
+                                                                      return Math.toIntExact(ac + el);
+                                                                  });
+                                                          return Source.from()
                                                       }
                                               )
                                     })
