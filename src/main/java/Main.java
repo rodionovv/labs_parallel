@@ -12,6 +12,7 @@ import akka.http.javadsl.server.AllDirectives;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
 import akka.util.ByteString;
@@ -22,11 +23,14 @@ import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+import static org.asynchttpclient.Dsl.asyncHttpClient;
+
 
 class Main extends AllDirectives {
 
     public static final int PARALLELISM = 1;
     private static ActorRef maiActor;
+    private static ActorMaterializer materializer;
 
 
     private static final String TEST_URL = "testUrl";
@@ -43,7 +47,7 @@ class Main extends AllDirectives {
     public static void  main(String[] args)  throws IOException {
         ActorSystem system = ActorSystem.create(ROUTES);
         final Http http =  Http.get(system);
-        final ActorMaterializer materializer = ActorMaterializer.create(system);
+        materializer = ActorMaterializer.create(system);
         maiActor = system.actorOf();
         Main app = new Main();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute();
@@ -94,18 +98,26 @@ class Main extends AllDirectives {
                                                           return Source.from(Collections.singleton(pair))
                                                                   .toMat(
                                                                           Flow.<Pair<HttpRequest, Integer>>create()
-                                                                          .mapConcat(p -> Collections.nCopies(p.getValue(), p.getKey()))
-                                                                          .mapAsync(PARALLELISM, req - > {
-                                                                              return CompletableFuture.supplyAsync(() ->
-                                                                                    System.currentTimeMillis()
-                                                                              ).thenCompose(start -> CompletableFuture.supplyAsync(() -> {
-                                                                                    CompletionStage<Long> onResponse = asyncHttpClient()
-                                                                              }))
-                                                                          })
-                                                                  )
-                                                      }
-                                              )
-                                    })
+                                                                                  .mapConcat(p -> Collections.nCopies(p.getValue(), p.getKey()))
+                                                                                  .mapAsync(PARALLELISM, newReq -> {
+                                                                                      return CompletableFuture.supplyAsync(() ->
+                                                                                              System.currentTimeMillis()
+                                                                                      ).thenCompose(start -> CompletableFuture.supplyAsync(() -> {
+                                                                                          CompletionStage<Long> onResponse = asyncHttpClient()
+                                                                                                  .prepareGet(newReq.getUri().toString())
+                                                                                                  .execute()
+                                                                                                  .toCompletableFuture()
+                                                                                                  .thenCompose(ans ->
+                                                                                                          CompletableFuture.completedFuture(System.currentTimeMillis() - start));
+                                                                                          return onResponse;
+                                                                                      }));
+                                                                                  })
+                                                                                  .toMat(fold, Keep.right()), Keep.left()).run(materializer);
+                                                      }).thenCompose(sum -> {
+                                                          Patterns.ask(maiActor, new msg);
+                                                          Double midValue =  (double) sum / (double) count;
+                                                      });
+                                    });
                         }
                     }
                 }
