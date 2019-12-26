@@ -10,11 +10,16 @@ import akka.http.javadsl.model.Uri;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Complete;
 import akka.http.javadsl.server.Route;
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.stream.javadsl.Source;
 import akka.util.ByteString;
+import javafx.util.Pair;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.util.Collections;
 import java.util.concurrent.CompletionStage;
 
 import static akka.http.javadsl.server.Directives.*;
@@ -26,6 +31,9 @@ class Main extends AllDirectives {
     private static final String LOCALHOST = "localhost";
     private static final int PORT = 8080;
     private static final String SERVER_MSG = "Server online at http://localhost:8080/\nPress RETURN to stop...";
+    private static final String COUNT_ERROR_MSG = "No count parameter";
+    private static final String URL_ERROR_MSG = "No URL parameter";
+    public static final int MILLIS = 5000;
 
     public static void  main(String[] args)  throws IOException {
         ActorSystem system = ActorSystem.create(ROUTES);
@@ -52,13 +60,25 @@ class Main extends AllDirectives {
                         Uri uri = req.getUri();
                         if (uri.path().equals("/")) {
                             String url = uri.query().getOrElse("testUrl", "");
-                            String count = uri.query().getOrElse("count", "");
+                            String stringCount = uri.query().getOrElse("count", "");
                             if (url.isEmpty()) {
-                                return HttpResponse.create().withEntity(ByteString.fromString());
+                                return HttpResponse.create().withEntity(ByteString.fromString(URL_ERROR_MSG));
                             }
-                            if (url.isEmpty()) {
-                                return HttpResponse.create().withEntity(ByteString.fromString());
+                            if (stringCount.isEmpty()) {
+                                return HttpResponse.create().withEntity(ByteString.fromString(COUNT_ERROR_MSG));
                             }
+                            Integer count = Integer.parseInt(stringCount);
+                            Source<Pair<String, Integer>, NotUsed> src = Source.from(Collections.singleton(new Pair<>(url, count)));
+                            Flow<Pair<String, Integer>, HttpResponse, NotUsed> sink = Flow.<Pair<String, Integer>>create()
+                                    .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.first()), pair.second()))
+                                    .mapAsync(1, pair -> {
+                                      return Patterns
+                                              .ask(
+                                                      mainActor,
+                                                      new GetMSG(),
+                                                      Duration.ofMillis(MILLIS)
+                                              ).thenCompose
+                                    })
                         }
                     }
                 }
