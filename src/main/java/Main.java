@@ -63,7 +63,7 @@ class Main extends AllDirectives {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    private Flow<HttpRequest, HttpResponse, NotUsed> createRoute() {
+    private Flow<HttpRequest, HttpResponse, NotUsed> createRoute() throws NumberFormatException {
         return Flow.of(HttpRequest.class).map(
                 req -> {
                     if (req.method() == HttpMethods.GET) {
@@ -115,7 +115,11 @@ class Main extends AllDirectives {
                                                                                   .toMat(fold, Keep.right()), Keep.left()).run(materializer);
                                                       }).thenCompose(sum -> {
                                                           Patterns.ask(maiActor, new msg);
-                                                          Double midValue =  (double) sum / (double) count;
+                                                          try {
+                                                              Double midValue = (int) sum / (double) count;
+                                                          } catch (NumberFormatException e) {
+                                                              e.printStackTrace();
+                                                          }
                                                       });
                                     });
                         }
