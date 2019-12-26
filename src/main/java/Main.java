@@ -45,7 +45,7 @@ class Main extends AllDirectives {
         ActorSystem system = ActorSystem.create(ROUTES);
         Http http =  Http.get(system);
         materializer = ActorMaterializer.create(system);
-        maiActor = system.actorOf();
+        maiActor = system.actorOf(MainActor.class);
         Main app = new Main();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute();
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
