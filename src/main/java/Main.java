@@ -70,7 +70,7 @@ class Main extends AllDirectives {
                             Integer count = Integer.parseInt(stringCount);
                             Source<Pair<String, Integer>, NotUsed> src = Source.from(Collections.singleton(new Pair<>(url, count)));
                             Flow<Pair<String, Integer>, HttpResponse, NotUsed> sink = Flow.<Pair<String, Integer>>create()
-                                    .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.first()), pair.second()))
+                                    .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.getKey()), pair.getValue()))
                                     .mapAsync(1, pair -> {
                                       return Patterns
                                               .ask(
