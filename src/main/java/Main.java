@@ -9,6 +9,7 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Uri;
 import akka.http.javadsl.server.AllDirectives;
+import akka.japi.Pair;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
@@ -16,7 +17,6 @@ import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
 import akka.util.ByteString;
-import javafx.util.Pair;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Collections;
@@ -80,12 +80,12 @@ class Main extends AllDirectives {
                             Integer count = Integer.parseInt(stringCount);
                             Source<Pair<String, Integer>, NotUsed> src = Source.from(Collections.singleton(new Pair<>(url, count)));
                             Flow<Pair<String, Integer>, HttpResponse, NotUsed> sink = Flow.<Pair<String, Integer>>create()
-                                    .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.getKey()), pair.getValue()))
+                                    .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.first()), pair.second()))
                                     .mapAsync(1, pair -> {
                                       return Patterns
                                               .ask(
                                                       maiActor,
-                                                      new GetMSG(),
+                                                      new GetMSG(new Pair<>(url, count)),
                                                       Duration.ofMillis(MILLIS)
                                               ).thenCompose(
                                                       r -> {
@@ -98,7 +98,7 @@ class Main extends AllDirectives {
                                                           return Source.from(Collections.singleton(pair))
                                                                   .toMat(
                                                                           Flow.<Pair<HttpRequest, Integer>>create()
-                                                                                  .mapConcat(p -> Collections.nCopies(p.getValue(), p.getKey()))
+                                                                                  .mapConcat(p -> Collections.nCopies(p.second(), p.first()))
                                                                                   .mapAsync(PARALLELISM, newReq -> {
                                                                                       return CompletableFuture.supplyAsync(() ->
                                                                                               System.currentTimeMillis()

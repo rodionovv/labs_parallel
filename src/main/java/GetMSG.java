@@ -1,4 +1,4 @@
-import javafx.util.Pair;
+import akka.japi.Pair;
 
 public class GetMSG {
 
@@ -14,10 +14,10 @@ public class GetMSG {
     }
 
     public int getCount() {
-       return msgPair.getValue();
+       return msgPair.second();
     }
 
     public String getValue() {
-        return msgPair.getKey();
+        return msgPair.first();
     }
 }
