@@ -43,7 +43,7 @@ class Main extends AllDirectives {
     private static final String SERVER_MSG = "Server online at http://localhost:8080/\nPress RETURN to stop...";
     private static final String COUNT_ERROR_MSG = "No count parameter";
     private static final String URL_ERROR_MSG = "No URL parameter";
-    private static final String PATH_ERROR = ""
+    private static final String PATH_ERROR = "Incorrect Path";
     public static final int MILLIS = 5000;
 
     public static void  main(String[] args)  throws IOException {
