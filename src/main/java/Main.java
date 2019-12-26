@@ -9,8 +9,6 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Uri;
 import akka.http.javadsl.server.AllDirectives;
-import akka.http.javadsl.server.Complete;
-import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
@@ -18,20 +16,22 @@ import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
 import akka.util.ByteString;
 import javafx.util.Pair;
-
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Collections;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-import static akka.http.javadsl.server.Directives.*;
 
 class Main extends AllDirectives {
 
-    public static final String TEST_URL = "testUrl";
+    public static final int PARALLELISM = 1;
     private static ActorRef maiActor;
 
 
+    private static final String TEST_URL = "testUrl";
+    private static final String COUNT = "count";
+    private static final String EMPTY_STRING = "";
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
     private static final int PORT = 8080;
@@ -65,8 +65,8 @@ class Main extends AllDirectives {
                     if (req.method() == HttpMethods.GET) {
                         Uri uri = req.getUri();
                         if (uri.path().equals("/")) {
-                            String url = uri.query().getOrElse(TEST_URL, "");
-                            String stringCount = uri.query().getOrElse("count", "");
+                            String url = uri.query().getOrElse(TEST_URL, EMPTY_STRING);
+                            String stringCount = uri.query().getOrElse(COUNT, EMPTY_STRING);
                             if (url.isEmpty()) {
                                 return HttpResponse.create().withEntity(ByteString.fromString(URL_ERROR_MSG));
                             }
@@ -91,7 +91,18 @@ class Main extends AllDirectives {
                                                                       long el = element.toCompletableFuture().get();
                                                                       return Math.toIntExact(ac + el);
                                                                   });
-                                                          return Source.from()
+                                                          return Source.from(Collections.singleton(pair))
+                                                                  .toMat(
+                                                                          Flow.<Pair<HttpRequest, Integer>>create()
+                                                                          .mapConcat(p -> Collections.nCopies(p.getValue(), p.getKey()))
+                                                                          .mapAsync(PARALLELISM, req - > {
+                                                                              return CompletableFuture.supplyAsync(() ->
+                                                                                    System.currentTimeMillis()
+                                                                              ).thenCompose(start -> CompletableFuture.supplyAsync(() -> {
+                                                                                    CompletionStage<Long> onResponse = asyncHttpClient()
+                                                                              }))
+                                                                          })
+                                                                  )
                                                       }
                                               )
                                     })
