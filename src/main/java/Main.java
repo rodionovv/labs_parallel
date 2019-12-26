@@ -43,6 +43,7 @@ class Main extends AllDirectives {
     private static final String SERVER_MSG = "Server online at http://localhost:8080/\nPress RETURN to stop...";
     private static final String COUNT_ERROR_MSG = "No count parameter";
     private static final String URL_ERROR_MSG = "No URL parameter";
+    private static final String PATH_ERROR = ""
     public static final int MILLIS = 5000;
 
     public static void  main(String[] args)  throws IOException {
@@ -55,7 +56,7 @@ class Main extends AllDirectives {
                     if (req.method() == HttpMethods.GET){
                         return handleGet(req);
                     } else {
-                        handleReq();
+                        return handleReq(req);
                     }
                 });
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
@@ -70,7 +71,7 @@ class Main extends AllDirectives {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    private HttpResponse handleGet(HttpRequest req) throws ExecutionException, InterruptedException {
+    private static HttpResponse handleGet(HttpRequest req) throws ExecutionException, InterruptedException {
         Uri uri = req.getUri();
         if (uri.path().equals(HOME_DIRECTORY)) {
             String url = uri.query().getOrElse(TEST_URL, EMPTY_STRING);
@@ -129,21 +130,14 @@ class Main extends AllDirectives {
             return res.toCompletableFuture().get();
         } else {
             req.discardEntityBytes(materializer);
-            return HttpResponse.create().withEntity(ByteString.fromString(""));
+            return HttpResponse.create().withEntity(ByteString.fromString(PATH_ERROR));
         }
     }
-    
-    
-    private Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
-        return Flow.of(HttpRequest.class).map(
-                req -> {
-                    if (req.method() == HttpMethods.GET) {
-                        
-                    } else {
-                        req.discardEntityBytes(materializer);
-                        return HttpResponse.create().withStatus(StatusCodes.NOT_FOUND).withEntity("");
-                    }
-                }
-        );
+
+    private static HttpResponse handleReq(HttpRequest req) {
+        req.discardEntityBytes(materializer);
+        return HttpResponse.create().withStatus(StatusCodes.NOT_FOUND).withEntity("");
     }
+    
+
 }
