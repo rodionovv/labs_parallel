@@ -44,6 +44,7 @@ class Main extends AllDirectives {
     private static final String COUNT_ERROR_MSG = "No count parameter";
     private static final String URL_ERROR_MSG = "No URL parameter";
     private static final String PATH_ERROR = "Incorrect Path";
+    private static final String METHOD_ERROR = "Only GET requests allowed";
     public static final int MILLIS = 5000;
 
     public static void  main(String[] args)  throws IOException {
@@ -136,7 +137,7 @@ class Main extends AllDirectives {
 
     private static HttpResponse handleReq(HttpRequest req) {
         req.discardEntityBytes(materializer);
-        return HttpResponse.create().withStatus(StatusCodes.NOT_FOUND).withEntity("");
+        return HttpResponse.create().withStatus(StatusCodes.NOT_FOUND).withEntity(METHOD_ERROR);
     }
     
 
