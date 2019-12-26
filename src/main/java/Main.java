@@ -87,7 +87,9 @@ class Main extends AllDirectives {
                                                     Duration.ofMillis(MILLIS)
                                             ).thenCompose(
                                                     r -> {
-                                                        //TODO:if
+                                                        if ((int) r != NO_SUCH_DATA) {
+                                                            return CompletableFuture.completedFuture((int) r);
+                                                        }
                                                         Sink<CompletionStage<Long>, CompletionStage<Integer>> fold = Sink
                                                                 .fold(ZERO, (ac, element) -> {
                                                                     long el = element.toCompletableFuture().get();
