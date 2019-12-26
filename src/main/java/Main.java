@@ -112,7 +112,7 @@ class Main extends AllDirectives {
                                                     }).thenCompose(sum -> {
                                                 Patterns.ask(
                                                         maiActor,
-                                                        new PutMSG(url, count, 5000),
+                                                        new PutMSG(url, count, sum),
                                                         Duration.ofMillis(MILLIS)
                                                 );
                                                 double midVal = (double) sum / count;
