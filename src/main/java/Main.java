@@ -116,7 +116,7 @@ class Main extends AllDirectives {
                                                       }).thenCompose(sum -> {
                                                           Patterns.ask(maiActor, new msg);
                                                           try {
-                                                              Double midValue = (int) sum / (double) count;
+                                                              Double midValue = (double) sum / (double) count;
                                                           } catch (NumberFormatException e) {
                                                               e.printStackTrace();
                                                           }
