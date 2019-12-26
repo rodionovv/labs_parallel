@@ -28,6 +28,7 @@ import static akka.http.javadsl.server.Directives.*;
 
 class Main extends AllDirectives {
 
+    public static final String TEST_URL = "testUrl";
     private static ActorRef maiActor;
 
 
@@ -64,7 +65,7 @@ class Main extends AllDirectives {
                     if (req.method() == HttpMethods.GET) {
                         Uri uri = req.getUri();
                         if (uri.path().equals("/")) {
-                            String url = uri.query().getOrElse("testUrl", "");
+                            String url = uri.query().getOrElse(TEST_URL, "");
                             String stringCount = uri.query().getOrElse("count", "");
                             if (url.isEmpty()) {
                                 return HttpResponse.create().withEntity(ByteString.fromString(URL_ERROR_MSG));
