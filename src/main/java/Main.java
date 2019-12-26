@@ -43,7 +43,7 @@ class Main extends AllDirectives {
 
     public static void  main(String[] args)  throws IOException {
         ActorSystem system = ActorSystem.create(ROUTES);
-        final Http http =  Http.get(system);
+        Http http =  Http.get(system);
         materializer = ActorMaterializer.create(system);
         maiActor = system.actorOf();
         Main app = new Main();
@@ -128,6 +128,5 @@ class Main extends AllDirectives {
                     }
                 }
         );
-        final CompletionStage<ServerBinding> binding = http.bind
     }
 }
