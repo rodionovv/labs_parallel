@@ -85,7 +85,7 @@ class Main extends AllDirectives {
                                       return Patterns
                                               .ask(
                                                       maiActor,
-                                                      new GetMSG(new Pair<>(url, count)),
+                                                      new GetMSG(new javafx.util.Pair<>(url, count)),
                                                       Duration.ofMillis(MILLIS)
                                               ).thenCompose(
                                                       r -> {
@@ -112,7 +112,7 @@ class Main extends AllDirectives {
                                                                                           return onResponse;
                                                                                       }));
                                                                                   })
-                                                                                  .toMat(fold, Keep.right()), Keep.left()).run(materializer);
+                                                                                  .toMat(fold, Keep.right()), Keep.left()).run(materializer)
                                                       }).thenCompose(sum -> {
                                                           Patterns.ask(maiActor, new msg);
                                                           double midVal = (dp)
