@@ -27,6 +27,7 @@ import static org.asynchttpclient.Dsl.asyncHttpClient;
 class Main extends AllDirectives {
 
     public static final int PARALLELISM = 1;
+    public static final int ZERO = 0;
     private static ActorRef maiActor;
     private static ActorMaterializer materializer;
 
@@ -79,16 +80,16 @@ class Main extends AllDirectives {
                             Source<Pair<String, Integer>, NotUsed> src = Source.from(Collections.singleton(new Pair<>(url, count)));
                             Flow<Pair<String, Integer>, HttpResponse, NotUsed> sink = Flow.<Pair<String, Integer>>create()
                                     .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.first()), pair.second()))
-                                    .mapAsync(1, pair -> Patterns
+                                    .mapAsync(PARALLELISM, pair -> Patterns
                                             .ask(
                                                     maiActor,
-                                                    new GetMSG(new javafx.util.Pair<>(url, count)),
+                                                    new GetMSG(new Pair<>(url, count)),
                                                     Duration.ofMillis(MILLIS)
                                             ).thenCompose(
                                                     r -> {
                                                         //TODO:if
                                                         Sink<CompletionStage<Long>, CompletionStage<Integer>> fold = Sink
-                                                                .fold(0, (ac, element) -> {
+                                                                .fold(ZERO, (ac, element) -> {
                                                                     long el = element.toCompletableFuture().get();
                                                                     return Math.toIntExact(ac + el);
                                                                 });
