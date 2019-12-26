@@ -53,7 +53,7 @@ class Main extends AllDirectives {
                             String url = uri.query().getOrElse("testUrl", "");
                             String count = uri.query().getOrElse("count", "");
                             if (url.isEmpty()) {
-                                
+                                return 
                             }
                         }
                     }
