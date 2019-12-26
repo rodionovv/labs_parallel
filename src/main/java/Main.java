@@ -109,7 +109,10 @@ class Main extends AllDirectives {
                                                                                 })))
                                                                                 .toMat(fold, Keep.right()), Keep.right()).run(materializer);
                                                     }).thenCompose(sum -> {
-                                                Patterns.ask(maiActor, new msg);
+                                                Patterns.ask(maiActor,
+                                                        new PutMSG(),
+                                                        Duration.ofMillis(MILLIS)
+                                                );
                                                 double midVal = (double) sum / count;
                                                 return CompletableFuture.completedFuture(HttpResponse.create().withEntity(ByteString.fromString("" + midVal)));
                                             }));
