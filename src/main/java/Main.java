@@ -12,6 +12,7 @@ import akka.http.javadsl.server.Complete;
 import akka.http.javadsl.server.Route;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.util.ByteString;
 
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
@@ -53,7 +54,10 @@ class Main extends AllDirectives {
                             String url = uri.query().getOrElse("testUrl", "");
                             String count = uri.query().getOrElse("count", "");
                             if (url.isEmpty()) {
-                                return 
+                                return HttpResponse.create().withEntity(ByteString.fromString());
+                            }
+                            if (url.isEmpty()) {
+                                return HttpResponse.create().withEntity(ByteString.fromString());
                             }
                         }
                     }
