@@ -1,6 +1,7 @@
 import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -45,7 +46,7 @@ class Main extends AllDirectives {
         ActorSystem system = ActorSystem.create(ROUTES);
         Http http =  Http.get(system);
         materializer = ActorMaterializer.create(system);
-        maiActor = system.actorOf(MainActor.class);
+        maiActor = system.actorOf(Props.create(MainActor.class));
         Main app = new Main();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute();
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
