@@ -77,11 +77,11 @@ class Main extends AllDirectives {
         if (uri.path().equals(HOME_DIRECTORY)) {
             String url = uri.query().getOrElse(TEST_URL, EMPTY_STRING);
             String stringCount = uri.query().getOrElse(COUNT, EMPTY_STRING);
-            if (url.isEmpty()) {
-                return HttpResponse.create().withEntity(ByteString.fromString(URL_ERROR_MSG));
+            if (url.equals(EMPTY_STRING)) {
+                return HttpResponse.create().withEntity(URL_ERROR_MSG);
             }
-            if (stringCount.isEmpty()) {
-                return HttpResponse.create().withEntity(ByteString.fromString(COUNT_ERROR_MSG));
+            if (stringCount.equals(EMPTY_STRING)) {
+                return HttpResponse.create().withEntity(COUNT_ERROR_MSG);
             }
             Integer count = Integer.parseInt(stringCount);
             Source<Pair<String, Integer>, NotUsed> src = Source.from(Collections.singleton(new Pair<>(url, count)));
@@ -131,7 +131,7 @@ class Main extends AllDirectives {
             return res.toCompletableFuture().get();
         } else {
             req.discardEntityBytes(materializer);
-            return HttpResponse.create().withEntity(ByteString.fromString(PATH_ERROR));
+            return HttpResponse.create().withEntity(PATH_ERROR);
         }
     }
 
