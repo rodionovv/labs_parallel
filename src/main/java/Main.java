@@ -27,10 +27,9 @@ class Main extends AllDirectives {
     public static void  main(String[] args)  throws IOException {
         ActorSystem system = ActorSystem.create(ROUTES);
         final Http http =  Http.get(system);
-        
         final ActorMaterializer materializer = ActorMaterializer.create(system);
         Main app = new Main();
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute().flow(system,materializer);
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute();
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost(LOCALHOST, PORT),
@@ -43,7 +42,7 @@ class Main extends AllDirectives {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    private Route createRoute() {
-
+    private Flow<HttpRequest, HttpResponse, NotUsed> createRoute() {
+        Flow.of()
     }
 }
