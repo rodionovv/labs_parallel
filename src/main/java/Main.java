@@ -20,6 +20,7 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 
 import static org.asynchttpclient.Dsl.asyncHttpClient;
 
@@ -28,6 +29,7 @@ class Main extends AllDirectives {
 
     public static final int PARALLELISM = 1;
     public static final int ZERO = 0;
+    public static final String HOME_DIRECTORY = "/";
     private static ActorRef maiActor;
     private static ActorMaterializer materializer;
 
@@ -48,8 +50,14 @@ class Main extends AllDirectives {
         Http http =  Http.get(system);
         materializer = ActorMaterializer.create(system);
         maiActor = system.actorOf(Props.create(MainActor.class));
-        Main app = new Main();
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createFlow();
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = Flow.of(HttpRequest.class)
+                .map(req -> {
+                    if (req.method() == HttpMethods.GET){
+                        return handleGet(req);
+                    } else {
+                        handleReq();
+                    }
+                });
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost(LOCALHOST, PORT),
@@ -62,70 +70,75 @@ class Main extends AllDirectives {
                 .thenAccept(unbound -> system.terminate());
     }
 
+    private HttpResponse handleGet(HttpRequest req) throws ExecutionException, InterruptedException {
+        Uri uri = req.getUri();
+        if (uri.path().equals(HOME_DIRECTORY)) {
+            String url = uri.query().getOrElse(TEST_URL, EMPTY_STRING);
+            String stringCount = uri.query().getOrElse(COUNT, EMPTY_STRING);
+            if (url.isEmpty()) {
+                return HttpResponse.create().withEntity(ByteString.fromString(URL_ERROR_MSG));
+            }
+            if (stringCount.isEmpty()) {
+                return HttpResponse.create().withEntity(ByteString.fromString(COUNT_ERROR_MSG));
+            }
+            Integer count = Integer.parseInt(stringCount);
+            Source<Pair<String, Integer>, NotUsed> src = Source.from(Collections.singleton(new Pair<>(url, count)));
+            Flow<Pair<String, Integer>, HttpResponse, NotUsed> sink = Flow.<Pair<String, Integer>>create()
+                    .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.first()), pair.second()))
+                    .mapAsync(PARALLELISM, pair -> Patterns
+                            .ask(
+                                    maiActor,
+                                    new GetMSG(count, url),
+                                    Duration.ofMillis(MILLIS)
+                            ).thenCompose(
+                                    r -> {
+                                        if ((int) r != -1) {
+                                            return CompletableFuture.completedFuture((int) r);
+                                        }
+                                        Sink<CompletionStage<Long>, CompletionStage<Integer>> fold = Sink
+                                                .fold(ZERO, (ac, element) -> {
+                                                    long el = element.toCompletableFuture().get();
+                                                    return Math.toIntExact(ac + el);
+                                                });
+                                        return Source.from(Collections.singleton(pair))
+                                                .toMat(
+                                                        Flow.<Pair<HttpRequest, Integer>>create()
+                                                                .mapConcat(p -> Collections.nCopies(p.second(), p.first()))
+                                                                .mapAsync(PARALLELISM, newReq -> CompletableFuture.supplyAsync(() ->
+                                                                        System.currentTimeMillis()
+                                                                ).thenCompose(start -> CompletableFuture.supplyAsync(() -> {
+                                                                    CompletionStage<Long> onResponse = asyncHttpClient()
+                                                                            .prepareGet(newReq.getUri().toString())
+                                                                            .execute()
+                                                                            .toCompletableFuture()
+                                                                            .thenCompose(ans ->
+                                                                                    CompletableFuture.completedFuture(System.currentTimeMillis() - start));
+                                                                    return onResponse;
+                                                                })))
+                                                                .toMat(fold, Keep.right()), Keep.right()).run(materializer);
+                                    }).thenCompose(sum -> {
+                                Patterns.ask(
+                                        maiActor,
+                                        new PutMSG(url, count, sum),
+                                        Duration.ofMillis(MILLIS)
+                                );
+                                double midVal = (double) sum / count;
+                                return CompletableFuture.completedFuture(HttpResponse.create().withEntity(ByteString.fromString("" + midVal)));
+                            }));
+            CompletionStage<HttpResponse> res = src.via(sink).toMat(Sink.last(), Keep.right()).run(materializer);
+            return res.toCompletableFuture().get();
+        } else {
+            req.discardEntityBytes(materializer);
+            return HttpResponse.create().withEntity(ByteString.fromString(""));
+        }
+    }
+    
+    
     private Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
         return Flow.of(HttpRequest.class).map(
                 req -> {
                     if (req.method() == HttpMethods.GET) {
-                        Uri uri = req.getUri();
-                        if (uri.path().equals("/")) {
-                            String url = uri.query().getOrElse(TEST_URL, EMPTY_STRING);
-                            String stringCount = uri.query().getOrElse(COUNT, EMPTY_STRING);
-                            if (url.isEmpty()) {
-                                return HttpResponse.create().withEntity(ByteString.fromString(URL_ERROR_MSG));
-                            }
-                            if (stringCount.isEmpty()) {
-                                return HttpResponse.create().withEntity(ByteString.fromString(COUNT_ERROR_MSG));
-                            }
-                            Integer count = Integer.parseInt(stringCount);
-                            Source<Pair<String, Integer>, NotUsed> src = Source.from(Collections.singleton(new Pair<>(url, count)));
-                            Flow<Pair<String, Integer>, HttpResponse, NotUsed> sink = Flow.<Pair<String, Integer>>create()
-                                    .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.first()), pair.second()))
-                                    .mapAsync(PARALLELISM, pair -> Patterns
-                                            .ask(
-                                                    maiActor,
-                                                    new GetMSG(count, url),
-                                                    Duration.ofMillis(MILLIS)
-                                            ).thenCompose(
-                                                    r -> {
-                                                        if ((int) r != ) {
-                                                            return CompletableFuture.completedFuture((int) r);
-                                                        }
-                                                        Sink<CompletionStage<Long>, CompletionStage<Integer>> fold = Sink
-                                                                .fold(ZERO, (ac, element) -> {
-                                                                    long el = element.toCompletableFuture().get();
-                                                                    return Math.toIntExact(ac + el);
-                                                                });
-                                                        return Source.from(Collections.singleton(pair))
-                                                                .toMat(
-                                                                        Flow.<Pair<HttpRequest, Integer>>create()
-                                                                                .mapConcat(p -> Collections.nCopies(p.second(), p.first()))
-                                                                                .mapAsync(PARALLELISM, newReq -> CompletableFuture.supplyAsync(() ->
-                                                                                        System.currentTimeMillis()
-                                                                                ).thenCompose(start -> CompletableFuture.supplyAsync(() -> {
-                                                                                    CompletionStage<Long> onResponse = asyncHttpClient()
-                                                                                            .prepareGet(newReq.getUri().toString())
-                                                                                            .execute()
-                                                                                            .toCompletableFuture()
-                                                                                            .thenCompose(ans ->
-                                                                                                    CompletableFuture.completedFuture(System.currentTimeMillis() - start));
-                                                                                    return onResponse;
-                                                                                })))
-                                                                                .toMat(fold, Keep.right()), Keep.right()).run(materializer);
-                                                    }).thenCompose(sum -> {
-                                                Patterns.ask(
-                                                        maiActor,
-                                                        new PutMSG(url, count, sum),
-                                                        Duration.ofMillis(MILLIS)
-                                                );
-                                                double midVal = (double) sum / count;
-                                                return CompletableFuture.completedFuture(HttpResponse.create().withEntity(ByteString.fromString("" + midVal)));
-                                            }));
-                            CompletionStage<HttpResponse> res = src.via(sink).toMat(Sink.last(), Keep.right()).run(materializer);
-                            return res.toCompletableFuture().get();
-                        } else {
-                            req.discardEntityBytes(materializer);
-                            return HttpResponse.create().withEntity(ByteString.fromString(""));
-                        }
+                        
                     } else {
                         req.discardEntityBytes(materializer);
                         return HttpResponse.create().withStatus(StatusCodes.NOT_FOUND).withEntity("");
