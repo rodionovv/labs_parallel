@@ -115,7 +115,7 @@ class Main extends AllDirectives {
                                                                                   .toMat(fold, Keep.right()), Keep.right()).run(materializer);
                                                       }).thenCompose(sum -> {
                                                           Patterns.ask(maiActor, new msg);
-                                                          double midVal = (double) sum;
+                                                          double midVal = (double) sum / count;
                                                       });
                                     });
                         }
