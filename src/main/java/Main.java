@@ -116,6 +116,7 @@ class Main extends AllDirectives {
                                                       }).thenCompose(sum -> {
                                                           Patterns.ask(maiActor, new msg);
                                                           double midVal = (double) sum / count;
+                                                          return CompletableFuture.completedFuture(HttpResponse.create().withEntity(ByteString.fromString()))
                                                       });
                                     });
                         }
