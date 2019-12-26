@@ -78,44 +78,40 @@ class Main extends AllDirectives {
                             Source<Pair<String, Integer>, NotUsed> src = Source.from(Collections.singleton(new Pair<>(url, count)));
                             Flow<Pair<String, Integer>, HttpResponse, NotUsed> sink = Flow.<Pair<String, Integer>>create()
                                     .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.first()), pair.second()))
-                                    .mapAsync(1, pair -> {
-                                        return Patterns
-                                                .ask(
-                                                        maiActor,
-                                                        new GetMSG(new javafx.util.Pair<>(url, count)),
-                                                        Duration.ofMillis(MILLIS)
-                                                ).thenCompose(
-                                                        r -> {
-                                                            //TODO:if
-                                                            Sink<CompletionStage<Long>, CompletionStage<Integer>> fold = Sink
-                                                                    .fold(0, (ac, element) -> {
-                                                                        long el = element.toCompletableFuture().get();
-                                                                        return Math.toIntExact(ac + el);
-                                                                    });
-                                                            return Source.from(Collections.singleton(pair))
-                                                                    .toMat(
-                                                                            Flow.<Pair<HttpRequest, Integer>>create()
-                                                                                    .mapConcat(p -> Collections.nCopies(p.second(), p.first()))
-                                                                                    .mapAsync(PARALLELISM, newReq -> {
-                                                                                        return CompletableFuture.supplyAsync(() ->
-                                                                                                System.currentTimeMillis()
-                                                                                        ).thenCompose(start -> CompletableFuture.supplyAsync(() -> {
-                                                                                            CompletionStage<Long> onResponse = asyncHttpClient()
-                                                                                                    .prepareGet(newReq.getUri().toString())
-                                                                                                    .execute()
-                                                                                                    .toCompletableFuture()
-                                                                                                    .thenCompose(ans ->
-                                                                                                            CompletableFuture.completedFuture(System.currentTimeMillis() - start));
-                                                                                            return onResponse;
-                                                                                        }));
-                                                                                    })
-                                                                                    .toMat(fold, Keep.right()), Keep.right()).run(materializer);
-                                                        }).thenCompose(sum -> {
-                                                    Patterns.ask(maiActor, new msg);
-                                                    double midVal = (double) sum / count;
-                                                    return CompletableFuture.completedFuture(HttpResponse.create().withEntity(ByteString.fromString("" + midVal)));
-                                                });
-                                    });
+                                    .mapAsync(1, pair -> Patterns
+                                            .ask(
+                                                    maiActor,
+                                                    new GetMSG(new javafx.util.Pair<>(url, count)),
+                                                    Duration.ofMillis(MILLIS)
+                                            ).thenCompose(
+                                                    r -> {
+                                                        //TODO:if
+                                                        Sink<CompletionStage<Long>, CompletionStage<Integer>> fold = Sink
+                                                                .fold(0, (ac, element) -> {
+                                                                    long el = element.toCompletableFuture().get();
+                                                                    return Math.toIntExact(ac + el);
+                                                                });
+                                                        return Source.from(Collections.singleton(pair))
+                                                                .toMat(
+                                                                        Flow.<Pair<HttpRequest, Integer>>create()
+                                                                                .mapConcat(p -> Collections.nCopies(p.second(), p.first()))
+                                                                                .mapAsync(PARALLELISM, newReq -> CompletableFuture.supplyAsync(() ->
+                                                                                        System.currentTimeMillis()
+                                                                                ).thenCompose(start -> CompletableFuture.supplyAsync(() -> {
+                                                                                    CompletionStage<Long> onResponse = asyncHttpClient()
+                                                                                            .prepareGet(newReq.getUri().toString())
+                                                                                            .execute()
+                                                                                            .toCompletableFuture()
+                                                                                            .thenCompose(ans ->
+                                                                                                    CompletableFuture.completedFuture(System.currentTimeMillis() - start));
+                                                                                    return onResponse;
+                                                                                })))
+                                                                                .toMat(fold, Keep.right()), Keep.right()).run(materializer);
+                                                    }).thenCompose(sum -> {
+                                                Patterns.ask(maiActor, new msg);
+                                                double midVal = (double) sum / count;
+                                                return CompletableFuture.completedFuture(HttpResponse.create().withEntity(ByteString.fromString("" + midVal)));
+                                            }));
                             CompletionStage<HttpResponse> res = src.via(sink).toMat(Sink.last(), Keep.right()).run(materializer);
                             return res.toCompletableFuture().get();
                         } else {
