@@ -77,7 +77,11 @@ class Main extends AllDirectives {
                                                       mainActor,
                                                       new GetMSG(),
                                                       Duration.ofMillis(MILLIS)
-                                              ).thenCompose
+                                              ).thenCompose(
+                                                      r -> {
+
+                                                      }
+                                              )
                                     })
                         }
                     }
