@@ -19,19 +19,23 @@ import static akka.http.javadsl.server.Directives.*;
 class Main extends AllDirectives {
 
 
+    private static final String ROUTES = "routes";
+    private static final String LOCALHOST = "localhost";
+    private static final int PORT = 8080;
+    private static final String SERVER_MSG = "Server online at http://localhost:8080/\nPress RETURN to stop...";
 
     public static void  main(String[] args)  throws IOException {
-        ActorSystem system = ActorSystem.create("routes");
+        ActorSystem system = ActorSystem.create(ROUTES);
         final Http http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
         Main app = new Main();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute().flow(system,materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
-                ConnectHttp.toHost("localhost", 8080),
+                ConnectHttp.toHost(LOCALHOST, PORT),
                 materializer
         );
-        System.out.println("Server online at http://localhost:8080/\nPress RETURN to stop...");
+        System.out.println(SERVER_MSG);
         System.in.read();
         binding
                 .thenCompose(ServerBinding::unbind)
