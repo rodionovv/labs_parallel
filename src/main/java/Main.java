@@ -1,4 +1,5 @@
 import akka.NotUsed;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
@@ -27,7 +28,9 @@ import static akka.http.javadsl.server.Directives.*;
 
 class Main extends AllDirectives {
 
-    
+    private static ActorRef maiActor;
+
+
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
     private static final int PORT = 8080;
@@ -40,6 +43,7 @@ class Main extends AllDirectives {
         ActorSystem system = ActorSystem.create(ROUTES);
         final Http http =  Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
+        maiActor = system.actorOf();
         Main app = new Main();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute();
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
@@ -75,7 +79,7 @@ class Main extends AllDirectives {
                                     .mapAsync(1, pair -> {
                                       return Patterns
                                               .ask(
-                                                      mainActor,
+                                                      maiActor,
                                                       new GetMSG(),
                                                       Duration.ofMillis(MILLIS)
                                               ).thenCompose(
