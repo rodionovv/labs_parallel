@@ -48,7 +48,7 @@ class Main extends AllDirectives {
         materializer = ActorMaterializer.create(system);
         maiActor = system.actorOf(Props.create(MainActor.class));
         Main app = new Main();
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute();
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createFlow();
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost(LOCALHOST, PORT),
@@ -61,7 +61,7 @@ class Main extends AllDirectives {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    private Flow<HttpRequest, HttpResponse, NotUsed> createRoute() throws NumberFormatException {
+    private Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
         return Flow.of(HttpRequest.class).map(
                 req -> {
                     if (req.method() == HttpMethods.GET) {
@@ -109,7 +109,8 @@ class Main extends AllDirectives {
                                                                                 })))
                                                                                 .toMat(fold, Keep.right()), Keep.right()).run(materializer);
                                                     }).thenCompose(sum -> {
-                                                Patterns.ask(maiActor,
+                                                Patterns.ask(
+                                                        maiActor,
                                                         new PutMSG(),
                                                         Duration.ofMillis(MILLIS)
                                                 );
