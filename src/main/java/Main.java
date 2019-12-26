@@ -14,7 +14,6 @@ import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
-import akka.util.ByteString;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Collections;
@@ -124,8 +123,8 @@ class Main extends AllDirectives {
                                         new PutMSG(url, count, sum),
                                         Duration.ofMillis(MILLIS)
                                 );
-                                double midVal = (double) sum / count;
-                                return CompletableFuture.completedFuture(HttpResponse.create().withEntity(ByteString.fromString("" + midVal)));
+                                Double midVal = (double) sum / count;
+                                return CompletableFuture.completedFuture(HttpResponse.create().withEntity(midVal.toString()));
                             }));
             CompletionStage<HttpResponse> res = src.via(sink).toMat(Sink.last(), Keep.right()).run(materializer);
             return res.toCompletableFuture().get();
@@ -139,6 +138,4 @@ class Main extends AllDirectives {
         req.discardEntityBytes(materializer);
         return HttpResponse.create().withStatus(StatusCodes.NOT_FOUND).withEntity(METHOD_ERROR);
     }
-    
-
 }
