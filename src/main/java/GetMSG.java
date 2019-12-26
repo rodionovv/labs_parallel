@@ -1,23 +1,19 @@
-import akka.japi.Pair;
-
 public class GetMSG {
 
 
-    Pair<String, Integer> msgPair;
+   private int count;
+   private String url;
 
-    public GetMSG(Pair<String, Integer> msgPair) {
-        this.msgPair = msgPair;
-    }
-
-    public Pair<String, Integer> getMsgPair() {
-        return msgPair;
+    public GetMSG(int count, String url) {
+        this.count = count;
+        this.url = url;
     }
 
     public int getCount() {
-       return msgPair.second();
+        return count;
     }
 
-    public String getValue() {
-        return msgPair.first();
+    public String getUrl() {
+        return url;
     }
 }

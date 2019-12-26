@@ -1,17 +1,17 @@
 public class PutMSG {
 
-    private String URL;
+    private String url;
     private int count;
     private int time;
 
-    public PutMSG(String URL, int count, int time) {
-        this.URL = URL;
+    public PutMSG(String url, int count, int time) {
+        this.url = url;
         this.count = count;
         this.time = time;
     }
 
-    public String getURL() {
-        return URL;
+    public String getUrl() {
+        return url;
     }
 
     public int getCount() {

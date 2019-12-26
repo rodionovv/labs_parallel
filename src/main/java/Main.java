@@ -83,7 +83,7 @@ class Main extends AllDirectives {
                                     .mapAsync(PARALLELISM, pair -> Patterns
                                             .ask(
                                                     maiActor,
-                                                    new GetMSG(new Pair<>(url, count)),
+                                                    new GetMSG(count, url),
                                                     Duration.ofMillis(MILLIS)
                                             ).thenCompose(
                                                     r -> {
