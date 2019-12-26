@@ -122,7 +122,7 @@ class Main extends AllDirectives {
                             req.discardEntityBytes(materializer);
                             return HttpResponse.create().withEntity(ByteString.fromString(""));
                         }
-                    }else {
+                    } else {
                         req.discardEntityBytes(materializer);
                         return HttpResponse.create().withStatus(StatusCodes.NOT_FOUND).withEntity("");
                     }
