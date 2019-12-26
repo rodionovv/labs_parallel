@@ -3,8 +3,10 @@ import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
+import akka.http.javadsl.model.HttpMethods;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
+import akka.http.javadsl.model.Uri;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Complete;
 import akka.http.javadsl.server.Route;
@@ -43,6 +45,17 @@ class Main extends AllDirectives {
     }
 
     private Flow<HttpRequest, HttpResponse, NotUsed> createRoute() {
-        Flow.of()
+        return Flow.of(HttpRequest.class).map(
+                req -> {
+                    if (req.method() == HttpMethods.GET) {
+                        Uri uri = req.getUri();
+                        if (uri.path().equals("/")) {
+                            String url = uri.query().getOrElse("testUrl", "");
+                            String count = uri.query().getOrElse("count", "");
+                            
+                        }
+                    }
+                }
+        );
     }
 }
