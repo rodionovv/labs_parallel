@@ -17,6 +17,4 @@ public class GetMSG {
     public String getValue() {
         return msgPair.getKey();
     }
-    
-
 }
