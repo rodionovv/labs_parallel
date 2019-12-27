@@ -19,9 +19,20 @@ public class MainActor extends AbstractActor {
                            if (data.containsKey(url) && data.get(url).containsKey(count)) {
                                getSender().tell(data.get(url).get(count), ActorRef.noSender());
                            } else {
-                               getSender()
+                               getSender().tell(-1, ActorRef.noSender());
                            }
-
                         })
+                .match(
+                        PutMSG.class,
+                        msg -> {
+                            Map<Integer, Integer> newValue;
+                            if (data.containsKey(msg.getUrl())) {
+                                newValue = data.get(msg.getUrl());
+                            } else {
+                                newValue = new Map<>();
+                            }
+                            newValue.put()
+                        }
+                )
     }
 }
