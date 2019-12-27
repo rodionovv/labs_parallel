@@ -29,9 +29,10 @@ public class MainActor extends AbstractActor {
                             if (data.containsKey(msg.getUrl())) {
                                 newValue = data.get(msg.getUrl());
                             } else {
-                                newValue = new Map<>();
+                                newValue = new HashMap<>();
                             }
-                            newValue.put()
+                            newValue.put(msg.getCount(), msg.getTime());
+                            data.put(msg.getUrl(), newValue);
                         }
                 )
     }
