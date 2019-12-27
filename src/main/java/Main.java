@@ -101,22 +101,7 @@ class Main extends AllDirectives {
                                                     long el = element.toCompletableFuture().get();
                                                     return Math.toIntExact(ac + el);
                                                 });
-                                        return Source.from(Collections.singleton(pair))
-                                                .toMat(
-                                                        Flow.<Pair<HttpRequest, Integer>>create()
-                                                                .mapConcat(p -> Collections.nCopies(p.second(), p.first()))
-                                                                .mapAsync(PARALLELISM, newReq -> CompletableFuture.supplyAsync(() ->
-                                                                        System.currentTimeMillis()
-                                                                ).thenCompose(start -> CompletableFuture.supplyAsync(() -> {
-                                                                    CompletionStage<Long> onResponse = asyncHttpClient()
-                                                                            .prepareGet(newReq.getUri().toString())
-                                                                            .execute()
-                                                                            .toCompletableFuture()
-                                                                            .thenCompose(ans ->
-                                                                                    CompletableFuture.completedFuture(System.currentTimeMillis() - start));
-                                                                    return onResponse;
-                                                                })))
-                                                                .toMat(fold, Keep.right()), Keep.right()).run(materializer);
+                                        return returnSource(pair, fold);
                                     }).thenCompose(sum -> {
                                 Patterns.ask(
                                         maiActor,
@@ -132,6 +117,25 @@ class Main extends AllDirectives {
             req.discardEntityBytes(materializer);
             return HttpResponse.create().withEntity(PATH_ERROR);
         }
+    }
+
+    private static CompletionStage<Integer> returnSource(Pair<HttpRequest, Integer> pair, Sink<CompletionStage<Long>, CompletionStage<Integer>> fold) {
+        return Source.from(Collections.singleton(pair))
+                .toMat(
+                        Flow.<Pair<HttpRequest, Integer>>create()
+                                .mapConcat(p -> Collections.nCopies(p.second(), p.first()))
+                                .mapAsync(PARALLELISM, newReq -> CompletableFuture.supplyAsync(() ->
+                                        System.currentTimeMillis()
+                                ).thenCompose(start -> CompletableFuture.supplyAsync(() -> {
+                                    CompletionStage<Long> onResponse = asyncHttpClient()
+                                            .prepareGet(newReq.getUri().toString())
+                                            .execute()
+                                            .toCompletableFuture()
+                                            .thenCompose(ans ->
+                                                    CompletableFuture.completedFuture(System.currentTimeMillis() - start));
+                                    return onResponse;
+                                })))
+                                .toMat(fold, Keep.right()), Keep.right()).run(materializer);
     }
 
     private static HttpResponse handleReq(HttpRequest req) {
