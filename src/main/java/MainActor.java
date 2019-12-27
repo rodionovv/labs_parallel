@@ -34,6 +34,6 @@ public class MainActor extends AbstractActor {
                             newValue.put(msg.getCount(), msg.getTime());
                             data.put(msg.getUrl(), newValue);
                         }
-                );
+                )
     }
 }
