@@ -84,39 +84,43 @@ class Main extends AllDirectives {
             }
             Integer count = Integer.parseInt(stringCount);
             Source<Pair<String, Integer>, NotUsed> src = Source.from(Collections.singleton(new Pair<>(url, count)));
-            Flow<Pair<String, Integer>, HttpResponse, NotUsed> sink = Flow.<Pair<String, Integer>>create()
-                    .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.first()), pair.second()))
-                    .mapAsync(PARALLELISM, pair -> Patterns
-                            .ask(
-                                    maiActor,
-                                    new GetMSG(count, url),
-                                    Duration.ofMillis(MILLIS)
-                            ).thenCompose(
-                                    r -> {
-                                        if ((int) r != -1) {
-                                            return CompletableFuture.completedFuture((int) r);
-                                        }
-                                        Sink<CompletionStage<Long>, CompletionStage<Integer>> fold = Sink
-                                                .fold(ZERO, (ac, element) -> {
-                                                    long el = element.toCompletableFuture().get();
-                                                    return Math.toIntExact(ac + el);
-                                                });
-                                        return returnSource(pair, fold);
-                                    }).thenCompose(sum -> {
-                                Patterns.ask(
-                                        maiActor,
-                                        new PutMSG(url, count, sum),
-                                        Duration.ofMillis(MILLIS)
-                                );
-                                Double midVal = (double) sum / count;
-                                return CompletableFuture.completedFuture(HttpResponse.create().withEntity(midVal.toString()));
-                            }));
+            Flow<Pair<String, Integer>, HttpResponse, NotUsed> sink = getSink(url, count);
             CompletionStage<HttpResponse> res = src.via(sink).toMat(Sink.last(), Keep.right()).run(materializer);
             return res.toCompletableFuture().get();
         } else {
             req.discardEntityBytes(materializer);
             return HttpResponse.create().withEntity(PATH_ERROR);
         }
+    }
+
+    private static Flow<Pair<String, Integer>, HttpResponse, NotUsed> getSink(String url, Integer count) {
+        return Flow.<Pair<String, Integer>>create()
+                .map(pair -> new Pair<>(HttpRequest.create().withUri(pair.first()), pair.second()))
+                .mapAsync(PARALLELISM, pair -> Patterns
+                        .ask(
+                                maiActor,
+                                new GetMSG(count, url),
+                                Duration.ofMillis(MILLIS)
+                        ).thenCompose(
+                                r -> {
+                                    if ((int) r != -1) {
+                                        return CompletableFuture.completedFuture((int) r);
+                                    }
+                                    Sink<CompletionStage<Long>, CompletionStage<Integer>> fold = Sink
+                                            .fold(ZERO, (ac, element) -> {
+                                                long el = element.toCompletableFuture().get();
+                                                return Math.toIntExact(ac + el);
+                                            });
+                                    return returnSource(pair, fold);
+                                }).thenCompose(sum -> {
+                            Patterns.ask(
+                                    maiActor,
+                                    new PutMSG(url, count, sum),
+                                    Duration.ofMillis(MILLIS)
+                            );
+                            Double midVal = (double) sum / count;
+                            return CompletableFuture.completedFuture(HttpResponse.create().withEntity(midVal.toString()));
+                        }));
     }
 
     private static CompletionStage<Integer> returnSource(Pair<HttpRequest, Integer> pair, Sink<CompletionStage<Long>, CompletionStage<Integer>> fold) {
