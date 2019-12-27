@@ -12,20 +12,7 @@ public class MainActor extends AbstractActor {
                         msg -> {
                            String url = msg.getUrl();
                            int count = msg.getCount();
-                           for int i in range for int i isss
 
-
-                                    as;df
-
-                                    ;dlfaf
-                                    ;jajfaf
-                                    afka';ljf;ajf
-                        af
-                        afakf
-                            afakfakfkfaf
-                        af
-                            afakfakf
-                        k'
 
                         })
     }
