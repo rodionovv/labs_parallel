@@ -12,13 +12,9 @@ public class MainActor extends AbstractActor {
                         msg -> {
                            String url = msg.getUrl();
                            int count = msg.getCount();
-                           if ()
+                           
+
+
                         })
     }
 }
-
-
-
-
-ыдвадтыюю
-ыважол
