@@ -1,2 +1,2 @@
-public class MainActor {
+public class MainActor ext {
 }
